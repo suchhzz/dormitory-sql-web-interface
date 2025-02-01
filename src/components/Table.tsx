@@ -2,15 +2,35 @@
 export default function Table() {
     return (
         <>
-        <table>
+        <table className="table-display">
             <thead>
-                <th>
-                    <td>123</td>
-                    <td>123</td>
-                    <td>123</td>
-                    <td>123</td>
-                </th>
+                <tr>
+                    <th>123</th>
+                    <th>123</th>
+                    <th>123</th>
+                    <th>123</th>
+                </tr>
             </thead>
+            <tbody>
+                <tr>
+                    <td>asd</td>
+                    <td>asd</td>
+                    <td>asd</td>
+                    <td>asd</td>
+                </tr>
+                <tr>
+                    <td>asd</td>
+                    <td>asd</td>
+                    <td>asd</td>
+                    <td>asd</td>
+                </tr>
+                <tr>
+                    <td>asd</td>
+                    <td>asd</td>
+                    <td>asd</td>
+                    <td>asd</td>
+                </tr>
+            </tbody>
         </table>
         </>
     )
