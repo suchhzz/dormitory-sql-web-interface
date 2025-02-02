@@ -9,7 +9,7 @@ export default function SelectModalBody() {
                     </label>
                 </div>
                 <div className="select-modal-section select-condition-section">
-
+                    
                 </div>
             </div>
         </>
