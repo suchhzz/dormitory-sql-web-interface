@@ -48,42 +48,6 @@
     .panel-wrapper {
         position: relative;
         margin: 10% 0 0 0;
-
-        .close-menu-panel-button {
-            position: absolute;
-            top: 0;
-            right: 3%;
-            background-color: #202124;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            font-size: 18px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2;
-            border: 1px solid transparent;
-
-            &:hover {
-                background-color: #333;
-                border: 1px solid #fff;
-                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            }
-
-            &:focus {
-                outline: none;
-                box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
-            }
-
-            &:active {
-                background-color: #444;
-                transform: scale(0.95);
-            }
-        }
-
         .panel-header {
 
             position: relative;

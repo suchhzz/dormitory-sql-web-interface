@@ -1,7 +1,7 @@
 import ButtonPanel from './components/ButtonPanel';
 import MenuPanel from './components/MenuPanel';
 import Table from './components/Table';
-import './scripts/example'
+import './scripts/main'
 
 function App() {
   return (
