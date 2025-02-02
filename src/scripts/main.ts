@@ -27,6 +27,8 @@ $(document).ready(() => {
     $(this).toggleClass('selected');
   });
 
+  
+
   // option function click 
 
   $('.option--function').click(function (event) {
@@ -58,6 +60,10 @@ $(document).ready(() => {
     event.stopPropagation();
   });
 
+  $('.option-menu').on('mouseleave', function() {
+    $(this).removeClass('active');
+  });
+
   $('.option-alias-change-btn').on('click', function() {
     const inputValue = $(this).closest('.input-container').find('.form-item-input').val() as string;
 
@@ -65,6 +71,8 @@ $(document).ready(() => {
 
     parentColumnItem.attr('data-aliasOption', inputValue);
   });
+
+
 
 
   });
