@@ -1,0 +1,98 @@
+.button-panel-wrapper {
+    .buttons {
+        justify-content: space-between;
+
+        .button-item {
+            padding: 5px 10px;
+            font-family: Arial, Helvetica, sans-serif;
+            
+            &--insert {
+                background-color: #007bff;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                font-size: 16px;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+
+                &:hover {
+                    background-color: #0056b3;
+                    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+                }
+
+                &:focus {
+                    outline: none;
+                    box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
+                }
+
+                &:active {
+                    background-color: #004085;
+                    transform: scale(0.98);
+                }
+            }
+
+            &--select {
+                background-color: #28a745;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                font-size: 16px;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+              
+                &:hover {
+                  background-color: #218838;
+                  box-shadow: 0 4px 8px rgba(40, 167, 69, 0.2);
+                }
+              
+                &:focus {
+                  outline: none;
+                  box-shadow: 0 0 8px rgba(40, 167, 69, 0.6);
+                }
+              
+                &:active {
+                  background-color: #1e7e34;
+                  transform: scale(0.98);
+                }
+              }
+              
+        }
+    }
+}
+
+.close-button {
+  position: absolute;
+  top: 0;
+  right: 3%;
+  background-color: transparent;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  font-size: 18px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, border 0.3s ease, box-shadow 0.3s ease, outline 0.3s ease, transform 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  border: 1px solid transparent;
+
+  &:hover {
+      background-color: #333;
+      border: 1px solid #fff;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+
+  &:focus {
+      outline: none;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+  }
+
+  &:active {
+      background-color: #444;
+      transform: scale(0.95);
+  }
+}
