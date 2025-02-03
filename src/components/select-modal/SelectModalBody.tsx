@@ -1,3 +1,5 @@
+import Condition from "./condition-items/Condition";
+
 export default function SelectModalBody() {
     return (
         <>
@@ -9,7 +11,11 @@ export default function SelectModalBody() {
                     </label>
                 </div>
                 <div className="select-modal-section select-condition-section">
-                    
+                    <label className="label-form">Condition</label>
+                    <div className="condition-wrapper d-grid">
+                        <Condition />
+                    </div>
+                    <button className="add-condition-button">+</button>
                 </div>
             </div>
         </>

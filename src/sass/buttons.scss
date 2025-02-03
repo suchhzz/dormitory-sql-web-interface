@@ -1,65 +1,65 @@
 .button-panel-wrapper {
     .buttons {
         justify-content: space-between;
+    }
+}
 
-        .button-item {
-            padding: 5px 10px;
-            font-family: Arial, Helvetica, sans-serif;
-            
-            &--insert {
-                background-color: #007bff;
-                color: white;
-                border: none;
-                padding: 10px 20px;
-                font-size: 16px;
-                border-radius: 5px;
-                cursor: pointer;
-                transition: all 0.3s ease;
+.button-item {
+    padding: 5px 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    
+    &--insert {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
 
-                &:hover {
-                    background-color: #0056b3;
-                    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
-                }
+        &:hover {
+            background-color: #0056b3;
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+        }
 
-                &:focus {
-                    outline: none;
-                    box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
-                }
+        &:focus {
+            outline: none;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
+        }
 
-                &:active {
-                    background-color: #004085;
-                    transform: scale(0.98);
-                }
-            }
-
-            &--select {
-                background-color: #28a745;
-                color: white;
-                border: none;
-                padding: 10px 20px;
-                font-size: 16px;
-                border-radius: 5px;
-                cursor: pointer;
-                transition: all 0.3s ease;
-              
-                &:hover {
-                  background-color: #218838;
-                  box-shadow: 0 4px 8px rgba(40, 167, 69, 0.2);
-                }
-              
-                &:focus {
-                  outline: none;
-                  box-shadow: 0 0 8px rgba(40, 167, 69, 0.6);
-                }
-              
-                &:active {
-                  background-color: #1e7e34;
-                  transform: scale(0.98);
-                }
-              }
-              
+        &:active {
+            background-color: #004085;
+            transform: scale(0.98);
         }
     }
+
+    &--select {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      
+        &:hover {
+          background-color: #218838;
+          box-shadow: 0 4px 8px rgba(40, 167, 69, 0.2);
+        }
+      
+        &:focus {
+          outline: none;
+          box-shadow: 0 0 8px rgba(40, 167, 69, 0.6);
+        }
+      
+        &:active {
+          background-color: #1e7e34;
+          transform: scale(0.98);
+        }
+      }
+      
 }
 
 .close-button {
