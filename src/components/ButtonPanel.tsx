@@ -5,8 +5,8 @@ export default function ButtonPanel() {
     return (
         <>
             <div className="buttons d-flex">
-                <button id="insertBtn" className="button-item button-item--insert">Insert</button>
-                <button id="selectBtn" className="button-item button-item--select">Select</button>
+                <button id="insertBtn" className="button-item template-button template-button--blue">Insert</button>
+                <button id="selectBtn" className="button-item template-button template-button--green">Select</button>
             </div>
 
             <InsertModal />

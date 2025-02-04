@@ -1,3 +1,4 @@
+import ColumnItem from "./modal-items/ColumnItem";
 import SelectModalBody from "./SelectModalBody";
 
 export default function SelectModal() {
@@ -15,18 +16,10 @@ export default function SelectModal() {
                                         <div className="column-item selected">
                                             <p>All</p>
                                         </div>
-                                        <div className="column-item selected">
-                                            <p>column</p>
-                                        </div>
-                                        <div className="column-item">
-                                            <p>column</p>
-                                        </div>
-                                        <div className="column-item">
-                                            <p>column</p>
-                                        </div>
-                                        <div className="column-item">
-                                            <p>column</p>
-                                        </div>
+                                        <ColumnItem />
+                                        <ColumnItem />
+                                        <ColumnItem />
+                                        <ColumnItem />
                                     </div>
                                 </div>
                             </div>
