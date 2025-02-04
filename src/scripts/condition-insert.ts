@@ -10,11 +10,9 @@ $(document).ready(function() {
 
     });
 
-
     $('.popup-insert-form').click(function(event) {
         event.stopPropagation();
     })
-
 
     $('.tab-item').click(function(e) {
         $('.tab-item').removeClass('active');
@@ -24,9 +22,7 @@ $(document).ready(function() {
 
         if (tabData !== undefined) {
             setConditionBody(tabData);
-        }
-
-        
+        }        
 
         e.stopPropagation();
     });
