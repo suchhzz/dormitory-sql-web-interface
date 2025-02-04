@@ -357,6 +357,15 @@
                                                                         border-radius: 3px;
                                                                         transition: background-color .3s ease-out, box-shadow .3s ease-out;
 
+                                                                        &.selected {
+                                                                            box-shadow: 0 0 3px 3px #4f5d74;
+                                                                            outline: 2px solid #7c99c7;
+
+                                                                            p {
+                                                                                color: #7c99c7;
+                                                                            }
+                                                                        }
+
                                                                         p {
                                                                             font-size: .8rem;
                                                                             margin: 0 .3rem;

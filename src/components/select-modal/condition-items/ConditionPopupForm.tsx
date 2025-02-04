@@ -4,7 +4,7 @@ export default function ConditionPopupForm() {
             <div className="popup-insert-form">
                 <div className="popup-insert-form--wrapper d-grid">
                     <div className="popup-form popup-form--header d-grid">
-                        <div data-insertConditionTab="conditionTemplate" className="tab-item">
+                        <div data-insertConditionTab="conditionTemplate" className="tab-item active">
                             <p>Template</p>
                         </div>
                         <div data-insertConditionTab="conditionCustom" className="tab-item">
@@ -12,23 +12,23 @@ export default function ConditionPopupForm() {
                         </div>
                     </div>
                     <div className="popup-form popup-form--body">
-                        <div id='conditionTemplate' className="condition-field body--template">
+                        <div id='conditionTemplate' className="condition-field body--template active">
                             <div className="condition-field-wrapper d-grid">
                                 <div className="body--template body--template__regular-condition-item d-grid">
                                     <div className="popup-template__title d-flex">
                                         <p>Regular</p>
                                     </div>
                                     <div className="popup-template__body d-flex">
-                                        <div className="template-item d-flex regular--equal">
+                                        <div data-selected='0' data-value='=' className="template-item d-flex regular--equal">
                                             <p>=</p>
                                         </div>
-                                        <div className="template-item d-flex regular--greater">
+                                        <div data-selected='0' data-value='>' className="template-item d-flex regular--greater">
                                             <p>&gt;</p>
                                         </div>
-                                        <div className="template-item d-flex regular--less">
+                                        <div data-selected='0' data-value='<' className="template-item d-flex regular--less">
                                             <p>&lt;</p>
                                         </div>
-                                        <div className="template-item regular--value">
+                                        <div data-selected='0' data-value='' className="template-item regular--value">
                                         </div>
                                     </div>
                                 </div>
@@ -37,19 +37,13 @@ export default function ConditionPopupForm() {
                                         <p>Logic</p>
                                     </div>
                                     <div className="popup-template__body d-flex">
-                                        <div className="template-item d-flex logic--and">
-                                            <p>AND</p>
-                                        </div>
-                                        <div className="template-item d-flex logic--or">
-                                            <p>OR</p>
-                                        </div>
-                                        <div className="template-item d-flex regular--is">
+                                        <div data-selected='0' data-value='IS' className="template-item d-flex logic--is">
                                             <p>IS</p>
                                         </div>
-                                        <div className="template-item d-flex logic--not">
+                                        <div data-selected='0' data-value='NOT' className="template-item d-flex logic--not">
                                             <p>NOT</p>
                                         </div>
-                                        <div className="template-item d-flex regular--is-not">
+                                        <div data-selected='0' data-value='IS NOT' className="template-item d-flex regular--is-not">
                                             <p>IS NOT</p>
                                         </div>
                                     </div>
@@ -59,10 +53,10 @@ export default function ConditionPopupForm() {
                                         <p>Template</p>
                                     </div>
                                     <div className="popup-template__body d-flex">
-                                        <div className="template-item d-flex regular--less">
+                                        <div data-selected='0' data-value='BETWEEN' className="template-item d-flex template--between">
                                             <p>BETWEEN ... AND ...</p>
                                         </div>
-                                        <div className="template-item d-flex regular--less">
+                                        <div data-selected='0' data-value='IN' className="template-item d-flex template--in">
                                             <p>IN (...)</p>
                                         </div>
                                     </div>
@@ -75,7 +69,7 @@ export default function ConditionPopupForm() {
                         </div>
                     </div>
                     <div className="popup-form popup-form--footer d-flex">
-                        <button className="button-item template-button template-button--green">Add</button>
+                        <button id='addConditionButton' data-selectedtab='conditionTemplate' className="button-item template-button template-button--green">Add</button>
                     </div>
                 </div>
             </div>
