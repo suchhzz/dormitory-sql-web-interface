@@ -62,6 +62,14 @@ function getSelectedItem() : JQuery {
     return selectedItem;
 }
 
+function incorrectValueButton($button : JQuery, delay : number) : void {
+    $button.addClass('outline-red');
+    
+    setTimeout(() => {
+        $button.removeClass('outline-red');
+    }, delay);
+}
+
 interface Condition {
     firstValue? : string;
     secondValue? : string;
@@ -79,8 +87,10 @@ function addCondition(conditionType : string) : void {
 
         if (selectedItem.length === 0) {
             console.log('choose element');
+
+            incorrectValueButton($('#addConditionButton'), 500);
+
             return;
-            // todo: add button style
         }
 
         const itemValue : string = selectedItem.attr('data-value') || '';

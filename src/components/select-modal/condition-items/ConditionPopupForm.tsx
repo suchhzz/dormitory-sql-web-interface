@@ -46,6 +46,9 @@ export default function ConditionPopupForm() {
                                         <div data-selected='0' data-value='IS NOT' className="template-item d-flex regular--is-not">
                                             <p>IS NOT</p>
                                         </div>
+                                        <div data-selected='0' data-value='IS NOT' className="template-item d-flex regular--is-not">
+                                            <p>LIKE</p>
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="body--template body--template__template-condition-item d-grid">
