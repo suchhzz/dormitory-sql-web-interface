@@ -70,16 +70,7 @@ function incorrectValueButton($button : JQuery, delay : number) : void {
     }, delay);
 }
 
-interface Condition {
-    firstValue? : string;
-    secondValue? : string;
-    operator? : string[];
-}
 
-interface ConditionService {
-    conditionArray? : Condition[];
-    conditionRelativeArray? : string[];
-}
 
 function addCondition(conditionType : string) : void {
     if (conditionType === CONDITION_TEMPLATE) {
@@ -95,9 +86,9 @@ function addCondition(conditionType : string) : void {
 
         const itemValue : string = selectedItem.attr('data-value') || '';
 
-        const condition : Condition = {
+        // const condition : Condition = {
             // value: itemValue,
-        }
+        // }
 
         // save template sql string to array
 

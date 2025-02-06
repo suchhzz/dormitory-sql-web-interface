@@ -14,6 +14,7 @@ export default function SelectModalBody() {
                     <label className="label-form">Condition</label>
                     <div className="condition-wrapper d-grid">
                         <Condition />
+                        <Condition />
                     </div>
                     <button className="add-condition-button">+</button>
                 </div>

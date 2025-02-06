@@ -1,12 +1,7 @@
 interface Condition {
-    column: string;
+    column?: string;
     operator: string;
-    values: string[];
-}
-
-interface ConditionGroup {
-    conditions: Condition[];
-    logicalOperator: "AND" | "OR";
+    values?: string[];
 }
 
 class ConditionBuilder {
@@ -28,8 +23,8 @@ class ConditionBuilder {
             this.conditionsLogicalRelative.push(logicalOperator);
         }
     }
-
-    getSQLRequest() : void {
-        
-    }
 }
+
+const $selectedCondition = $('.condition-item');
+
+// function addCondition()
