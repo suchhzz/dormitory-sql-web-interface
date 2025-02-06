@@ -1,7 +1,9 @@
-export default function ConditionPopupForm() {
+// import '../../../scripts/condition-popup'
+
+export default function ConditionPopupForm({ isActive } : { isActive : boolean } )  {
     return (
         <>
-            <div className="popup-insert-form">
+        <div className={`popup-insert-form ${isActive ? 'active' : ''}`}>
                 <div className="popup-insert-form--wrapper d-grid">
                     <div className="popup-form popup-form--header d-grid">
                         <div data-insertConditionTab="conditionTemplate" className="tab-item active">

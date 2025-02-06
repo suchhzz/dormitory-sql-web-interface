@@ -1,6 +1,15 @@
+import { useState } from "react";
 import Condition from "./condition-items/Condition";
+import '../../scripts/modal'
 
 export default function SelectModalBody() {
+
+    const [conditions, setConditions] = useState<number[]>([]);
+    
+    const addNewCondition = () => {
+        setConditions([...conditions, Date.now()]);
+    }
+
     return (
         <>
             <div className="select-modal-wrapper-body d-grid">
@@ -13,10 +22,11 @@ export default function SelectModalBody() {
                 <div className="select-modal-section select-condition-section">
                     <label className="label-form">Condition</label>
                     <div className="condition-wrapper d-grid">
-                        <Condition />
-                        <Condition />
+                        {conditions.map(id => (
+                            <Condition key={id} />
+                        ))}
                     </div>
-                    <button className="add-condition-button">+</button>
+                    <button className="add-condition-button" onClick={addNewCondition}>+</button>
                 </div>
             </div>
         </>

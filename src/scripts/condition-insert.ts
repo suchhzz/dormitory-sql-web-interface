@@ -42,8 +42,10 @@ $(document).ready(function() {
         const conditionType : any = $(this).attr('data-selectedtab');
 
         addCondition(conditionType);
-    })
+    });
 });
+
+
 
 function setConditionBody(tabData : string) : void {
     $('.condition-field').removeClass('active');
@@ -99,3 +101,9 @@ function addCondition(conditionType : string) : void {
 
     }
 }
+
+
+
+$(document).ready(function() {
+    
+})

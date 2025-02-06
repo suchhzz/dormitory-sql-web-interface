@@ -25,6 +25,6 @@ class ConditionBuilder {
     }
 }
 
-const $selectedCondition = $('.condition-item');
 
 // function addCondition()
+

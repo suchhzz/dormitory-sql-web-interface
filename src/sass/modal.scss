@@ -279,7 +279,6 @@
                                     }
 
                                     .popup-insert-form {
-                                        display: none;
                                         position: absolute;
                                         width: 500px;
                                         height: auto;
@@ -288,6 +287,14 @@
                                         z-index: 3;
                                         border-radius: 2px;
                                         outline: 1px solid #2A323C;
+                                        opacity: 0;
+                                        visibility: hidden;
+                                        transition: opacity .3s ease-out;
+
+                                        &.active {
+                                            opacity: 1;
+                                            visibility: visible;
+                                        }
 
                                         &:hover {
                                             cursor: default;
