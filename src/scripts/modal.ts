@@ -1,6 +1,6 @@
 import $ from 'jquery'
 
-function openConditionModal($button : JQueryElement) : void {
+function openConditionModal($button : JQuery) : void {
     clearConditionModals();
     $button.find('.popup-insert-form').addClass('active');
 }
