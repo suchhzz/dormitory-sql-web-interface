@@ -9,9 +9,44 @@ export default function UserCondition({ column, values, operator }: { column?: s
     const [typeInConditionModalActive, setTypeInConditionModalActive] = useState<boolean>(false);
     const [typeInConditionInputValue, setTypeInConditionInputValue] = useState<string>("");
 
+    const [activeColumnInput, setActiveColumnInput] = useState<string>("");
+
+    const [selectedDivIndexPopup, setSelectedDivIndexPopup] = useState<number | null>(null);
+
+
+
     const toggleInConditionModal = () => {
         setTypeInConditionModalActive(!typeInConditionModalActive);
     }
+
+    const handleActiveColumnInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setActiveColumnInput(event.target.value);
+    }
+
+    const handleActiveColumnAddButton = () => {
+        setActiveColumn(activeColumnInput);
+        setActiveColumnInput("");
+    }
+
+
+
+    const [activeValueInput, setActiveValueInput] = useState<string>("");
+
+    const handleActiveValueInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setActiveValueInput(event.target.value);
+    }
+
+    const handleActiveValueAddButton = (index: number) => {
+        setActiveValues((prevValues) => {
+            const updatedValues = [...prevValues];
+            updatedValues[index] = activeValueInput;
+            return updatedValues;
+        });
+    };
+
+
+
+
 
     const handleTypeInConditionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setTypeInConditionInputValue(event.target.value);
@@ -52,6 +87,15 @@ export default function UserCondition({ column, values, operator }: { column?: s
                         <p>
                             {activeColumn}
                         </p>
+                        <div className={`condition-change-value-popup d-flex ${typeInConditionModalActive ? "active" : ""}`}>
+                            <input type="text" placeholder="value"
+                                value={activeColumnInput}
+                                onChange={handleActiveColumnInputChange}
+                            ></input>
+                            <button className="template-button template-button--green"
+                                onClick={handleActiveColumnAddButton}
+                            >Add</button>
+                        </div>
                     </div>
                     <div className="condition-value condition--operator">
                         <p>{activeOperator}</p>
@@ -59,13 +103,13 @@ export default function UserCondition({ column, values, operator }: { column?: s
                     {activeOperator === "BETWEEN" ? (
                         <>
                             <div className="condition-value condition--values">
-                                <p>{activeValues[0]}</p>
+                                <p key={0}>{activeValues[0]}</p>
                             </div>
                             <div className="condition-value condition--values">
                                 <p>AND</p>
                             </div>
                             <div className="condition-value condition--values">
-                                <p>{activeValues[1]}</p>
+                                <p key={1}>{activeValues[1]}</p>
                             </div>
                         </>
                     ) : activeOperator === "IN" ? (
@@ -82,7 +126,7 @@ export default function UserCondition({ column, values, operator }: { column?: s
                                 <button className="condition-in-add-value-button"
                                     onClick={toggleInConditionModal}
                                 >+</button>
-                                <div className={`condition-in-add-value-popup d-flex ${typeInConditionModalActive ? "active" : ""}`}>
+                                <div className={`condition-change-value-popup d-flex ${typeInConditionModalActive ? "active" : ""}`}>
                                     <input type="text" placeholder="value"
                                         value={typeInConditionInputValue}
                                         onChange={handleTypeInConditionChange}
@@ -97,8 +141,17 @@ export default function UserCondition({ column, values, operator }: { column?: s
                     ) : (
                         activeValues.map((value, index) =>
                             <>
-                                <div className="condition-value condition--values">
-                                    <p key={index}>{value}</p>
+                                <div key={index} className="condition-value condition--values">
+                                    <p >{value}</p>
+                                    <div className={`condition-change-value-popup d-flex ${typeInConditionModalActive ? "active" : ""}`}>
+                                    <input type="text" placeholder="value"
+                                        value={activeValueInput}
+                                        onChange={handleActiveValueInputChange}
+                                    ></input>
+                                    <button className="template-button template-button--green"
+                                        onClick={() => handleActiveValueAddButton(index)}
+                                    >Add</button>
+                                </div>
                                 </div>
                             </>
                         )
