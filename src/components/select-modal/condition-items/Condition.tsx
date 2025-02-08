@@ -15,18 +15,19 @@ export default function Condition() {
     };
 
     const addUserCondition = (condition : string) => {
-        console.log(condition);
         setUserCondition(condition);
+        toggleModal();
     }
 
     return (
         <>
             <div className="condition-item d-flex">
                 {userCondition && <UserCondition
-                    
+                    operator={userCondition}
                 />}
-                <button className="condition-inner-button" onClick={toggleModal}>+
-                </button>
+                {!userCondition && (
+                    <button className="condition-inner-button" onClick={toggleModal}>+</button>
+                )}
                 <ConditionPopupForm isActive={isPopupActive} addUserConditionHandler={addUserCondition} />
             </div>
         </>
