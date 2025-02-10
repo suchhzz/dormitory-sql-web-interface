@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from 'uuid';
 
 export default function UserCondition({ column, values, operator }: { column?: string; values?: string[]; operator?: string }) {
 
@@ -12,7 +13,6 @@ export default function UserCondition({ column, values, operator }: { column?: s
     const [activeColumnInput, setActiveColumnInput] = useState<string>("");
 
     const [selectedDivIndexPopup, setSelectedDivIndexPopup] = useState<number | null>(null);
-
 
 
     const toggleInConditionModal = () => {
@@ -102,14 +102,14 @@ export default function UserCondition({ column, values, operator }: { column?: s
                     </div>
                     {activeOperator === "BETWEEN" ? (
                         <>
-                            <div className="condition-value condition--values">
-                                <p key={0}>{activeValues[0]}</p>
+                            <div key={uuidv4()} className="condition-value condition--values">
+                                <p>{activeValues[0]}</p>
                             </div>
                             <div className="condition-value condition--values">
                                 <p>AND</p>
                             </div>
-                            <div className="condition-value condition--values">
-                                <p key={1}>{activeValues[1]}</p>
+                            <div key={uuidv4()} className="condition-value condition--values">
+                                <p>{activeValues[1]}</p>
                             </div>
                         </>
                     ) : activeOperator === "IN" ? (
@@ -139,11 +139,15 @@ export default function UserCondition({ column, values, operator }: { column?: s
                             </div>
                         </>
                     ) : (
-                        activeValues.map((value, index) =>
-                            <>
-                                <div key={index} className="condition-value condition--values">
+                        activeValues.map((value, index) => {
+
+                            const uuid : string = uuidv4();
+
+                            return (
+                                <>
+                                <div key={uuid} className="condition-value condition--values">
                                     <p >{value}</p>
-                                    <div className={`condition-change-value-popup d-flex ${typeInConditionModalActive ? "active" : ""}`}>
+                                    <div className={`condition-change-value-popup d-flex ${uuid === selectedDivIndexPopup ? "active" : ""}`}>
                                     <input type="text" placeholder="value"
                                         value={activeValueInput}
                                         onChange={handleActiveValueInputChange}
@@ -154,6 +158,8 @@ export default function UserCondition({ column, values, operator }: { column?: s
                                 </div>
                                 </div>
                             </>
+                            )
+                        }
                         )
                     )}
                 </div>
