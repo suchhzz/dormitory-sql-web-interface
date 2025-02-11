@@ -10,11 +10,21 @@ interface ICondition {
     getCondition(): string,
 };
 
-class Condition1 implements ICondition {
+class Condition implements ICondition {
 
-    column: string = "";
-    values: string[] = [""];
-    operator: string = "";
+    constructor(
+        operator: string = "=",
+        column: string = "",
+        values: string[] = []
+    ) {
+        this.operator = operator;
+        this.column = column;
+        this.values = values;
+    }
+
+    column: string;
+    values: string[];
+    operator: string;
 
     setColumn(column: string): void {
         this.column = column;
@@ -32,18 +42,19 @@ class Condition1 implements ICondition {
         let conditionString: string = "";
 
         if (this.operator === "BETWEEN") {
-            conditionString = (this.column + " " + this.operator + this.values[0] + "AND" + this.values[1]);
+            conditionString = `${this.column} ${this.operator} ${this.values[0]} AND ${this.values[1]}`;
         }
         else if (this.operator === "IN") {
             conditionString = `${this.column} ${this.operator} (${this.values.join(", ")})`;
         }
         else {
-            conditionString = (this.column + " " + this.operator + this.values[0]);
+            conditionString = `${this.column} ${this.operator} ${this.values[0]}`;
         }
 
         return conditionString;
     }
 }
 
-export {  Condition1 };
+
+export {  Condition };
 export type { ICondition }
