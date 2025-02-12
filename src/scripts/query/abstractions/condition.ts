@@ -55,6 +55,17 @@ class Condition implements ICondition {
     }
 }
 
+class InsertCondition {
+
+    constructor(values: string[] = []) {
+        this.values = values;
+    }
+
+    values: string[];
+
+    // setValue
+}
+
 
 export {  Condition };
 export type { ICondition }

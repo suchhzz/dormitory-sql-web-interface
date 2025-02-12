@@ -6,7 +6,7 @@ interface IQuery {
     conditions?: ICondition[],
     relatives?: string[],
 
-    getQueryString(): string,
+    getQuerySelectString(): string,
 
     setSelectedColumn(column: string): void,
     setSelectedTable(table: string): void,
@@ -33,20 +33,20 @@ class Query implements IQuery {
         this.relatives?.push(relative);
     }
 
-    getQueryString(): string {
+    getQuerySelectString(): string {
         let queryString: string = "";
 
-        queryString += this.getHeaderQueryString(this.selectedColumns, this.selectedTable);
-        queryString += this.getConditionsQueryString(this.conditions);
+        queryString += this.getHeaderSelectQueryString(this.selectedColumns, this.selectedTable);
+        queryString += this.getConditionsSelectQueryString(this.conditions);
 
         return queryString;
     }
 
-    getHeaderQueryString(columns: string[], table: string): string {
+    getHeaderSelectQueryString(columns: string[], table: string): string {
         return `SELECT ${columns.join(', ')} FROM ${table} \n`;
     }
 
-    getConditionsQueryString(conditions: ICondition[]) {
+    getConditionsSelectQueryString(conditions: ICondition[]) {
 
         let buildConditionString: string = "WHERE" + '\n';
 
@@ -56,19 +56,39 @@ class Query implements IQuery {
 
         return buildConditionString;
     }
+
+    getQueryInsertString(): string {
+
+        let queryString: string = "";
+
+        queryString += this.getHeaderInsertQueryString(this.selectedColumns, this.selectedTable);
+
+        // queryString += this.getValuesInsertQueryString(this.);
+
+        return "";
+    }
+
+    getHeaderInsertQueryString(columns: string[], table: string) {
+        return `INSERT INTO (${columns.join(' ')}) FROM ${table}`;
+    }
+
+    getValuesInsertQueryString(values: string[]) {
+        return `VALUES (${values.join(' ')})`;
+    }
+
 }
 
 
-let condition1: Condition = new Condition('=', 'column1', ['123']);
-let condition2: Condition = new Condition('BETWEEN', 'column2', ['123213', '432']);
-let condition3: Condition = new Condition('IN', 'column2', ['123', '1234324', 'FDSAFASD']);
+// let condition1: Condition = new Condition('=', 'column1', ['123']);
+// let condition2: Condition = new Condition('BETWEEN', 'column2', ['123213', '432']);
+// let condition3: Condition = new Condition('IN', 'column2', ['123', '1234324', 'FDSAFASD']);
 
-let query: Query = new Query();
-query.setSelectedColumn('*');
-query.setSelectedTable('table-test');
+// let query: Query = new Query();
+// query.setSelectedColumn('*');
+// query.setSelectedTable('table-test');
 
-query.addCondition(condition1);
-query.addCondition(condition2);
-query.addCondition(condition3);
+// query.addCondition(condition1);
+// query.addCondition(condition2);
+// query.addCondition(condition3);
 
-console.log(query.getQueryString());
+// console.log(query.getQuerySelectString());

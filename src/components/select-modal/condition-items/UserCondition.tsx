@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
 
 export default function UserCondition({ column, values, operator }: { column?: string; values?: string[]; operator?: string }) {
@@ -12,7 +12,16 @@ export default function UserCondition({ column, values, operator }: { column?: s
 
     const [activeColumnInput, setActiveColumnInput] = useState<string>("");
 
-    const [selectedDivIndexPopup, setSelectedDivIndexPopup] = useState<number | null>(null);
+    const [selectedPopupId, setSelectedPopupId] = useState<string | null>(null);
+
+    const togglePopup = (id: string) => {
+        setSelectedPopupId(prevId => (prevId === id ? null : id));
+        console.log(selectedPopupId);
+    }
+
+    const preventButtonClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        e.stopPropagation();
+    }
 
 
     const toggleInConditionModal = () => {
@@ -87,7 +96,7 @@ export default function UserCondition({ column, values, operator }: { column?: s
                         <p>
                             {activeColumn}
                         </p>
-                        <div className={`condition-change-value-popup d-flex ${typeInConditionModalActive ? "active" : ""}`}>
+                        <div className={`condition-change-value-popup d-flex ${typeInConditionModalActive ? "active" : ""}`} onClick={preventButtonClick}>
                             <input type="text" placeholder="value"
                                 value={activeColumnInput}
                                 onChange={handleActiveColumnInputChange}
@@ -116,13 +125,15 @@ export default function UserCondition({ column, values, operator }: { column?: s
                         <>
                             <div className="condition-in-value d-flex">
                                 <p>(</p>
-                                {activeValues.map((value, index) => (
-                                    <>
-                                        <div className="condition-value condition--values">
-                                            <p>{index === activeValues.length - 1 ? value : `${value},`}</p>
-                                        </div>
-                                    </>
-                                ))}
+                                {activeValues.map((value, index) => {
+                                    return (
+                                        <>
+                                            <div className="condition-value condition--values">
+                                                <p>{index === activeValues.length - 1 ? value : `${value},`}</p>
+                                            </div>
+                                        </>
+                                    )
+                                })}
                                 <button className="condition-in-add-value-button"
                                     onClick={toggleInConditionModal}
                                 >+</button>
@@ -141,23 +152,25 @@ export default function UserCondition({ column, values, operator }: { column?: s
                     ) : (
                         activeValues.map((value, index) => {
 
-                            const uuid : string = uuidv4();
+                            const popupId = useMemo(() => uuidv4(), []);
 
                             return (
                                 <>
-                                <div key={uuid} className="condition-value condition--values">
-                                    <p >{value}</p>
-                                    <div className={`condition-change-value-popup d-flex ${uuid === selectedDivIndexPopup ? "active" : ""}`}>
-                                    <input type="text" placeholder="value"
-                                        value={activeValueInput}
-                                        onChange={handleActiveValueInputChange}
-                                    ></input>
-                                    <button className="template-button template-button--green"
-                                        onClick={() => handleActiveValueAddButton(index)}
-                                    >Add</button>
-                                </div>
-                                </div>
-                            </>
+                                    <div key={popupId} className="condition-value condition--values"
+                                        onClick={() => togglePopup(popupId)}
+                                    >
+                                        <p >{value}</p>
+                                        <div className={`condition-change-value-popup d-flex ${popupId === selectedPopupId ? "active" : ""}`} onClick={preventButtonClick}>
+                                            <input type="text" placeholder="value"
+                                                value={activeValueInput}
+                                                onChange={handleActiveValueInputChange}
+                                            ></input>
+                                            <button className="template-button template-button--green"
+                                                onClick={() => handleActiveValueAddButton(index)}
+                                            >Add</button>
+                                        </div>
+                                    </div>
+                                </>
                             )
                         }
                         )
