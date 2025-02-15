@@ -3,6 +3,7 @@ import MenuPanel from './components/MenuPanel';
 import Table from './components/Table';
 import './scripts/main'
 import './scripts/query/abstractions/query'
+import './services/databaseService';
 
 function App() {
   return (
