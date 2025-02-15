@@ -1,5 +1,14 @@
+import { useEffect, useState } from "react"
 
-export default function Table() {
+export default function Table( { table } : { table: object } ) {
+
+    const [columnsName, setColumnsName] = useState<object[] | null>(null);
+    const [columnsValues, setColumnsValues] = useState<string[] | null>(null);
+
+    useEffect(() => {
+        console.log(table);
+    }, []);
+
     return (
         <>
         <table className="table-display">

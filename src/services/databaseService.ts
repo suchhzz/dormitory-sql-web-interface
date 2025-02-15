@@ -1,16 +1,12 @@
 import axios from "axios";
 const apiUrl = import.meta.env.VITE_API_URL;
 
-async function fetchDatabaseData() {
+export async function fetchDatabaseData() {
     try {
-
-        console.log(`full url: ${apiUrl}/home/database`);
-
         const response = await axios.get(`${apiUrl}/home/database`);
 
         if (response.status === 200) {
-            console.log('response');
-            console.log(response.data);
+            return response.data;
         }
 
     } catch (e) {
