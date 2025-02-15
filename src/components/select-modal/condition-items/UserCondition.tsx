@@ -12,10 +12,15 @@ export default function UserCondition({ column, values, operator }: { column?: s
 
     const [activeColumnInput, setActiveColumnInput] = useState<string>("");
 
-    const [selectedPopupId, setSelectedPopupId] = useState<string | null>(null);
+    const [selectedPopupId, setSelectedPopupId] = useState<number>(-1);
 
-    const togglePopup = (id: string) => {
-        setSelectedPopupId(prevId => (prevId === id ? null : id));
+    const togglePopup = (id: number) => {
+        let currentid;
+
+        id === selectedPopupId ? currentid = -1 : currentid = id;
+
+        setSelectedPopupId(currentid);
+
         console.log(selectedPopupId);
     }
 
@@ -89,6 +94,7 @@ export default function UserCondition({ column, values, operator }: { column?: s
     }, [values]);
 
     return (
+
         <>
             <div className="user-condition-item">
                 <div className="user-condition-item--wrapper d-flex">
@@ -96,7 +102,7 @@ export default function UserCondition({ column, values, operator }: { column?: s
                         <p>
                             {activeColumn}
                         </p>
-                        <div className={`condition-change-value-popup d-flex ${typeInConditionModalActive ? "active" : ""}`} onClick={preventButtonClick}>
+                        <div className={`condition-change-value-popup d-flex ${false ? "active" : ""}`} onClick={preventButtonClick}>
                             <input type="text" placeholder="value"
                                 value={activeColumnInput}
                                 onChange={handleActiveColumnInputChange}
@@ -111,14 +117,32 @@ export default function UserCondition({ column, values, operator }: { column?: s
                     </div>
                     {activeOperator === "BETWEEN" ? (
                         <>
-                            <div key={uuidv4()} className="condition-value condition--values">
+                            <div key={0} className="condition-value condition--values" onClick={() => togglePopup(0)}>
                                 <p>{activeValues[0]}</p>
+                                <div className={`condition-change-value-popup d-flex ${0 === selectedPopupId ? "active" : ""}`} onClick={preventButtonClick}>
+                                    <input type="text" placeholder="value"
+                                        value={activeValueInput}
+                                        onChange={handleActiveValueInputChange}
+                                    ></input>
+                                    <button className="template-button template-button--green"
+                                        onClick={() => handleActiveValueAddButton(0)}
+                                    >Add</button>
+                                </div>
                             </div>
                             <div className="condition-value condition--values">
                                 <p>AND</p>
                             </div>
-                            <div key={uuidv4()} className="condition-value condition--values">
+                            <div key={1} className="condition-value condition--values" onClick={() => togglePopup(1)}>
                                 <p>{activeValues[1]}</p>
+                                <div className={`condition-change-value-popup d-flex ${1 === selectedPopupId ? "active" : ""}`} onClick={preventButtonClick}>
+                                    <input type="text" placeholder="value"
+                                        value={activeValueInput}
+                                        onChange={handleActiveValueInputChange}
+                                    ></input>
+                                    <button className="template-button template-button--green"
+                                        onClick={() => handleActiveValueAddButton(1)}
+                                    >Add</button>
+                                </div>
                             </div>
                         </>
                     ) : activeOperator === "IN" ? (
@@ -128,8 +152,17 @@ export default function UserCondition({ column, values, operator }: { column?: s
                                 {activeValues.map((value, index) => {
                                     return (
                                         <>
-                                            <div className="condition-value condition--values">
+                                            <div key={index} className="condition-value condition--values" onClick={() => togglePopup(index)}>
                                                 <p>{index === activeValues.length - 1 ? value : `${value},`}</p>
+                                                <div className={`condition-change-value-popup d-flex ${index === selectedPopupId ? "active" : ""}`} onClick={preventButtonClick}>
+                                                    <input type="text" placeholder="value"
+                                                        value={activeValueInput}
+                                                        onChange={handleActiveValueInputChange}
+                                                    ></input>
+                                                    <button className="template-button template-button--green"
+                                                        onClick={() => handleActiveValueAddButton(index)}
+                                                    >Add</button>
+                                                </div>
                                             </div>
                                         </>
                                     )
@@ -151,16 +184,13 @@ export default function UserCondition({ column, values, operator }: { column?: s
                         </>
                     ) : (
                         activeValues.map((value, index) => {
-
-                            const popupId = useMemo(() => uuidv4(), []);
-
                             return (
                                 <>
-                                    <div key={popupId} className="condition-value condition--values"
-                                        onClick={() => togglePopup(popupId)}
+                                    <div key={index} className="condition-value condition--values"
+                                        onClick={() => togglePopup(index)}
                                     >
                                         <p >{value}</p>
-                                        <div className={`condition-change-value-popup d-flex ${popupId === selectedPopupId ? "active" : ""}`} onClick={preventButtonClick}>
+                                        <div className={`condition-change-value-popup d-flex ${index === selectedPopupId ? "active" : ""}`} onClick={preventButtonClick}>
                                             <input type="text" placeholder="value"
                                                 value={activeValueInput}
                                                 onChange={handleActiveValueInputChange}

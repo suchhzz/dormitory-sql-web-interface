@@ -1,4 +1,4 @@
-export default createUser = (req, res, next) => {
+export const createUser = (req, res, next) => {
     try {
         const { name, password } = req.body;
 
