@@ -58,8 +58,11 @@ export default function UserCondition(
     const hideChangeValuePopups = () => {
         setIsColumnChangePopupActive(false);
         setIsFilteredItemsActive(false);
+        setTypeInConditionModalActive(false);
         setSelectedPopupId(-1);
         filterColumnItems("");
+        setActiveValueInput("");
+        setTypeInConditionInputValue("");
     }
 
     const togglePopup = (id: number) => {
@@ -77,6 +80,7 @@ export default function UserCondition(
 
 
     const toggleInConditionModal = () => {
+        hideChangeValuePopups();
         setTypeInConditionModalActive(!typeInConditionModalActive);
     }
 
