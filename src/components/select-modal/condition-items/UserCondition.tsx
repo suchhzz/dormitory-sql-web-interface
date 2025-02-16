@@ -1,19 +1,64 @@
 import { useEffect, useMemo, useState } from "react";
 
-export default function UserCondition({ column, values, operator, handlerUpdateUserCondition, conditionId }: { column?: string; values?: string[]; operator?: string, handlerUpdateUserCondition: (id: number) => void, conditionId: number }) {
+export default function UserCondition(
+    {
+        column,
+        values,
+        operator,
+        handlerUpdateUserCondition,
+        conditionId
+    }: {
+        column?: string;
+        values?: string[];
+        operator?: string,
+        handlerUpdateUserCondition: (id: number) => void,
+        conditionId: number
+    }) {
 
     const [activeColumn, setActiveColumn] = useState<string>(column ?? "column");
     const [activeValues, setActiveValues] = useState<string[]>(values ?? ["value"]);
     const [activeOperator, setActiveOperator] = useState<string>(operator ?? "");
-
     const [typeInConditionModalActive, setTypeInConditionModalActive] = useState<boolean>(false);
     const [typeInConditionInputValue, setTypeInConditionInputValue] = useState<string>("");
-
-    const [activeColumnInput, setActiveColumnInput] = useState<string>("");
-
     const [selectedPopupId, setSelectedPopupId] = useState<number>(-1);
+    const [isColumnChangePopupActive, setIsColumnChangePopupActive] = useState<boolean>(false);
+    const [isFilteredItemsActive, setIsFilteredItemsActive] = useState<boolean>(false);
+    const [columnInputValue, setColumnInputValue] = useState<string>("");
+    const [tableColumns, setTableColumns] = useState<string[]>([]);
+    const [filteredTableColumns, setFilteredTableColumns] = useState<string[]>([]);
+    const items = ['column1', 'column2', '123', 'coludsadfas', 'fdsaf2w22432'];
+    const [activeValueInput, setActiveValueInput] = useState<string>("");
+
+    useEffect(() => {
+        setTableColumns(items.map(item => item));
+        setFilteredTableColumns(items.map(item => item));
+    }, [])
+
+    useEffect(() => {
+        console.log(filteredTableColumns);
+    }, [filteredTableColumns]);
+
+    useEffect(() => {
+        if (operator === "BETWEEN") {
+            setValuesBetweenOperator();
+        }
+    }, [operator]);
+
+    useEffect(() => {
+        if (values && values.length > 0) {
+            setActiveValues(prevValues => [...prevValues, values[values.length - 1]]);
+        }
+    }, [values]);
+
+
+    const hideChangeValuePopups = () => {
+        setIsColumnChangePopupActive(false);
+        setIsFilteredItemsActive(false);
+        setSelectedPopupId(-1);
+    }
 
     const togglePopup = (id: number) => {
+        hideChangeValuePopups();
         let currentid;
 
         id === selectedPopupId ? currentid = -1 : currentid = id;
@@ -32,36 +77,27 @@ export default function UserCondition({ column, values, operator, handlerUpdateU
         setTypeInConditionModalActive(!typeInConditionModalActive);
     }
 
-    const handleActiveColumnInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setActiveColumnInput(event.target.value);
-    }
-
     const handleActiveColumnAddButton = () => {
-        setActiveColumn(activeColumnInput);
-        setActiveColumnInput("");
+        setActiveColumn(columnInputValue);
+        setColumnInputValue("");
+        hideChangeValuePopups();
     }
-
-
-
-    const [activeValueInput, setActiveValueInput] = useState<string>("");
 
     const handleActiveValueInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setActiveValueInput(event.target.value);
     }
 
     const handleActiveValueAddButton = (index: number) => {
+
         setActiveValues((prevValues) => {
             const updatedValues = [...prevValues];
             updatedValues[index] = activeValueInput;
             return updatedValues;
         });
 
+        hideChangeValuePopups();
         handlerUpdateUserCondition(conditionId);
     };
-
-
-
-
 
     const handleTypeInConditionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setTypeInConditionInputValue(event.target.value);
@@ -73,7 +109,6 @@ export default function UserCondition({ column, values, operator, handlerUpdateU
         toggleInConditionModal();
     }
 
-
     const setValuesBetweenOperator = () => {
         setActiveValues(["value", "value"]);
     }
@@ -82,49 +117,22 @@ export default function UserCondition({ column, values, operator, handlerUpdateU
         setActiveValues(prevValues => [...activeValues, inConditionValue]);
     }
 
-    useEffect(() => {
-        if (operator === "BETWEEN") {
-            setValuesBetweenOperator();
-        }
-    }, [operator]);
-
-    useEffect(() => {
-        if (values && values.length > 0) {
-            setActiveValues(prevValues => [...prevValues, values[values.length - 1]]);
-        }
-    }, [values]);
-
-
-    const [isColumnChangePopupActive, setIsColumnChangePopupActive] = useState<boolean>(false);
-    const [isFilteredItemsActive, setIsFilteredItemActive] = useState<boolean>(false);
-
     const toggleColumnChangePopup = () => {
+        hideChangeValuePopups();
         setIsColumnChangePopupActive(!isColumnChangePopupActive);
+
+        if (!isColumnChangePopupActive) {
+            setIsFilteredItemsActive(false);
+        }
     }
 
-
-    const [columnInputValue, setColumnInputValue] = useState<string>("");
-    const [tableColumns, setTableColumns] = useState<string[]>([]);
-    const [filteredTableColumns, setFilteredTableColumns] = useState<string[]>([]);
-    const items = ['column1', 'column2', '123', 'coludsadfas', 'fdsaf2w22432'];
-
-    useEffect(() => {
-        setTableColumns(items.map(item => item));
-        setFilteredTableColumns(items.map(item => item));
-    }, [])
-
-    useEffect(() => {
-        console.log(filteredTableColumns);
-    }, [filteredTableColumns]);
-
     const filterColumnItems = (wordFilter: string) => {
-        const filtered = tableColumns.filter(column => 
+        const filtered = tableColumns.filter(column =>
             column.toLowerCase().includes(wordFilter.toLowerCase())
         );
 
         setFilteredTableColumns(filtered);
     }
-
 
     const handlerColumnInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setColumnInputValue(event.target.value);
@@ -137,17 +145,13 @@ export default function UserCondition({ column, values, operator, handlerUpdateU
     }
 
     const handleColumnInputFocus = () => {
-        setIsFilteredItemActive(true);
-      };
-    
-      const handleColumnInputBlur = () => {
-        setIsFilteredItemActive(false);
-      };
+        setIsFilteredItemsActive(true);
+    };
+
 
 
 
     return (
-
         <>
             <div className="user-condition-item">
                 <div className="user-condition-item--wrapper d-flex">
