@@ -1,7 +1,17 @@
 import ColumnItem from "./modal-items/ColumnItem";
 import SelectModalBody from "./SelectModalBody";
 
-export default function SelectModal( { isActive, handlerCloseModal, } : { isActive: boolean, handlerCloseModal: () => void; } ) {
+export default function SelectModal( 
+    { 
+        isActive, 
+        handlerCloseModal, 
+        tableColumnItems
+    } : 
+    { 
+        isActive: boolean, 
+        handlerCloseModal: () => void; 
+        tableColumnItems: string[]
+    } ) {
     return (
         <>
             <div id="selectModal" className={`modal ${isActive ? "active" : ""}`}>
@@ -24,7 +34,9 @@ export default function SelectModal( { isActive, handlerCloseModal, } : { isActi
                                 </div>
                             </div>
                             <div className="modal-body">
-                                <SelectModalBody />
+                                <SelectModalBody 
+                                    tableColumnItems={tableColumnItems} 
+                                />
                             </div>
                         </div>
                     </div>

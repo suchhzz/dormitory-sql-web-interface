@@ -6,13 +6,15 @@ export default function UserCondition(
         values,
         operator,
         handlerUpdateUserCondition,
-        conditionId
+        conditionId,
+        tableColumnItems
     }: {
         column?: string;
         values?: string[];
         operator?: string,
         handlerUpdateUserCondition: (id: number) => void,
-        conditionId: number
+        conditionId: number,
+        tableColumnItems: string[]
     }) {
 
     const [activeColumn, setActiveColumn] = useState<string>(column ?? "column");
@@ -26,17 +28,19 @@ export default function UserCondition(
     const [columnInputValue, setColumnInputValue] = useState<string>("");
     const [tableColumns, setTableColumns] = useState<string[]>([]);
     const [filteredTableColumns, setFilteredTableColumns] = useState<string[]>([]);
-    const items = ['column1', 'column2', '123', 'coludsadfas', 'fdsaf2w22432'];
     const [activeValueInput, setActiveValueInput] = useState<string>("");
 
-    useEffect(() => {
-        setTableColumns(items.map(item => item));
-        setFilteredTableColumns(items.map(item => item));
-    }, [])
+    const items = ['column1', 'column2', '123', 'coludsadfas', 'fdsaf2w22432'];
 
     useEffect(() => {
-        console.log(filteredTableColumns);
-    }, [filteredTableColumns]);
+        console.log('table columns');
+        console.log(tableColumnItems);
+    }, []);
+
+    useEffect(() => {
+        setTableColumns(tableColumnItems.map(item => item));
+        setFilteredTableColumns(tableColumnItems.map(item => item));
+    }, []);
 
     useEffect(() => {
         if (operator === "BETWEEN") {
@@ -55,6 +59,7 @@ export default function UserCondition(
         setIsColumnChangePopupActive(false);
         setIsFilteredItemsActive(false);
         setSelectedPopupId(-1);
+        filterColumnItems("");
     }
 
     const togglePopup = (id: number) => {
@@ -64,8 +69,6 @@ export default function UserCondition(
         id === selectedPopupId ? currentid = -1 : currentid = id;
 
         setSelectedPopupId(currentid);
-
-        console.log(selectedPopupId);
     }
 
     const preventButtonClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -144,12 +147,9 @@ export default function UserCondition(
         filterColumnItems(filterValue);
     }
 
-    const handleColumnInputFocus = () => {
+    const handlerColumnInputFocus = () => {
         setIsFilteredItemsActive(true);
     };
-
-
-
 
     return (
         <>
@@ -165,7 +165,7 @@ export default function UserCondition(
                             <input type="text" placeholder="value"
                                 value={columnInputValue}
                                 onChange={handlerColumnInputChange}
-                                onFocus={handleColumnInputFocus}
+                                onFocus={handlerColumnInputFocus}
                             />
                             <div className={`filtered-input-columns d-grid  ${isFilteredItemsActive ? "active" : ""}`}>
                                 {filteredTableColumns.map((item, index) => (

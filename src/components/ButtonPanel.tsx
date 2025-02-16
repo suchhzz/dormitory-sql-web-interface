@@ -2,7 +2,14 @@ import { useState } from "react";
 import InsertModal from "./insert-modal/InsertModal";
 import SelectModal from "./select-modal/SelectModal";
 
-export default function ButtonPanel() {
+export default function ButtonPanel(
+    {
+        tableColumnItems
+    }:
+    {
+        tableColumnItems: string[]
+    }
+) {
 
     const [isInsertModalActive, setIsInsertModalActive] = useState<boolean>(false);
     const [isSelectModalActive, setIsSelectModalActive] = useState<boolean>(false);
@@ -23,7 +30,7 @@ export default function ButtonPanel() {
             </div>
 
             <InsertModal isActive={isInsertModalActive} handlerCloseModal={toggleInsertModal} />
-            <SelectModal isActive={isSelectModalActive} handlerCloseModal={toggleSelectModal} />
+            <SelectModal isActive={isSelectModalActive} handlerCloseModal={toggleSelectModal} tableColumnItems={tableColumnItems} />
         </>
     )
 }
