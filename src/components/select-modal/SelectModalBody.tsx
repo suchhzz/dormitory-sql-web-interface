@@ -8,6 +8,10 @@ export default function SelectModalBody() {
     
     const addNewCondition = () => {
         setConditions([...conditions, Date.now()]);
+    };
+
+    const updateCondition = (conditionId: number) => {
+        console.log(conditionId);
     }
 
     return (
@@ -22,8 +26,11 @@ export default function SelectModalBody() {
                 <div className="select-modal-section select-condition-section">
                     <label className="label-form">Condition</label>
                     <div className="condition-wrapper d-grid">
-                        {conditions.map(id => (
-                            <Condition key={id} />
+                        {conditions.map((item, index) => (
+                            <Condition
+                                key={index}
+                                handlerUpdateCondition = {updateCondition}
+                                conditionId = {index} />
                         ))}
                     </div>
                     <button className="add-condition-button" onClick={addNewCondition}>+</button>

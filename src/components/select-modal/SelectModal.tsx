@@ -1,14 +1,14 @@
 import ColumnItem from "./modal-items/ColumnItem";
 import SelectModalBody from "./SelectModalBody";
 
-export default function SelectModal() {
+export default function SelectModal( { isActive, handlerCloseModal, } : { isActive: boolean, handlerCloseModal: () => void; } ) {
     return (
         <>
-            <div id="selectModal" className="modal">
+            <div id="selectModal" className={`modal ${isActive ? "active" : ""}`}>
                 <div className="relative-container">
                     <div className='modal-container'>
                         <div className="modal-wrapper d-grid">
-                            <button id='closeModal' className="close-button close-button-modal">X</button>
+                            <button id='closeModal' className="close-button close-button-modal" onClick={handlerCloseModal} >X</button>
                             <div className="modal-header">
                                 <p className="modal-title">Select</p>
                                 <div className="table-columns-selector">

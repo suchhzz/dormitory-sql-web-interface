@@ -5,22 +5,36 @@ import Table from './components/Table';
 import './scripts/main'
 import './scripts/query/abstractions/query'
 import { fetchDatabaseData } from './services/databaseService.ts';
+import { DatabaseAbstractObjectType, DatabaseType, TableType } from './types/databaseTypes.ts';
 
 function App() {
 
-  const [activeDatabase, setActiveDatabase] = useState<Object | null>(null);
-  const [activeTable, setActiveTable] = useState<Object | null>(null);
+  const [activeDatabase, setActiveDatabase] = useState<DatabaseType | null>(null);
+  const [activeTable, setActiveTable] = useState<TableType | null>(null);
+  const [activeTableIndex, setActiveTableIndex] = useState<number>(0);
 
   useEffect(() => {
     const fetchData = async () => {
       const fetchedDatabase = await fetchDatabaseData();
       if (fetchedDatabase) {
-        setActiveDatabase(fetchedDatabase);
+        setActiveDatabase(fetchedDatabase.database);
+        console.log(fetchedDatabase.database);
+        
       }
     };
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    console.log(activeDatabase);
+    if (activeDatabase && activeDatabase.tables && activeDatabase.tables.length > 0) {
+      setActiveTable(activeDatabase.tables[activeTableIndex]);
+    } else {
+      console.warn("No tables found in activeDatabase");
+    }
+  }, [activeDatabase]);
+  
 
 
   return (
@@ -31,7 +45,7 @@ function App() {
             <ButtonPanel />
           </div>
           <div className='table-wrapper'>
-            <Table table={activeDatabase ? activeDatabase.tables.table : null } />
+            {activeTable && <Table table={activeTable}  />}
           </div>
         </div>
       </div>

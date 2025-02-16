@@ -4,7 +4,7 @@ import '../../../scripts/modal'
 import UserCondition from "./UserCondition";
 import { useState } from "react";
 
-export default function Condition() {
+export default function Condition( { handlerUpdateCondition, conditionId }: { handlerUpdateCondition: (id: number) => void, conditionId: number } ) {
 
     const [isPopupActive, setPopupActive] = useState(false);
     const [userCondition, setUserCondition] = useState<string>("");
@@ -24,6 +24,8 @@ export default function Condition() {
             <div className="condition-item d-flex">
                 {userCondition && <UserCondition
                     operator={userCondition}
+                    handlerUpdateUserCondition = {handlerUpdateCondition}
+                    conditionId = {conditionId}
                 />}
                 {!userCondition && (
                     <button className="condition-inner-button" onClick={toggleModal}>+</button>

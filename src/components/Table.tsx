@@ -1,46 +1,50 @@
 import { useEffect, useState } from "react"
+import { TableType } from "../types/databaseTypes";
 
-export default function Table( { table } : { table: object } ) {
+export default function Table({ table }: { table: TableType }) {
 
-    const [columnsName, setColumnsName] = useState<object[] | null>(null);
-    const [columnsValues, setColumnsValues] = useState<string[] | null>(null);
+    const [columnsName, setColumnsName] = useState<string[]>([]);
+    const [columnsValues, setColumnsValues] = useState<string[][]>([]);
 
     useEffect(() => {
-        console.log(table);
-    }, []);
+        if (table) {
+            setColumnsName(table.columns.map(column => column));
+        }
+    }, [table]);
+
+    useEffect(() => {
+        if (table) {
+            setColumnsValues(table.values.map(values => values));
+        }
+    }, [table]);
+
+    useEffect(() => {
+        console.log(columnsName);
+        console.log(columnsValues);
+    }, [columnsValues]);
 
     return (
         <>
-        <table className="table-display">
-            <thead>
-                <tr>
-                    <th>123</th>
-                    <th>123</th>
-                    <th>123</th>
-                    <th>123</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>asd</td>
-                    <td>asd</td>
-                    <td>asd</td>
-                    <td>asd</td>
-                </tr>
-                <tr>
-                    <td>asd</td>
-                    <td>asd</td>
-                    <td>asd</td>
-                    <td>asd</td>
-                </tr>
-                <tr>
-                    <td>asd</td>
-                    <td>asd</td>
-                    <td>asd</td>
-                    <td>asd</td>
-                </tr>
-            </tbody>
-        </table>
+            <table className="table-display">
+                <thead>
+                    <tr>
+                        {columnsName.map((item, index) => (
+                            <th key={index}>
+                                {item}
+                            </th>
+                        ))}
+                    </tr>
+                </thead>
+                <tbody>
+                    {columnsValues.map((item, index) => (
+                        <tr key={index}>
+                            {item.map((valueItem, valueIndex) => (
+                                <td key={valueIndex}>{valueItem}</td>
+                            ))}
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </>
     )
 }

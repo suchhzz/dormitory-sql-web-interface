@@ -21,7 +21,7 @@
                 cursor: pointer;
             }
 
-           
+
         }
 
         .condition-change-value-popup {
@@ -68,7 +68,9 @@
         }
 
         .condition {
-            &--column, &--values {
+
+            &--column,
+            &--values {
                 .condition-change-value-popup {
                     left: 0;
                 }
@@ -84,7 +86,7 @@
             gap: .5rem;
             color: white;
 
-            
+
 
             .condition-in-add-value-button {
                 padding: .3rem .5rem;

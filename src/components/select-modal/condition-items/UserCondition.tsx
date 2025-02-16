@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
 
-export default function UserCondition({ column, values, operator }: { column?: string; values?: string[]; operator?: string }) {
+export default function UserCondition({ column, values, operator, handlerUpdateUserCondition, conditionId }: { column?: string; values?: string[]; operator?: string, handlerUpdateUserCondition: (id: number) => void, conditionId: number }) {
 
     const [activeColumn, setActiveColumn] = useState<string>(column ?? "column");
     const [activeValues, setActiveValues] = useState<string[]>(values ?? ["value"]);
@@ -56,6 +56,8 @@ export default function UserCondition({ column, values, operator }: { column?: s
             updatedValues[index] = activeValueInput;
             return updatedValues;
         });
+
+        handlerUpdateUserCondition(conditionId);
     };
 
 
@@ -93,6 +95,17 @@ export default function UserCondition({ column, values, operator }: { column?: s
         }
     }, [values]);
 
+
+
+
+
+
+
+
+
+
+  
+    
     return (
 
         <>
@@ -102,11 +115,8 @@ export default function UserCondition({ column, values, operator }: { column?: s
                         <p>
                             {activeColumn}
                         </p>
-                        <div className={`condition-change-value-popup d-flex ${false ? "active" : ""}`} onClick={preventButtonClick}>
-                            <input type="text" placeholder="value"
-                                value={activeColumnInput}
-                                onChange={handleActiveColumnInputChange}
-                            ></input>
+                        <div className={`condition-change-value-popup d-flex ${true ? "active" : ""}`} onClick={preventButtonClick}>
+                            
                             <button className="template-button template-button--green"
                                 onClick={handleActiveColumnAddButton}
                             >Add</button>
