@@ -1,11 +1,12 @@
-export default function InsertModal() {
+
+export default function InsertModal( { isActive, handlerCloseModal, } : { isActive: boolean, handlerCloseModal: () => void; } ) {
     return (
         <>
-            <div id="insertModal" className="modal">
+            <div id="insertModal" className={`modal ${isActive ? "active" : ""}`}>
                 <div className="relative-container">
                     <div className='modal-container'>
                         <div className="modal-wrapper d-grid">
-                            <button id='closeModal' className="close-button close-button-modal">X</button>
+                            <button id='closeModal' className="close-button close-button-modal" onClick={handlerCloseModal}>X</button>
                             <div className="modal-header">
                                 <p className="modal-title">Insert</p>
                             </div>
