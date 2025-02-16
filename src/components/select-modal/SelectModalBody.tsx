@@ -2,7 +2,14 @@ import { useState } from "react";
 import Condition from "./condition-items/Condition";
 import '../../scripts/modal'
 
-export default function SelectModalBody() {
+export default function SelectModalBody( 
+    {
+        tableColumnItems
+    }: 
+    {
+        tableColumnItems: string[]
+    }
+ ) {
 
     const [conditions, setConditions] = useState<number[]>([]);
     
@@ -30,7 +37,9 @@ export default function SelectModalBody() {
                             <Condition
                                 key={index}
                                 handlerUpdateCondition = {updateCondition}
-                                conditionId = {index} />
+                                conditionId = {index}
+                                tableColumnItems={tableColumnItems}    
+                            />
                         ))}
                     </div>
                     <button className="add-condition-button" onClick={addNewCondition}>+</button>

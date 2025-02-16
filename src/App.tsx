@@ -12,14 +12,13 @@ function App() {
   const [activeDatabase, setActiveDatabase] = useState<DatabaseType | null>(null);
   const [activeTable, setActiveTable] = useState<TableType | null>(null);
   const [activeTableIndex, setActiveTableIndex] = useState<number>(0);
+  const [tableColumns, setTableColumns] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       const fetchedDatabase = await fetchDatabaseData();
       if (fetchedDatabase) {
         setActiveDatabase(fetchedDatabase.database);
-        console.log(fetchedDatabase.database);
-        
       }
     };
 
@@ -30,6 +29,7 @@ function App() {
     console.log(activeDatabase);
     if (activeDatabase && activeDatabase.tables && activeDatabase.tables.length > 0) {
       setActiveTable(activeDatabase.tables[activeTableIndex]);
+      setTableColumns(activeDatabase.tables[activeTableIndex].columns);
     } else {
       console.warn("No tables found in activeDatabase");
     }
@@ -42,7 +42,7 @@ function App() {
       <div className='main-container'>
         <div className='content d-grid'>
           <div className='button-panel-wrapper'>
-            <ButtonPanel />
+            <ButtonPanel tableColumnItems={tableColumns} />
           </div>
           <div className='table-wrapper'>
             {activeTable && <Table table={activeTable}  />}

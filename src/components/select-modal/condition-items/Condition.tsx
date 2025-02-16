@@ -4,7 +4,17 @@ import '../../../scripts/modal'
 import UserCondition from "./UserCondition";
 import { useState } from "react";
 
-export default function Condition( { handlerUpdateCondition, conditionId }: { handlerUpdateCondition: (id: number) => void, conditionId: number } ) {
+export default function Condition( 
+    { 
+        handlerUpdateCondition, 
+        conditionId,
+        tableColumnItems
+    }: 
+    { 
+        handlerUpdateCondition: (id: number) => void, 
+        conditionId: number,
+        tableColumnItems: string[]
+    } ) {
 
     const [isPopupActive, setPopupActive] = useState(false);
     const [userCondition, setUserCondition] = useState<string>("");
@@ -26,6 +36,7 @@ export default function Condition( { handlerUpdateCondition, conditionId }: { ha
                     operator={userCondition}
                     handlerUpdateUserCondition = {handlerUpdateCondition}
                     conditionId = {conditionId}
+                    tableColumnItems={tableColumnItems}
                 />}
                 {!userCondition && (
                     <button className="condition-inner-button" onClick={toggleModal}>+</button>
