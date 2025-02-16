@@ -73,6 +73,36 @@
             &--values {
                 .condition-change-value-popup {
                     left: 0;
+
+                    .filtered-input-columns {
+                        display: none;
+                        grid-template-columns: 1fr;
+                        grid-template-rows: auto;
+                        gap: .2rem;
+                        position: absolute;
+                        left: 0;
+                        width: 109px;
+                        height: auto;
+                        top: 100%;
+                        background-color: #2c3541;
+                        border-radius: 0 0 10px 10px;
+
+                        &.active {
+                            display: block;
+                        }
+
+                        .filter-item {
+                            padding: .3rem .5rem;
+
+                            &:last-child {
+                                border-radius: 0 0 10px 10px;
+                            }
+
+                            &:hover {
+                                outline: 1px solid #fff;
+                            }
+                        }
+                    }
                 }
             }
         }

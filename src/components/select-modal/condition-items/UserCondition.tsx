@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from "react";
-import { v4 as uuidv4 } from 'uuid';
 
 export default function UserCondition({ column, values, operator, handlerUpdateUserCondition, conditionId }: { column?: string; values?: string[]; operator?: string, handlerUpdateUserCondition: (id: number) => void, conditionId: number }) {
 
@@ -96,27 +95,81 @@ export default function UserCondition({ column, values, operator, handlerUpdateU
     }, [values]);
 
 
+    const [isColumnChangePopupActive, setIsColumnChangePopupActive] = useState<boolean>(false);
+    const [isFilteredItemsActive, setIsFilteredItemActive] = useState<boolean>(false);
+
+    const toggleColumnChangePopup = () => {
+        setIsColumnChangePopupActive(!isColumnChangePopupActive);
+    }
 
 
+    const [columnInputValue, setColumnInputValue] = useState<string>("");
+    const [tableColumns, setTableColumns] = useState<string[]>([]);
+    const [filteredTableColumns, setFilteredTableColumns] = useState<string[]>([]);
+    const items = ['column1', 'column2', '123', 'coludsadfas', 'fdsaf2w22432'];
+
+    useEffect(() => {
+        setTableColumns(items.map(item => item));
+        setFilteredTableColumns(items.map(item => item));
+    }, [])
+
+    useEffect(() => {
+        console.log(filteredTableColumns);
+    }, [filteredTableColumns]);
+
+    const filterColumnItems = (wordFilter: string) => {
+        const filtered = tableColumns.filter(column => 
+            column.toLowerCase().includes(wordFilter.toLowerCase())
+        );
+
+        setFilteredTableColumns(filtered);
+    }
 
 
+    const handlerColumnInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setColumnInputValue(event.target.value);
+        filterColumnItems(event.target.value);
+    }
 
+    const filterItemClickHandler = (filterValue: string) => {
+        setColumnInputValue(filterValue);
+        filterColumnItems(filterValue);
+    }
 
-
-
-  
+    const handleColumnInputFocus = () => {
+        setIsFilteredItemActive(true);
+      };
     
+      const handleColumnInputBlur = () => {
+        setIsFilteredItemActive(false);
+      };
+
+
+
     return (
 
         <>
             <div className="user-condition-item">
                 <div className="user-condition-item--wrapper d-flex">
                     <div className="condition-value condition--column">
-                        <p>
+                        <p
+                            onClick={toggleColumnChangePopup}
+                        >
                             {activeColumn}
                         </p>
-                        <div className={`condition-change-value-popup d-flex ${true ? "active" : ""}`} onClick={preventButtonClick}>
-                            
+                        <div className={`condition-change-value-popup d-flex ${isColumnChangePopupActive ? "active" : ""}`} onClick={preventButtonClick}>
+                            <input type="text" placeholder="value"
+                                value={columnInputValue}
+                                onChange={handlerColumnInputChange}
+                                onFocus={handleColumnInputFocus}
+                            />
+                            <div className={`filtered-input-columns d-grid  ${isFilteredItemsActive ? "active" : ""}`}>
+                                {filteredTableColumns.map((item, index) => (
+                                    <p key={index} className="filter-item"
+                                        onClick={() => filterItemClickHandler(item)}
+                                    >{item}</p>
+                                ))}
+                            </div>
                             <button className="template-button template-button--green"
                                 onClick={handleActiveColumnAddButton}
                             >Add</button>
