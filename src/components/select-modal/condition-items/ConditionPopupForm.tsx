@@ -1,7 +1,34 @@
-export default function ConditionPopupForm() {
+// import '../../../scripts/condition-popup'
+
+import { useState } from "react"
+
+export default function ConditionPopupForm({ isActive, addUserConditionHandler }: { isActive : boolean; addUserConditionHandler: (condition: string) => void } )  {
+
+    const [activeElement, setActiveElement] = useState<string | null>(null);
+
+    const elementHandleClick = (value : string) => {
+
+        if (value === activeElement) {
+            setActiveElement("");
+        }
+        else {
+            setActiveElement(value);
+        }
+
+    };
+
+    const addConditionButtonHandle = () => {
+        if (activeElement) {
+            addUserConditionHandler(activeElement); 
+        }
+        else {
+            console.log('no condition selected');
+        }
+    }
+
     return (
         <>
-            <div className="popup-insert-form">
+        <div className={`popup-insert-form ${isActive ? 'active' : ''}`}>
                 <div className="popup-insert-form--wrapper d-grid">
                     <div className="popup-form popup-form--header d-grid">
                         <div data-insertConditionTab="conditionTemplate" className="tab-item active">
@@ -19,17 +46,18 @@ export default function ConditionPopupForm() {
                                         <p>Regular</p>
                                     </div>
                                     <div className="popup-template__body d-flex">
-                                        <div data-selected='0' data-value='=' className="template-item d-flex regular--equal">
-                                            <p>=</p>
-                                        </div>
-                                        <div data-selected='0' data-value='>' className="template-item d-flex regular--greater">
-                                            <p>&gt;</p>
-                                        </div>
-                                        <div data-selected='0' data-value='<' className="template-item d-flex regular--less">
-                                            <p>&lt;</p>
-                                        </div>
-                                        <div data-selected='0' data-value='' className="template-item regular--value">
-                                        </div>
+
+                                        {['=', '>', '<'].map((value) => (
+                                            <div
+                                                key={value}
+                                                data-selected={activeElement === value ? '1' : '0'}
+                                                data-value={value}
+                                                className={`template-item d-flex ${activeElement === value ? "selected" : ""}`}
+                                                onClick={() => elementHandleClick(value)}
+                                            >
+                                                {value}
+                                            </div>
+                                        ))}
                                     </div>
                                 </div>
                                 <div className="body--template body--template__logic-condition-item d-grid">
@@ -37,15 +65,17 @@ export default function ConditionPopupForm() {
                                         <p>Logic</p>
                                     </div>
                                     <div className="popup-template__body d-flex">
-                                        <div data-selected='0' data-value='IS' className="template-item d-flex logic--is">
-                                            <p>IS</p>
-                                        </div>
-                                        <div data-selected='0' data-value='NOT' className="template-item d-flex logic--not">
-                                            <p>NOT</p>
-                                        </div>
-                                        <div data-selected='0' data-value='IS NOT' className="template-item d-flex regular--is-not">
-                                            <p>IS NOT</p>
-                                        </div>
+                                        {['IS', 'NOT', 'IS NOT', 'LIKE'].map((value) => (
+                                            <div
+                                                key={value}
+                                                data-selected={activeElement === value ? '1' : '0'}
+                                                data-value={value}
+                                                className={`template-item d-flex ${activeElement === value ? 'selected' : ""}`}
+                                                onClick={() => elementHandleClick(value)}
+                                            >
+                                                {value}
+                                            </div>
+                                        ))}
                                     </div>
                                 </div>
                                 <div className="body--template body--template__template-condition-item d-grid">
@@ -53,12 +83,18 @@ export default function ConditionPopupForm() {
                                         <p>Template</p>
                                     </div>
                                     <div className="popup-template__body d-flex">
-                                        <div data-selected='0' data-value='BETWEEN' className="template-item d-flex template--between">
-                                            <p>BETWEEN ... AND ...</p>
-                                        </div>
-                                        <div data-selected='0' data-value='IN' className="template-item d-flex template--in">
-                                            <p>IN (...)</p>
-                                        </div>
+
+                                        {['BETWEEN', 'IN'].map((value) => (
+                                            <div
+                                                key={value}
+                                                data-selected={activeElement === value ? '1' : '0'}
+                                                data-value={value}
+                                                className={`template-item d-flex ${activeElement === value ? 'selected' : ""}`}
+                                                onClick={() => elementHandleClick(value)}
+                                            >
+                                                {value}
+                                            </div>
+                                        ))}
                                     </div>
                                 </div>
                             </div>
@@ -69,7 +105,7 @@ export default function ConditionPopupForm() {
                         </div>
                     </div>
                     <div className="popup-form popup-form--footer d-flex">
-                        <button id='addConditionButton' data-selectedtab='conditionTemplate' className="button-item template-button template-button--green">Add</button>
+                        <button id='addConditionButton' data-selectedtab='conditionTemplate' className="button-item template-button template-button--green" onClick={() => addConditionButtonHandle()}>Add</button>
                     </div>
                 </div>
             </div>

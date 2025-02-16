@@ -81,6 +81,29 @@
             background-color: #004085;
         }
     }
+
+    &.outline-red {
+        box-shadow: 0 0 10px 2px rgb(255, 62, 62);
+        animation: jiggle-animation .3s linear;
+    }
+}
+
+@keyframes jiggle-animation {
+    25% {
+        transform: translateX(3px);
+    }
+
+    50% {
+        transform: translateX(-3px);
+    }
+
+    75% {
+        transform: translateX(3px);
+    }
+
+    100% {
+        transform: translateX(-3px);
+    }
 }
 
 .template-text-input {

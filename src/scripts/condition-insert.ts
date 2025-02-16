@@ -42,8 +42,10 @@ $(document).ready(function() {
         const conditionType : any = $(this).attr('data-selectedtab');
 
         addCondition(conditionType);
-    })
+    });
 });
+
+
 
 function setConditionBody(tabData : string) : void {
     $('.condition-field').removeClass('active');
@@ -62,16 +64,15 @@ function getSelectedItem() : JQuery {
     return selectedItem;
 }
 
-interface Condition {
-    firstValue? : string;
-    secondValue? : string;
-    operator? : string[];
+function incorrectValueButton($button : JQuery, delay : number) : void {
+    $button.addClass('outline-red');
+    
+    setTimeout(() => {
+        $button.removeClass('outline-red');
+    }, delay);
 }
 
-interface ConditionService {
-    conditionArray? : Condition[];
-    conditionRelativeArray? : string[];
-}
+
 
 function addCondition(conditionType : string) : void {
     if (conditionType === CONDITION_TEMPLATE) {
@@ -79,15 +80,17 @@ function addCondition(conditionType : string) : void {
 
         if (selectedItem.length === 0) {
             console.log('choose element');
+
+            incorrectValueButton($('#addConditionButton'), 500);
+
             return;
-            // todo: add button style
         }
 
         const itemValue : string = selectedItem.attr('data-value') || '';
 
-        const condition : Condition = {
+        // const condition : Condition = {
             // value: itemValue,
-        }
+        // }
 
         // save template sql string to array
 
@@ -98,3 +101,9 @@ function addCondition(conditionType : string) : void {
 
     }
 }
+
+
+
+$(document).ready(function() {
+    
+})
