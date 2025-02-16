@@ -1,5 +1,6 @@
 import ColumnItem from "./modal-items/ColumnItem";
 import SelectModalBody from "./SelectModalBody";
+import { queryBuilder } from "../../scripts/query/queryBuilder";
 
 export default function SelectModal( 
     { 
@@ -12,6 +13,11 @@ export default function SelectModal(
         handlerCloseModal: () => void; 
         tableColumnItems: string[]
     } ) {
+
+    const executeQuery = () => {
+        queryBuilder.executeSelect();
+    }
+
     return (
         <>
             <div id="selectModal" className={`modal ${isActive ? "active" : ""}`}>
@@ -37,6 +43,11 @@ export default function SelectModal(
                                 <SelectModalBody 
                                     tableColumnItems={tableColumnItems} 
                                 />
+                            </div>
+                            <div className="modal-footer">
+                                <div className="modal-footer-wrapper d-flex">
+                                    <button className="template-button template-button--green" onClick={executeQuery}>Execute</button>
+                                </div>
                             </div>
                         </div>
                     </div>

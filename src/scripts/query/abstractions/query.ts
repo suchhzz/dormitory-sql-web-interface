@@ -3,20 +3,23 @@ import { ICondition, Condition } from './condition'
 interface IQuery {
     selectedColumns?: string[],
     selectedTable?: string,
-    conditions?: ICondition[],
+    conditions?: Condition[],
     relatives?: string[],
 
-    getQuerySelectString(): string,
+    getQuerySelect(): string,
 
     setSelectedColumn(column: string): void,
     setSelectedTable(table: string): void,
     addCondition(condition: Condition): void,
     addRelative(relative: string): void,
+
+    updateConditionValue(conditionIndex: number, values: string[]): void,
+    updateConditionColumn(conditionIndex: number, column: string): void,
 }
 
 class Query implements IQuery {
-    selectedColumns: string[] = [];
-    selectedTable: string = "";
+    selectedColumns: string[] = ['*'];
+    selectedTable: string = "table";
     conditions: Condition[] = [];
     relatives: string[] = [];
 
@@ -33,7 +36,15 @@ class Query implements IQuery {
         this.relatives?.push(relative);
     }
 
-    getQuerySelectString(): string {
+    updateConditionValue(conditionIndex: number, values: string[]): void {
+        this.conditions[conditionIndex].values = [...values];
+    }
+
+    updateConditionColumn(conditionIndex: number, column: string): void {
+        this.conditions[conditionIndex].column = column;
+    }
+
+    getQuerySelect(): string {
         let queryString: string = "";
 
         queryString += this.getHeaderSelectQueryString(this.selectedColumns, this.selectedTable);
@@ -78,6 +89,8 @@ class Query implements IQuery {
 
 }
 
+export {  Query };
+export type { IQuery }
 
 // let condition1: Condition = new Condition('=', 'column1', ['123']);
 // let condition2: Condition = new Condition('BETWEEN', 'column2', ['123213', '432']);

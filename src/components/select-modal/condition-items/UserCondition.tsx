@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { queryBuilder } from "../../../scripts/query/queryBuilder";
 
 export default function UserCondition(
     {
@@ -29,13 +30,6 @@ export default function UserCondition(
     const [tableColumns, setTableColumns] = useState<string[]>([]);
     const [filteredTableColumns, setFilteredTableColumns] = useState<string[]>([]);
     const [activeValueInput, setActiveValueInput] = useState<string>("");
-
-    const items = ['column1', 'column2', '123', 'coludsadfas', 'fdsaf2w22432'];
-
-    useEffect(() => {
-        console.log('table columns');
-        console.log(tableColumnItems);
-    }, []);
 
     useEffect(() => {
         setTableColumns(tableColumnItems.map(item => item));
@@ -88,7 +82,12 @@ export default function UserCondition(
         setActiveColumn(columnInputValue);
         setColumnInputValue("");
         hideChangeValuePopups();
+
     }
+
+    useEffect(() => {
+        queryBuilder.updateSelectConditionColumn(conditionId, activeColumn);
+    }, [activeColumn]);
 
     const handleActiveValueInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setActiveValueInput(event.target.value);
@@ -105,6 +104,10 @@ export default function UserCondition(
         hideChangeValuePopups();
         handlerUpdateUserCondition(conditionId);
     };
+
+    useEffect(() => {
+        queryBuilder.updateSelectConditionValue(conditionId, activeValues);
+    }, [activeValues]);
 
     const handleTypeInConditionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setTypeInConditionInputValue(event.target.value);

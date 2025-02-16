@@ -454,6 +454,12 @@
                     }
                 }
             }
+
+            .modal-footer {
+                .modal-footer-wrapper {
+                    justify-content: flex-end;
+                }
+            }
         }
     }
 

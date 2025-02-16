@@ -1,12 +1,13 @@
 // import '../../../scripts/condition-popup'
 
 import { useState } from "react"
+import { queryBuilder } from "../../../scripts/query/queryBuilder";
 
-export default function ConditionPopupForm({ isActive, addUserConditionHandler }: { isActive : boolean; addUserConditionHandler: (condition: string) => void } )  {
+export default function ConditionPopupForm({ isActive, addUserConditionHandler }: { isActive: boolean; addUserConditionHandler: (condition: string) => void }) {
 
     const [activeElement, setActiveElement] = useState<string | null>(null);
 
-    const elementHandleClick = (value : string) => {
+    const elementHandleClick = (value: string) => {
 
         if (value === activeElement) {
             setActiveElement("");
@@ -14,12 +15,12 @@ export default function ConditionPopupForm({ isActive, addUserConditionHandler }
         else {
             setActiveElement(value);
         }
-
     };
 
     const addConditionButtonHandle = () => {
         if (activeElement) {
-            addUserConditionHandler(activeElement); 
+            addUserConditionHandler(activeElement);
+            queryBuilder.addSelectCondition(activeElement, '', []);
         }
         else {
             console.log('no condition selected');
@@ -28,7 +29,7 @@ export default function ConditionPopupForm({ isActive, addUserConditionHandler }
 
     return (
         <>
-        <div className={`popup-insert-form ${isActive ? 'active' : ''}`}>
+            <div className={`popup-insert-form ${isActive ? 'active' : ''}`}>
                 <div className="popup-insert-form--wrapper d-grid">
                     <div className="popup-form popup-form--header d-grid">
                         <div data-insertConditionTab="conditionTemplate" className="tab-item active">
@@ -79,7 +80,7 @@ export default function ConditionPopupForm({ isActive, addUserConditionHandler }
                                     </div>
                                 </div>
                                 <div className="body--template body--template__template-condition-item d-grid">
-                                <div className="popup-template__title d-flex">
+                                    <div className="popup-template__title d-flex">
                                         <p>Template</p>
                                     </div>
                                     <div className="popup-template__body d-flex">
