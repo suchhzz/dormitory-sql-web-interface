@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Condition from "./condition-items/Condition";
-import '../../scripts/modal'
 
 export default function SelectModalBody( 
     {

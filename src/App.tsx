@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import ButtonPanel from './components/ButtonPanel';
 import MenuPanel from './components/MenuPanel';
 import Table from './components/Table';
-import './scripts/main'
 import './scripts/query/abstractions/query'
 import { fetchDatabaseData } from './services/databaseService.ts';
 import { DatabaseAbstractObjectType, DatabaseType, TableType } from './types/databaseTypes.ts';

@@ -1,6 +1,4 @@
 import ConditionPopupForm from "./ConditionPopupForm";
-import '../../../scripts/condition-insert'
-import '../../../scripts/modal'
 import UserCondition from "./UserCondition";
 import { useState } from "react";
 
