@@ -1,7 +1,14 @@
 import AliasOption from "./column-item-params/AliasOption"
 import FunctionOption from "./column-item-params/FunctionOption"
 
-export default function ColumnItem() {
+export default function ColumnItem( 
+    {
+        columnName
+    }: 
+    {
+        columnName: string
+    }
+ ) {
     return (
         <>
             <div className="column-item">
@@ -9,7 +16,7 @@ export default function ColumnItem() {
                     <FunctionOption />
                     <AliasOption />
                 </div>
-                <p>column</p>
+                <p>{columnName}</p>
             </div>
         </>
     )

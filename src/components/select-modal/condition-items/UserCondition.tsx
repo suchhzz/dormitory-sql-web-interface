@@ -19,7 +19,7 @@ export default function UserCondition(
     }) {
 
     const [activeColumn, setActiveColumn] = useState<string>(column ?? "column");
-    const [activeValues, setActiveValues] = useState<string[]>(values ?? ["value"]);
+    const [activeValues, setActiveValues] = useState<string[]>(values ?? ["_"]);
     const [activeOperator, setActiveOperator] = useState<string>(operator ?? "");
     const [typeInConditionModalActive, setTypeInConditionModalActive] = useState<boolean>(false);
     const [typeInConditionInputValue, setTypeInConditionInputValue] = useState<string>("");
@@ -120,7 +120,7 @@ export default function UserCondition(
     }
 
     const setValuesBetweenOperator = () => {
-        setActiveValues(["value", "value"]);
+        setActiveValues(["_", "_"]);
     }
 
     const setValuesInOperator = (inConditionValue: string) => {
@@ -203,7 +203,7 @@ export default function UserCondition(
                                     >Add</button>
                                 </div>
                             </div>
-                            <div className="condition-value condition--values">
+                            <div className="condition-value condition--operator">
                                 <p>AND</p>
                             </div>
                             <div key={1} className="condition-value condition--values" onClick={() => togglePopup(1)}>

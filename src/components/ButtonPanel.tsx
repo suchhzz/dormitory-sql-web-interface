@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InsertModal from "./insert-modal/InsertModal";
 import SelectModal from "./select-modal/SelectModal";
 
 export default function ButtonPanel(
     {
-        tableColumnItems
+        tableColumnItems,
+        tableName
     }:
     {
-        tableColumnItems: string[]
+        tableColumnItems: string[],
+        tableName: string
     }
 ) {
 
@@ -29,8 +31,16 @@ export default function ButtonPanel(
                 <button id="selectBtn" className="button-item template-button template-button--green" onClick={toggleSelectModal} >Select</button>
             </div>
 
-            <InsertModal isActive={isInsertModalActive} handlerCloseModal={toggleInsertModal} />
-            <SelectModal isActive={isSelectModalActive} handlerCloseModal={toggleSelectModal} tableColumnItems={tableColumnItems} />
+            <InsertModal 
+                isActive={isInsertModalActive}
+                handlerCloseModal={toggleInsertModal} 
+            />
+            <SelectModal 
+                isActive={isSelectModalActive} 
+                handlerCloseModal={toggleSelectModal} 
+                tableColumnItems={tableColumnItems} 
+                tableName={tableName}
+            />
         </>
     )
 }
