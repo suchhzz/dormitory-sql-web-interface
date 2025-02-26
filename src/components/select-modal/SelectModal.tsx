@@ -2,17 +2,19 @@ import ColumnItem from "./modal-items/ColumnItem";
 import SelectModalBody from "./SelectModalBody";
 import { queryBuilder } from "../../scripts/query/queryBuilder";
 
-export default function SelectModal( 
-    { 
-        isActive, 
-        handlerCloseModal, 
-        tableColumnItems
-    } : 
-    { 
-        isActive: boolean, 
-        handlerCloseModal: () => void; 
-        tableColumnItems: string[]
-    } ) {
+export default function SelectModal(
+    {
+        isActive,
+        handlerCloseModal,
+        tableColumnItems,
+        tableName
+    }:
+        {
+            isActive: boolean,
+            handlerCloseModal: () => void;
+            tableColumnItems: string[],
+            tableName: string
+        }) {
 
     const executeQuery = () => {
         queryBuilder.executeSelect();
@@ -29,19 +31,20 @@ export default function SelectModal(
                                 <p className="modal-title">Select</p>
                                 <div className="table-columns-selector">
                                     <div className="columns-wrapper d-flex">
-                                        <div className="column-item selected">
-                                            <p>All</p>
-                                        </div>
-                                        <ColumnItem />
-                                        <ColumnItem />
-                                        <ColumnItem />
-                                        <ColumnItem />
+                                        <ColumnItem columnName="All"/>
+                                        {tableColumnItems.map((item, index) => (
+                                            <ColumnItem 
+                                                key={index}  
+                                                columnName={item}
+                                            />
+                                        ))}
                                     </div>
                                 </div>
                             </div>
                             <div className="modal-body">
-                                <SelectModalBody 
-                                    tableColumnItems={tableColumnItems} 
+                                <SelectModalBody
+                                    tableColumnItems={tableColumnItems}
+                                    tableName={tableName}
                                 />
                             </div>
                             <div className="modal-footer">

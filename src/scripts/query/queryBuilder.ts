@@ -21,26 +21,18 @@ class QueryBuilder {
     addSelectCondition(operator: string, column: string, values: string[]): void {
         let condition = new Condition(operator, column, values);
         this.query.addCondition(condition);
-
-        console.log('condition added');
-        console.log(condition);
     }
 
     updateSelectConditionValue(conditionIndex: number, values: string[]): void {
         this.query.updateConditionValue(conditionIndex, values);
-        console.log('condition changed');
-        console.log(this.query);
     }
 
     updateSelectConditionColumn(conditionIndex: number, column: string): void {
         this.query.updateConditionColumn(conditionIndex, column);
-        console.log('condition changed');
-        console.log(this.query);
     }
 
     executeSelect() {
         let querySelect: string = this.query.getQuerySelect();
-
         console.log(querySelect);
     }
 }

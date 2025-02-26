@@ -4,10 +4,12 @@ import '../../scripts/modal'
 
 export default function SelectModalBody( 
     {
-        tableColumnItems
+        tableColumnItems,
+        tableName
     }: 
     {
-        tableColumnItems: string[]
+        tableColumnItems: string[],
+        tableName: string
     }
  ) {
 
@@ -27,7 +29,7 @@ export default function SelectModalBody(
                 <div className="select-modal-section select-from-section">
                     <label className="select-from-label label-form d-flex">
                         From table
-                        <input type='text' readOnly value={'table1'} className='form-item-input'></input>
+                        <input type='text' readOnly value={tableName} className='form-item-input'></input>
                     </label>
                 </div>
                 <div className="select-modal-section select-condition-section">
