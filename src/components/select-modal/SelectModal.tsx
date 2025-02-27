@@ -1,6 +1,7 @@
 import ColumnItem from "./modal-items/ColumnItem";
 import SelectModalBody from "./SelectModalBody";
 import { queryBuilder } from "../../scripts/query/queryBuilder";
+import { useState } from "react";
 
 export default function SelectModal(
     {
@@ -16,9 +17,25 @@ export default function SelectModal(
             tableName: string
         }) {
 
+    const [activeColumns, setActiveColumns] = useState<number[]>([0]);
+
     const executeQuery = () => {
         queryBuilder.executeSelect();
     }
+
+    const checkActiveColumn = (index: number): boolean => {
+        return activeColumns.some(el => el === index);
+    }
+
+    const toggleActiveColumn = (index: number): void => {
+        if (activeColumns.some(el => el === index)) {
+            setActiveColumns(prev => prev.filter(el => el !== index));
+        }
+        else {
+            setActiveColumns(prev => [...prev, index]);
+        }
+    }
+
 
     return (
         <>
@@ -31,11 +48,19 @@ export default function SelectModal(
                                 <p className="modal-title">Select</p>
                                 <div className="table-columns-selector">
                                     <div className="columns-wrapper d-flex">
-                                        <ColumnItem columnName="All"/>
+                                        <ColumnItem 
+                                            columnName="All"
+                                            columnIndex={0}
+                                            checkActiveColumn={checkActiveColumn}
+                                            toggleActiveColumn={toggleActiveColumn}
+                                        />
                                         {tableColumnItems.map((item, index) => (
                                             <ColumnItem 
                                                 key={index}  
                                                 columnName={item}
+                                                columnIndex={index + 1}
+                                                checkActiveColumn={checkActiveColumn}
+                                                toggleActiveColumn={toggleActiveColumn}
                                             />
                                         ))}
                                     </div>
