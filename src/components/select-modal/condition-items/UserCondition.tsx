@@ -30,6 +30,7 @@ export default function UserCondition(
     const [tableColumns, setTableColumns] = useState<string[]>([]);
     const [filteredTableColumns, setFilteredTableColumns] = useState<string[]>([]);
     const [activeValueInput, setActiveValueInput] = useState<string>("");
+    const [isColumnChanged, setisColumnChanged] = useState<boolean>(false);
 
     useEffect(() => {
         setTableColumns(tableColumnItems.map(item => item));
@@ -162,7 +163,7 @@ export default function UserCondition(
         <>
             <div className="user-condition-item">
                 <div className="user-condition-item--wrapper d-flex">
-                    <div className="condition-value condition--column">
+                    <div className={`condition-value condition--column ${isColumnChanged ? "" : "default"}`}>
                         <p
                             onClick={toggleColumnChangePopup}
                         >
