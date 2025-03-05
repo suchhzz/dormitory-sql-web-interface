@@ -1,7 +1,7 @@
 import ColumnItem from "./modal-items/ColumnItem";
 import SelectModalBody from "./SelectModalBody";
 import { queryBuilder } from "../../scripts/query/queryBuilder";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function SelectModal(
     {
@@ -18,6 +18,11 @@ export default function SelectModal(
         }) {
 
     const [activeColumns, setActiveColumns] = useState<number[]>([0]);
+
+    useEffect(() => {
+        queryBuilder.setSelectingColumns(tableColumnItems);
+    }, []);
+    
 
     const executeQuery = () => {
         queryBuilder.executeSelect();

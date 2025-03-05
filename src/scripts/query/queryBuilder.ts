@@ -1,5 +1,5 @@
-import { Query } from './abstractions/query'
-import { Condition } from './abstractions/condition'
+import { Query } from './abstractions/Query'
+import { Condition } from './abstractions/Condition'
 
 interface QueryBuilder {
     query: Query,
@@ -7,6 +7,7 @@ interface QueryBuilder {
     addSelectCondition(operator: string, column: string, values: string[]): void,
     updateSelectConditionValue(conditionIndex: number, values: string[]): void,
     updateSelectConditionColumn(conditionIndex: number, column: string): void,
+    setSelectingColumns(columns: string[]): void,
     executeSelect(): void,
 }
 
@@ -29,6 +30,10 @@ class QueryBuilder {
 
     updateSelectConditionColumn(conditionIndex: number, column: string): void {
         this.query.updateConditionColumn(conditionIndex, column);
+    }
+
+    setSelectingColumns(columns: string[]): void {
+        this.query.setColumns(columns);
     }
 
     executeSelect() {

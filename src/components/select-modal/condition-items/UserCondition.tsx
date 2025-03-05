@@ -30,7 +30,8 @@ export default function UserCondition(
     const [tableColumns, setTableColumns] = useState<string[]>([]);
     const [filteredTableColumns, setFilteredTableColumns] = useState<string[]>([]);
     const [activeValueInput, setActiveValueInput] = useState<string>("");
-    const [isColumnChanged, setisColumnChanged] = useState<boolean>(false);
+    const [isColumnChanged, setIsColumnChanged] = useState<boolean>(false);
+    const [changedValuesArray, setChangedValuesArray] = useState<number[]>([]);
 
     useEffect(() => {
         setTableColumns(tableColumnItems.map(item => item));
@@ -48,6 +49,10 @@ export default function UserCondition(
             setActiveValues(prevValues => [...prevValues, values[values.length - 1]]);
         }
     }, [values]);
+
+    const checkChangedValuesArray = (index: number): boolean => {
+        return changedValuesArray.some(el => el === index);
+    }
 
 
     const hideChangeValuePopups = () => {
@@ -83,7 +88,7 @@ export default function UserCondition(
         setActiveColumn(columnInputValue);
         setColumnInputValue("");
         hideChangeValuePopups();
-
+        setIsColumnChanged(true);
     }
 
     useEffect(() => {
@@ -104,6 +109,10 @@ export default function UserCondition(
 
         hideChangeValuePopups();
         handlerUpdateUserCondition(conditionId);
+
+        if (!checkChangedValuesArray(index)) {
+            setChangedValuesArray(prev => [...prev, index]);
+        }
     };
 
     useEffect(() => {
@@ -192,7 +201,7 @@ export default function UserCondition(
                     </div>
                     {activeOperator === "BETWEEN" ? (
                         <>
-                            <div key={0} className="condition-value condition--values" onClick={() => togglePopup(0)}>
+                            <div key={0} className={`condition-value condition--values ${checkChangedValuesArray(0) ? "" : "default"}`} onClick={() => togglePopup(0)}>
                                 <p>{activeValues[0]}</p>
                                 <div className={`condition-change-value-popup d-flex ${0 === selectedPopupId ? "active" : ""}`} onClick={preventButtonClick}>
                                     <input type="text" placeholder="value"
@@ -207,7 +216,7 @@ export default function UserCondition(
                             <div className="condition-value condition--operator">
                                 <p>AND</p>
                             </div>
-                            <div key={1} className="condition-value condition--values" onClick={() => togglePopup(1)}>
+                            <div key={1} className={`condition-value condition--values ${checkChangedValuesArray(1) ? "" : "default"}`} onClick={() => togglePopup(1)}>
                                 <p>{activeValues[1]}</p>
                                 <div className={`condition-change-value-popup d-flex ${1 === selectedPopupId ? "active" : ""}`} onClick={preventButtonClick}>
                                     <input type="text" placeholder="value"
@@ -227,7 +236,7 @@ export default function UserCondition(
                                 {activeValues.map((value, index) => {
                                     return (
                                         <>
-                                            <div key={index} className="condition-value condition--values" onClick={() => togglePopup(index)}>
+                                            <div key={index} className={`condition-value condition--values ${checkChangedValuesArray(index) ? "" : "default"}`} onClick={() => togglePopup(index)}>
                                                 <p>{index === activeValues.length - 1 ? value : `${value},`}</p>
                                                 <div className={`condition-change-value-popup d-flex ${index === selectedPopupId ? "active" : ""}`} onClick={preventButtonClick}>
                                                     <input type="text" placeholder="value"
@@ -261,7 +270,7 @@ export default function UserCondition(
                         activeValues.map((value, index) => {
                             return (
                                 <>
-                                    <div key={index} className="condition-value condition--values"
+                                    <div key={index} className={`condition-value condition--values ${checkChangedValuesArray(index) ? "" : "default"}`}
                                         onClick={() => togglePopup(index)}
                                     >
                                         <p >{value}</p>

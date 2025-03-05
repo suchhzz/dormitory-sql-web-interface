@@ -1,31 +1,31 @@
-import { ICondition, Condition } from './condition'
+import { ICondition, Condition } from './Condition'
+import { TableColumn } from './TableColumn'
 
 interface IQuery {
-    selectedColumns?: string[],
+    selectedColumns?: TableColumn[],
     selectedTable?: string,
     conditions?: Condition[],
     relatives?: string[],
 
     getQuerySelect(): string,
 
-    setSelectedColumn(column: string): void,
     setSelectedTable(table: string): void,
     addCondition(condition: Condition): void,
     addRelative(relative: string): void,
 
     updateConditionValue(conditionIndex: number, values: string[]): void,
     updateConditionColumn(conditionIndex: number, column: string): void,
+
+    setColumns(columns: string[]): void,
+    toggleSelectColumn(index: number): void,
 }
 
 class Query implements IQuery {
-    selectedColumns: string[] = ['*'];
+    selectedColumns: TableColumn[] = [];
     selectedTable: string = "table";
     conditions: Condition[] = [];
     relatives: string[] = [];
 
-    setSelectedColumn(column: string): void {
-        this.selectedColumns?.push(column);
-    }
     setSelectedTable(table: string): void {
         this.selectedTable = table;
     }
@@ -53,8 +53,10 @@ class Query implements IQuery {
         return queryString;
     }
 
-    getHeaderSelectQueryString(columns: string[], table: string): string {
-        return `SELECT ${columns.join(', ')} FROM ${table} \n`;
+    getHeaderSelectQueryString(columns: TableColumn[], table: string): string {
+        return `SELECT ${columns.filter(el => el.isSelected === true)
+                        .map(el => el.name)
+                        .join(', ')} FROM ${table} \n`;
     }
 
     getConditionsSelectQueryString(conditions: ICondition[]) {
@@ -79,12 +81,22 @@ class Query implements IQuery {
         return "";
     }
 
-    getHeaderInsertQueryString(columns: string[], table: string) {
-        return `INSERT INTO (${columns.join(' ')}) FROM ${table}`;
+    getHeaderInsertQueryString(columns: TableColumn[], table: string) {
+        return `INSERT INTO (${columns.map(el => el.name).join(' ')}) FROM ${table}`;
     }
 
     getValuesInsertQueryString(values: string[]) {
         return `VALUES (${values.join(' ')})`;
+    }
+
+    setColumns(columns: string[]): void {
+        columns.forEach(column => {
+            this.selectedColumns.push(new TableColumn(column));
+        });
+    }
+
+    toggleSelectColumn(index: number): void {
+        this.selectedColumns[index].toggleSelectColumn();
     }
 
 }
