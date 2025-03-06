@@ -19,9 +19,6 @@ export default function SelectModal(
 
     const [activeColumns, setActiveColumns] = useState<number[]>([0]);
 
-    useEffect(() => {
-        queryBuilder.setSelectingColumns(tableColumnItems);
-    }, []);
     
 
     const executeQuery = () => {

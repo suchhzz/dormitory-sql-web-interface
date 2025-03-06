@@ -9,6 +9,7 @@ interface QueryBuilder {
     updateSelectConditionColumn(conditionIndex: number, column: string): void,
     setSelectingColumns(columns: string[]): void,
     executeSelect(): void,
+    toggleSelectColumn(index: number): void,
 }
 
 class QueryBuilder {
@@ -36,9 +37,13 @@ class QueryBuilder {
         this.query.setColumns(columns);
     }
 
-    executeSelect() {
+    executeSelect(): void {
         let querySelect: string = this.query.getQuerySelect();
         console.log(querySelect);
+    }
+
+    toggleSelectColumn(index: number): void {
+        this.query.toggleSelectColumn(index);
     }
 }
 

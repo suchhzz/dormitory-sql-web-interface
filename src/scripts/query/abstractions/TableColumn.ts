@@ -5,9 +5,9 @@ interface ITableColumn {
 
 class TableColumn implements ITableColumn {
 
-    constructor(name: string) {
+    constructor(name: string, isSelected: boolean = false) {
         this.name = name;
-        this.isSelected = false;
+        this.isSelected = isSelected;
     }
 
     name: string;

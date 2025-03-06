@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { TableType } from "../types/databaseTypes";
+import { queryBuilder } from "../scripts/query/queryBuilder";
 
 export default function Table({ table }: { table: TableType }) {
 
@@ -19,8 +20,7 @@ export default function Table({ table }: { table: TableType }) {
     }, [table]);
 
     useEffect(() => {
-        console.log(columnsName);
-        console.log(columnsValues);
+        queryBuilder.setSelectingColumns(columnsName);
     }, [columnsValues]);
 
     return (

@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import AliasOption from "./column-item-params/AliasOption"
 import FunctionOption from "./column-item-params/FunctionOption"
+import { queryBuilder } from "../../../scripts/query/queryBuilder";
 
 export default function ColumnItem( 
     {
@@ -19,6 +20,7 @@ export default function ColumnItem(
 
     const selectColumn = () => {
         toggleActiveColumn(columnIndex);
+        queryBuilder.toggleSelectColumn(columnIndex);
     }
 
     return (

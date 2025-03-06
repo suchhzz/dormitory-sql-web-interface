@@ -30,9 +30,6 @@ function App() {
     if (activeDatabase && activeDatabase.tables && activeDatabase.tables.length > 0) {
       setActiveTable(activeDatabase.tables[activeTableIndex]);
       setTableColumns(activeDatabase.tables[activeTableIndex].columns);
-
-      
-
     } else {
       console.warn("No tables found in activeDatabase");
     }

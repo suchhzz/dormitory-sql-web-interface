@@ -21,7 +21,7 @@ interface IQuery {
 }
 
 class Query implements IQuery {
-    selectedColumns: TableColumn[] = [];
+    selectedColumns: TableColumn[] = [ new TableColumn("*", true) ];
     selectedTable: string = "table";
     conditions: Condition[] = [];
     relatives: string[] = [];
@@ -97,23 +97,11 @@ class Query implements IQuery {
 
     toggleSelectColumn(index: number): void {
         this.selectedColumns[index].toggleSelectColumn();
+
+        console.log(this.selectedColumns);
     }
 
 }
 
 export {  Query };
 export type { IQuery }
-
-// let condition1: Condition = new Condition('=', 'column1', ['123']);
-// let condition2: Condition = new Condition('BETWEEN', 'column2', ['123213', '432']);
-// let condition3: Condition = new Condition('IN', 'column2', ['123', '1234324', 'FDSAFASD']);
-
-// let query: Query = new Query();
-// query.setSelectedColumn('*');
-// query.setSelectedTable('table-test');
-
-// query.addCondition(condition1);
-// query.addCondition(condition2);
-// query.addCondition(condition3);
-
-// console.log(query.getQuerySelectString());
