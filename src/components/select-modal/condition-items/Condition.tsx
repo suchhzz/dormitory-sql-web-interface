@@ -42,7 +42,7 @@ export default function Condition(
                 )}
                 <ConditionPopupForm isActive={isPopupActive} addUserConditionHandler={addUserCondition} />
 
-                <ConditionRelative/>
+                <ConditionRelative conditionId={conditionId} />
             </div>
         </>
     )
