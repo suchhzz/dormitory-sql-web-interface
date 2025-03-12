@@ -25,12 +25,13 @@ interface IQuery {
 
 class Query implements IQuery {
     selectedColumns: TableColumn[] = [ new TableColumn("*", true) ];
-    selectedTable: string = "table";
+    selectedTable: string = "";
     conditions: Condition[] = [];
     relatives: string[] = [];
 
     setSelectedTable(table: string): void {
         this.selectedTable = table;
+        console.log(this.selectedTable);
     }
     addCondition(condition: Condition): void {
         this.conditions?.push(condition);

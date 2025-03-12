@@ -11,6 +11,8 @@ interface QueryBuilder {
     executeSelect(): void,
     toggleSelectColumn(index: number): void,
 
+    setActiveTable(tableName: string): void,
+
     addRelative(conditionId: number): void,
     toggleRelative(conditionId: number, isANDSelected: boolean): void,
 }
@@ -35,6 +37,10 @@ class QueryBuilder {
             return;
         }
         this.query.toggleRelative(conditionId, isANDSelected);
+    }
+
+    setActiveTable(tableName: string): void {
+        this.query.setSelectedTable(tableName);
     }
 
     addSelectCondition(operator: string, column: string, values: string[]): void {

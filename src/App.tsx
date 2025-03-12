@@ -5,6 +5,7 @@ import Table from './components/Table';
 import './scripts/query/abstractions/Query.ts'
 import { fetchDatabaseData } from './services/databaseService.ts';
 import { DatabaseAbstractObjectType, DatabaseType, TableType } from './types/databaseTypes.ts';
+import { queryBuilder } from './scripts/query/queryBuilder.ts';
 
 function App() {
 
@@ -26,7 +27,6 @@ function App() {
   }, []);
 
   useEffect(() => {
-    console.log(activeDatabase);
     if (activeDatabase && activeDatabase.tables && activeDatabase.tables.length > 0) {
       setActiveTable(activeDatabase.tables[activeTableIndex]);
       setTableColumns(activeDatabase.tables[activeTableIndex].columns);
@@ -34,12 +34,13 @@ function App() {
       console.warn("No tables found in activeDatabase");
     }
   }, [activeDatabase]);
-  
 
   useEffect(() => {
-    console.log(activeTable?.tableName);
+    if (activeTable) {
+      queryBuilder.setActiveTable(activeTable.tableName);
+    }
   }, [activeTable]);
-
+  
   return (
     <>
       <div className='main-container'>
