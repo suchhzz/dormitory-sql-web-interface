@@ -24,4 +24,5 @@ function watchFiles() {
   gulp.watch("src/sass/**/*.scss", styles);
 }
 
-export { styles, copyFiles as copy, watchFiles as watch };
+export default gulp.series(styles, copyFiles, watchFiles);
+

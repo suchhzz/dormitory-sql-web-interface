@@ -1,5 +1,5 @@
-import { Query } from './abstractions/query'
-import { Condition } from './abstractions/condition'
+import { Query } from './abstractions/Query'
+import { Condition } from './abstractions/Condition'
 
 interface QueryBuilder {
     query: Query,
@@ -7,7 +7,14 @@ interface QueryBuilder {
     addSelectCondition(operator: string, column: string, values: string[]): void,
     updateSelectConditionValue(conditionIndex: number, values: string[]): void,
     updateSelectConditionColumn(conditionIndex: number, column: string): void,
+    setSelectingColumns(columns: string[]): void,
     executeSelect(): void,
+    toggleSelectColumn(index: number): void,
+
+    setActiveTable(tableName: string): void,
+
+    addRelative(conditionId: number): void,
+    toggleRelative(conditionId: number, isANDSelected: boolean): void,
 }
 
 class QueryBuilder {
@@ -16,6 +23,24 @@ class QueryBuilder {
 
     constructor () {
         this.query = new Query();
+    }
+
+    addRelative(conditionId: number): void {
+        if (conditionId === 0) {
+            return;
+        }
+        this.query.addRelative();
+    }
+
+    toggleRelative(conditionId: number, isANDSelected: boolean): void {
+        if (conditionId === 0) {
+            return;
+        }
+        this.query.toggleRelative(conditionId, isANDSelected);
+    }
+
+    setActiveTable(tableName: string): void {
+        this.query.setSelectedTable(tableName);
     }
 
     addSelectCondition(operator: string, column: string, values: string[]): void {
@@ -31,9 +56,17 @@ class QueryBuilder {
         this.query.updateConditionColumn(conditionIndex, column);
     }
 
-    executeSelect() {
+    setSelectingColumns(columns: string[]): void {
+        this.query.setColumns(columns);
+    }
+
+    executeSelect(): void {
         let querySelect: string = this.query.getQuerySelect();
         console.log(querySelect);
+    }
+
+    toggleSelectColumn(index: number): void {
+        this.query.toggleSelectColumn(index);
     }
 }
 

@@ -1,4 +1,5 @@
 import ConditionPopupForm from "./ConditionPopupForm";
+import ConditionRelative from "./ConditionRelative";
 import UserCondition from "./UserCondition";
 import { useState } from "react";
 
@@ -40,6 +41,7 @@ export default function Condition(
                     <button className="condition-inner-button" onClick={toggleModal}>+</button>
                 )}
                 <ConditionPopupForm isActive={isPopupActive} addUserConditionHandler={addUserCondition} />
+                <ConditionRelative conditionId={conditionId} />
             </div>
         </>
     )
