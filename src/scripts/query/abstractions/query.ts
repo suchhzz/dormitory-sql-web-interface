@@ -76,10 +76,10 @@ class Query implements IQuery {
         let buildConditionString: string = "WHERE" + '\n';
 
         conditions.map((item, index) => {
-            buildConditionString += item.getCondition() + "\n";
             if (index !== 0) {
                 buildConditionString += this.relatives[index - 1] + "\n";
             }
+            buildConditionString += item.getCondition() + "\n";
         });
 
         return buildConditionString;
