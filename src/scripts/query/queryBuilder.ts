@@ -10,6 +10,9 @@ interface QueryBuilder {
     setSelectingColumns(columns: string[]): void,
     executeSelect(): void,
     toggleSelectColumn(index: number): void,
+
+    addRelative(conditionId: number): void,
+    toggleRelative(conditionId: number, isANDSelected: boolean): void,
 }
 
 class QueryBuilder {
@@ -18,6 +21,20 @@ class QueryBuilder {
 
     constructor () {
         this.query = new Query();
+    }
+
+    addRelative(conditionId: number): void {
+        if (conditionId === 0) {
+            return;
+        }
+        this.query.addRelative();
+    }
+
+    toggleRelative(conditionId: number, isANDSelected: boolean): void {
+        if (conditionId === 0) {
+            return;
+        }
+        this.query.toggleRelative(conditionId, isANDSelected);
     }
 
     addSelectCondition(operator: string, column: string, values: string[]): void {

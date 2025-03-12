@@ -18,6 +18,9 @@ interface IQuery {
 
     setColumns(columns: string[]): void,
     toggleSelectColumn(index: number): void,
+
+    addRelative(): void,
+    toggleRelative(conditionId: number, isANDSelected: boolean): void,
 }
 
 class Query implements IQuery {
@@ -32,8 +35,17 @@ class Query implements IQuery {
     addCondition(condition: Condition): void {
         this.conditions?.push(condition);
     }
-    addRelative(relative: string): void {
-        this.relatives?.push(relative);
+
+    addRelative(): void {
+        this.relatives.push("AND");
+
+        console.log(this.relatives);
+    }
+
+    toggleRelative(conditionId: number, isANDSelected: boolean): void {
+        isANDSelected ? this.relatives[conditionId - 1] = "AND" : this.relatives[conditionId - 1] = "OR";
+
+        console.log(this.relatives);
     }
 
     updateConditionValue(conditionIndex: number, values: string[]): void {
@@ -63,8 +75,11 @@ class Query implements IQuery {
 
         let buildConditionString: string = "WHERE" + '\n';
 
-        conditions.map((item) => {
+        conditions.map((item, index) => {
             buildConditionString += item.getCondition() + "\n";
+            if (index !== 0) {
+                buildConditionString += this.relatives[index - 1] + "\n";
+            }
         });
 
         return buildConditionString;

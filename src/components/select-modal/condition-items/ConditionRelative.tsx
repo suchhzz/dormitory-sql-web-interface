@@ -1,4 +1,5 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
+import { queryBuilder } from "../../../scripts/query/queryBuilder";
 
 export default function ConditionRelative( 
     {
@@ -9,12 +10,21 @@ export default function ConditionRelative(
     } ) {
 
     const [isANDRelativeSelected, setIsANDRelativeSelected] = useState<boolean>(true);
+    const effectExecuted = useRef(false);
+
+    useEffect(() => {
+        if (!effectExecuted.current) { 
+            queryBuilder.addRelative(conditionId);
+            effectExecuted.current = true;
+        }
+    }, []);
+
+    useEffect(() => {
+        queryBuilder.toggleRelative(conditionId, isANDRelativeSelected);
+    }, [isANDRelativeSelected])
 
     const toggleRelative = () => {
         setIsANDRelativeSelected(!isANDRelativeSelected);
-
-        console.log(`relative between ${conditionId} and ${conditionId - 1}: ${isANDRelativeSelected ? "AND" : "OR"}`)
-        console.log(isANDRelativeSelected)
     }
 
     return (
