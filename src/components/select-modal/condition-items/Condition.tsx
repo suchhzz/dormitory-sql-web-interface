@@ -41,7 +41,6 @@ export default function Condition(
                     <button className="condition-inner-button" onClick={toggleModal}>+</button>
                 )}
                 <ConditionPopupForm isActive={isPopupActive} addUserConditionHandler={addUserCondition} />
-
                 <ConditionRelative conditionId={conditionId} />
             </div>
         </>

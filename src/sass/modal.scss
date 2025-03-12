@@ -366,6 +366,15 @@
                                                     &.active {
                                                         display: block;
                                                     }
+
+                                                    .textarea-container {
+                                                        padding: 0.7rem 1rem;
+                                                        background-color: #161b21;
+
+                                                        .custom-textarea-item {
+                                                            padding: 0;
+                                                        }
+                                                    }
                                                 }
 
                                                 .body {

@@ -6,6 +6,7 @@ import { queryBuilder } from "../../../scripts/query/queryBuilder";
 export default function ConditionPopupForm({ isActive, addUserConditionHandler }: { isActive: boolean; addUserConditionHandler: (condition: string) => void }) {
 
     const [activeElement, setActiveElement] = useState<string | null>(null);
+    const [selectedTabId, setSelectedTabId] = useState<number>(0);
 
     const elementHandleClick = (value: string) => {
 
@@ -27,20 +28,24 @@ export default function ConditionPopupForm({ isActive, addUserConditionHandler }
         }
     }
 
+    const setActiveTab = (index: number) => {
+        setSelectedTabId(index);
+    }
+
     return (
         <>
             <div className={`popup-insert-form ${isActive ? 'active' : ''}`}>
                 <div className="popup-insert-form--wrapper d-grid">
                     <div className="popup-form popup-form--header d-grid">
-                        <div data-insertConditionTab="conditionTemplate" className="tab-item active">
+                        <div data-insertConditionTab="conditionTemplate" className={`tab-item ${selectedTabId === 0 ? "active" : ""}`} onClick={() => setActiveTab(0)}>
                             <p>Template</p>
                         </div>
-                        <div data-insertConditionTab="conditionCustom" className="tab-item">
+                        <div data-insertConditionTab="conditionCustom" className={`tab-item ${selectedTabId === 1 ? "active" : ""}`} onClick={() => setActiveTab(1)}>
                             <p>Custom</p>
                         </div>
                     </div>
                     <div className="popup-form popup-form--body">
-                        <div id='conditionTemplate' className="condition-field body--template active">
+                        <div id='conditionTemplate' className={`condition-field body--template ${selectedTabId === 0 ? "active" : ""}`}>
                             <div className="condition-field-wrapper d-grid">
                                 <div className="body--template body--template__regular-condition-item d-grid">
                                     <div className="popup-template__title d-flex">
@@ -100,9 +105,16 @@ export default function ConditionPopupForm({ isActive, addUserConditionHandler }
                                 </div>
                             </div>
                         </div>
-                        <div id='conditionCustom' className="condition-field body--custom d-flex">
-                            <textarea className="custom-textarea-item template-text-input">
-                            </textarea>
+                        <div id='conditionCustom' className={`condition-field body--custom d-flex ${selectedTabId === 1 ? "active" : ""}`}>
+                            <div className="textarea-container">
+                                <textarea
+                                    className="custom-textarea-item template-text-input"
+                                    onInput={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+                                        e.target.style.height = "auto";
+                                        e.target.style.height = `${e.target.scrollHeight}px`;
+                                    }}
+                                />
+                            </div>
                         </div>
                     </div>
                     <div className="popup-form popup-form--footer d-flex">
