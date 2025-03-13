@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { queryBuilder } from "../../../scripts/query/queryBuilder";
+import CustomTab from "./CustomTab";
 
 export default function ConditionPopupForm({ isActive, addUserConditionHandler }: { isActive: boolean; addUserConditionHandler: (condition: string) => void }) {
 
@@ -106,15 +107,7 @@ export default function ConditionPopupForm({ isActive, addUserConditionHandler }
                             </div>
                         </div>
                         <div id='conditionCustom' className={`condition-field body--custom d-flex ${selectedTabId === 1 ? "active" : ""}`}>
-                            <div className="textarea-container">
-                                <textarea
-                                    className="custom-textarea-item template-text-input"
-                                    onInput={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-                                        e.target.style.height = "auto";
-                                        e.target.style.height = `${e.target.scrollHeight}px`;
-                                    }}
-                                />
-                            </div>
+                            <CustomTab />
                         </div>
                     </div>
                     <div className="popup-form popup-form--footer d-flex">

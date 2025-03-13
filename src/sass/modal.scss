@@ -370,9 +370,17 @@
                                                     .textarea-container {
                                                         padding: 0.7rem 1rem;
                                                         background-color: #161b21;
+                                                        position: relative;
 
                                                         .custom-textarea-item {
                                                             padding: 0;
+                                                        }
+
+                                                        .word-hint {
+                                                            position: absolute;
+                                                            width: 30px;
+                                                            height: 20px;
+                                                            background-color: red;
                                                         }
                                                     }
                                                 }
