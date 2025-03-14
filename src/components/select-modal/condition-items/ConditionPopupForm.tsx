@@ -1,6 +1,6 @@
 // import '../../../scripts/condition-popup'
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { queryBuilder } from "../../../scripts/query/queryBuilder";
 import CustomTab from "./CustomTab";
 
@@ -8,6 +8,11 @@ export default function ConditionPopupForm({ isActive, addUserConditionHandler }
 
     const [activeElement, setActiveElement] = useState<string | null>(null);
     const [selectedTabId, setSelectedTabId] = useState<number>(0);
+    const [customTabValue, setCustomTabValue] = useState<string>("");
+
+    useEffect(() => {
+        console.log(customTabValue);
+    }, [customTabValue]);
 
     const elementHandleClick = (value: string) => {
 
@@ -20,12 +25,17 @@ export default function ConditionPopupForm({ isActive, addUserConditionHandler }
     };
 
     const addConditionButtonHandle = () => {
-        if (activeElement) {
-            addUserConditionHandler(activeElement);
-            queryBuilder.addSelectCondition(activeElement, '', []);
+        if (selectedTabId === 0) {
+            if (activeElement) {
+                addUserConditionHandler(activeElement);
+                queryBuilder.addSelectCondition(activeElement, '', []);
+            }
+            else {
+                console.log('no condition selected');
+            }
         }
-        else {
-            console.log('no condition selected');
+        else if (selectedTabId === 1) {
+            addUserConditionHandler(customTabValue);
         }
     }
 
@@ -107,7 +117,7 @@ export default function ConditionPopupForm({ isActive, addUserConditionHandler }
                             </div>
                         </div>
                         <div id='conditionCustom' className={`condition-field body--custom d-flex ${selectedTabId === 1 ? "active" : ""}`}>
-                            <CustomTab />
+                            <CustomTab customTabValue={setCustomTabValue} />
                         </div>
                     </div>
                     <div className="popup-form popup-form--footer d-flex">

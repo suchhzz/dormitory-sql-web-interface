@@ -378,9 +378,22 @@
 
                                                         .word-hint {
                                                             position: absolute;
-                                                            width: 30px;
-                                                            height: 20px;
-                                                            background-color: red;
+                                                            height: auto;
+
+                                                            &--container {
+                                                                background-color:#2c3541;
+                                                                border-radius: 5px;
+
+                                                                .hint-item {
+                                                                    padding: 0.3rem 0.5rem;
+                                                                    
+                                                                    &:hover, 
+                                                                    &.selected {
+                                                                        outline: 1px solid #fff;
+                                                                        cursor: pointer;
+                                                                    }
+                                                                }
+                                                            }
                                                         }
                                                     }
                                                 }
@@ -443,9 +456,6 @@
                                                     }
 
                                                     &--custom {
-
-                                                        overflow: hidden;
-
                                                         .custom-textarea-item {
                                                             width: 100%;
                                                             resize: none;

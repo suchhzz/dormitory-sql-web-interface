@@ -20,7 +20,6 @@ export default function Condition(
 
     const toggleModal = () => {   
         setPopupActive(!isPopupActive);
-        console.log('toggled ' + isPopupActive);
     };
 
     const addUserCondition = (condition : string) => {
