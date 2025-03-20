@@ -4,7 +4,15 @@ import { useEffect, useState } from "react"
 import { queryBuilder } from "../../../scripts/query/queryBuilder";
 import CustomTab from "./CustomTab";
 
-export default function ConditionPopupForm({ isActive, addUserConditionHandler }: { isActive: boolean; addUserConditionHandler: (condition: string) => void }) {
+export default function ConditionPopupForm({ 
+    isActive, 
+    addUserTemplateConditionHandler: addUserTemplateConditionHandler,
+    addUserCustomConditionHandler: addUserCustomConditionHandler
+}: { 
+    isActive: boolean; 
+    addUserTemplateConditionHandler: (condition: string) => void,
+    addUserCustomConditionHandler: (condition: string) => void,
+}) {
 
     const [activeElement, setActiveElement] = useState<string | null>(null);
     const [selectedTabId, setSelectedTabId] = useState<number>(0);
@@ -24,10 +32,10 @@ export default function ConditionPopupForm({ isActive, addUserConditionHandler }
         }
     };
 
-    const addConditionButtonHandle = () => {
+    const addConditionButtonHandler = () => {
         if (selectedTabId === 0) {
             if (activeElement) {
-                addUserConditionHandler(activeElement);
+                addUserTemplateConditionHandler(activeElement);
                 queryBuilder.addSelectCondition(activeElement, '', []);
             }
             else {
@@ -35,7 +43,7 @@ export default function ConditionPopupForm({ isActive, addUserConditionHandler }
             }
         }
         else if (selectedTabId === 1) {
-            addUserConditionHandler(customTabValue);
+            addUserCustomConditionHandler(customTabValue);
         }
     }
 
@@ -121,7 +129,7 @@ export default function ConditionPopupForm({ isActive, addUserConditionHandler }
                         </div>
                     </div>
                     <div className="popup-form popup-form--footer d-flex">
-                        <button id='addConditionButton' data-selectedtab='conditionTemplate' className="button-item template-button template-button--green" onClick={() => addConditionButtonHandle()}>Add</button>
+                        <button id='addConditionButton' data-selectedtab='conditionTemplate' className="button-item template-button template-button--green" onClick={() => addConditionButtonHandler()}>Add</button>
                     </div>
                 </div>
             </div>

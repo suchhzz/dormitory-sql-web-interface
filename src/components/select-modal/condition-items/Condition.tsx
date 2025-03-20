@@ -1,6 +1,7 @@
 import ConditionPopupForm from "./ConditionPopupForm";
 import ConditionRelative from "./ConditionRelative";
-import UserCondition from "./UserCondition";
+import UserCustomCondition from "./UserCustomCondition";
+import UserTemplateCondition from "./UserTemplateCondition";
 import { useState } from "react";
 
 export default function Condition( 
@@ -16,30 +17,43 @@ export default function Condition(
     } ) {
 
     const [isPopupActive, setPopupActive] = useState(false);
-    const [userCondition, setUserCondition] = useState<string>("");
+    const [userTemplateCondition, setUserTemplateCondition] = useState<string>("");
+    const [userCustomCondition, setUserCustomCondition] = useState<string>("");
 
     const toggleModal = () => {   
         setPopupActive(!isPopupActive);
     };
 
-    const addUserCondition = (condition : string) => {
-        setUserCondition(condition);
+    const addUserTemplateCondition = (condition : string) => {
+        setUserTemplateCondition(condition);
+        toggleModal();
+    }
+
+    const addUserCustomCondition = (condition: string) => {
+        setUserCustomCondition(condition);
         toggleModal();
     }
 
     return (
         <>
             <div className="condition-item d-flex">
-                {userCondition && <UserCondition
-                    operator={userCondition}
+                {userTemplateCondition !== "" && <UserTemplateCondition
+                    operator={userTemplateCondition}
                     handlerUpdateUserCondition = {handlerUpdateCondition}
                     conditionId = {conditionId}
                     tableColumnItems={tableColumnItems}
                 />}
-                {!userCondition && (
+                {userCustomCondition !== "" && <UserCustomCondition 
+                    conditionContent={userCustomCondition}
+                />}
+                {userTemplateCondition === "" && userCustomCondition === "" && (
                     <button className="condition-inner-button" onClick={toggleModal}>+</button>
                 )}
-                <ConditionPopupForm isActive={isPopupActive} addUserConditionHandler={addUserCondition} />
+                <ConditionPopupForm 
+                    isActive={isPopupActive} 
+                    addUserTemplateConditionHandler={addUserTemplateCondition} 
+                    addUserCustomConditionHandler={addUserCustomCondition}
+                />
                 <ConditionRelative conditionId={conditionId} />
             </div>
         </>

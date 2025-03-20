@@ -16,6 +16,7 @@ export default function CustomTab( {
     const [textAreaValue, setTextAreaValue] = useState<string>("");
 
     useEffect(() => {
+        console.log('text area', textAreaValue);
         customTabValue(textAreaValue);
     }, [textAreaValue]);
 
@@ -54,7 +55,7 @@ export default function CustomTab( {
     };
 
     const getKeywords = (searchWord: string): string[] => {
-        return (Array.isArray(keywords) ? keywords : []).filter(word => word.includes(searchWord));
+        return (Array.isArray(keywords) ? keywords : []).filter(word => word.toLowerCase().includes(searchWord.toLowerCase()));
     };
 
     const fillHintSection = (searchWord: string) => {

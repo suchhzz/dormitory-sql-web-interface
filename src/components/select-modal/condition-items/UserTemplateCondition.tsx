@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { queryBuilder } from "../../../scripts/query/queryBuilder";
 
-export default function UserCondition(
+export default function UserTemplateCondition(
     {
         column,
         values,
