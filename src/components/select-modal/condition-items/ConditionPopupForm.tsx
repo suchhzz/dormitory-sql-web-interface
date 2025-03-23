@@ -1,22 +1,25 @@
 // import '../../../scripts/condition-popup'
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { queryBuilder } from "../../../scripts/query/queryBuilder";
 import CustomTab from "./CustomTab";
 
 export default function ConditionPopupForm({ 
     isActive, 
     addUserTemplateConditionHandler: addUserTemplateConditionHandler,
-    addUserCustomConditionHandler: addUserCustomConditionHandler
+    addUserCustomConditionHandler: addUserCustomConditionHandler,
+    conditionId
 }: { 
     isActive: boolean; 
     addUserTemplateConditionHandler: (condition: string) => void,
     addUserCustomConditionHandler: (condition: string) => void,
+    conditionId: number
 }) {
 
     const [activeElement, setActiveElement] = useState<string | null>(null);
     const [selectedTabId, setSelectedTabId] = useState<number>(0);
     const [customTabValue, setCustomTabValue] = useState<string>("");
+    const containerRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
         console.log(customTabValue);
@@ -125,7 +128,11 @@ export default function ConditionPopupForm({
                             </div>
                         </div>
                         <div id='conditionCustom' className={`condition-field body--custom d-flex ${selectedTabId === 1 ? "active" : ""}`}>
-                            <CustomTab customTabValue={setCustomTabValue} />
+                            <CustomTab 
+                                customTabValue={setCustomTabValue} 
+                                containerRef={containerRef}
+                                conditionId={conditionId}
+                            />
                         </div>
                     </div>
                     <div className="popup-form popup-form--footer d-flex">

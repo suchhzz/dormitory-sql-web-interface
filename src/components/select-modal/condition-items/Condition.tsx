@@ -45,6 +45,7 @@ export default function Condition(
                 />}
                 {userCustomCondition !== "" && <UserCustomCondition 
                     conditionContent={userCustomCondition}
+                    conditionId={conditionId}
                 />}
                 {userTemplateCondition === "" && userCustomCondition === "" && (
                     <button className="condition-inner-button" onClick={toggleModal}>+</button>
@@ -53,6 +54,7 @@ export default function Condition(
                     isActive={isPopupActive} 
                     addUserTemplateConditionHandler={addUserTemplateCondition} 
                     addUserCustomConditionHandler={addUserCustomCondition}
+                    conditionId={conditionId}
                 />
                 <ConditionRelative conditionId={conditionId} />
             </div>
