@@ -1,5 +1,6 @@
-import { useEffect, useMemo, useRef } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { queryBuilder } from "../../../scripts/query/queryBuilder"
+import { staticWords } from "../../../scripts/custom-tab/queryFilters";  
 
 export default function UserCustomCondition(
     {
@@ -10,23 +11,34 @@ export default function UserCustomCondition(
         conditionId: number
     }) {
 
+    const [safeConditionContent, setSafeConditionContent] = useState<string>('');
     const setCustomConditionMounted = useRef(false);
 
     useEffect(() => {
         if (!setCustomConditionMounted.current) {
             queryBuilder.setCustomCondition(conditionContent);
+            const hightlightedContent = hightLightSyntax(conditionContent);
+            setSafeConditionContent(hightlightedContent);
             setCustomConditionMounted.current = true;
         }
-    }, []);
+    }, [setCustomConditionMounted]);
+
+    const hightLightSyntax = (text: string): string => {
+        const wordsRegex = staticWords.join("|");
+        const regex = new RegExp(`\\b(${wordsRegex})\\b`, "g");
+
+        return text.replace(regex, (match) => {
+            return `<span class="highlighted">${match}</span>`;
+        });
+    };
 
     return (
         <>
             <div className="user-condition-item">
                 <div className="user-condition-item--wrapper d-flex">
                     <div className="condition-value condition--operator">
-                        <p style={{ whiteSpace: "pre-line" }}>
-                            {conditionContent}
-                        </p>
+                        <p style={{ whiteSpace: "pre-line" }}
+                            dangerouslySetInnerHTML={{ __html: safeConditionContent }} />
                     </div>
                 </div>
             </div>

@@ -13,10 +13,16 @@
                 border: 1px solid #ff3d2f;
             }
 
-            p {
+            p, .highlighted {
                 color: #fff;
                 font-family: Arial, Helvetica, sans-serif;
                 font-size: 0.9rem;
+                word-spacing: 10px;
+
+                .highlighted {
+                    color: #4f69ff;
+                    line-height: 2.3;
+                }
             }
 
             &:hover {

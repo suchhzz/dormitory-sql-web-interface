@@ -197,7 +197,9 @@ export default function UserTemplateCondition(
                         </div>
                     </div>
                     <div className="condition-value condition--operator">
-                        <p>{activeOperator}</p>
+                        <p>
+                            <span className="highlighted">{activeOperator}</span>
+                        </p>
                     </div>
                     {activeOperator === "BETWEEN" ? (
                         <>
@@ -214,7 +216,9 @@ export default function UserTemplateCondition(
                                 </div>
                             </div>
                             <div className="condition-value condition--operator">
-                                <p>AND</p>
+                                <p>
+                                    <span className="highlighted">AND</span>
+                                </p>
                             </div>
                             <div key={1} className={`condition-value condition--values ${checkChangedValuesArray(1) ? "" : "default"}`} onClick={() => togglePopup(1)}>
                                 <p>{activeValues[1]}</p>

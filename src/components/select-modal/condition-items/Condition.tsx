@@ -4,27 +4,27 @@ import UserCustomCondition from "./UserCustomCondition";
 import UserTemplateCondition from "./UserTemplateCondition";
 import { useState } from "react";
 
-export default function Condition( 
-    { 
-        handlerUpdateCondition, 
+export default function Condition(
+    {
+        handlerUpdateCondition,
         conditionId,
         tableColumnItems
-    }: 
-    { 
-        handlerUpdateCondition: (id: number) => void, 
-        conditionId: number,
-        tableColumnItems: string[]
-    } ) {
+    }:
+        {
+            handlerUpdateCondition: (id: number) => void,
+            conditionId: number,
+            tableColumnItems: string[]
+        }) {
 
     const [isPopupActive, setPopupActive] = useState(false);
     const [userTemplateCondition, setUserTemplateCondition] = useState<string>("");
     const [userCustomCondition, setUserCustomCondition] = useState<string>("");
 
-    const toggleModal = () => {   
+    const toggleModal = () => {
         setPopupActive(!isPopupActive);
     };
 
-    const addUserTemplateCondition = (condition : string) => {
+    const addUserTemplateCondition = (condition: string) => {
         setUserTemplateCondition(condition);
         toggleModal();
     }
@@ -39,20 +39,20 @@ export default function Condition(
             <div className="condition-item d-flex">
                 {userTemplateCondition !== "" && <UserTemplateCondition
                     operator={userTemplateCondition}
-                    handlerUpdateUserCondition = {handlerUpdateCondition}
-                    conditionId = {conditionId}
+                    handlerUpdateUserCondition={handlerUpdateCondition}
+                    conditionId={conditionId}
                     tableColumnItems={tableColumnItems}
                 />}
-                {userCustomCondition !== "" && <UserCustomCondition 
+                {userCustomCondition !== "" && <UserCustomCondition
                     conditionContent={userCustomCondition}
                     conditionId={conditionId}
                 />}
                 {userTemplateCondition === "" && userCustomCondition === "" && (
                     <button className="condition-inner-button" onClick={toggleModal}>+</button>
                 )}
-                <ConditionPopupForm 
-                    isActive={isPopupActive} 
-                    addUserTemplateConditionHandler={addUserTemplateCondition} 
+                <ConditionPopupForm
+                    isActive={isPopupActive}
+                    addUserTemplateConditionHandler={addUserTemplateCondition}
                     addUserCustomConditionHandler={addUserCustomCondition}
                     conditionId={conditionId}
                 />
