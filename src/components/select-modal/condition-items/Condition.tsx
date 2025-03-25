@@ -2,16 +2,18 @@ import ConditionPopupForm from "./ConditionPopupForm";
 import ConditionRelative from "./ConditionRelative";
 import UserCustomCondition from "./UserCustomCondition";
 import UserTemplateCondition from "./UserTemplateCondition";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Condition(
     {
         handlerUpdateCondition,
+        setAddConditionEnabled,
         conditionId,
         tableColumnItems
     }:
         {
             handlerUpdateCondition: (id: number) => void,
+            setAddConditionEnabled: (isEnabled: boolean) => void,
             conditionId: number,
             tableColumnItems: string[]
         }) {
@@ -19,6 +21,14 @@ export default function Condition(
     const [isPopupActive, setPopupActive] = useState(false);
     const [userTemplateCondition, setUserTemplateCondition] = useState<string>("");
     const [userCustomCondition, setUserCustomCondition] = useState<string>("");
+    const addConditionDisabled = useRef(false);
+
+    useEffect(() => {
+        if (!addConditionDisabled.current) {
+            setAddConditionEnabled(false);
+            addConditionDisabled.current = true;
+        }
+    }, []);
 
     const toggleModal = () => {
         setPopupActive(!isPopupActive);
@@ -27,11 +37,13 @@ export default function Condition(
     const addUserTemplateCondition = (condition: string) => {
         setUserTemplateCondition(condition);
         toggleModal();
+        setAddConditionEnabled(true);
     }
 
     const addUserCustomCondition = (condition: string) => {
         setUserCustomCondition(condition);
         toggleModal();
+        setAddConditionEnabled(true);
     }
 
     return (

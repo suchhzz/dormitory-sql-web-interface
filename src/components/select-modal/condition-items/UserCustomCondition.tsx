@@ -24,6 +24,7 @@ export default function UserCustomCondition(
     }, [setCustomConditionMounted]);
 
     const hightLightSyntax = (text: string): string => {
+
         const wordsRegex = staticWords.join("|");
         const regex = new RegExp(`\\b(${wordsRegex})\\b`, "g");
 

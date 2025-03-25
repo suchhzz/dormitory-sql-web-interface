@@ -13,6 +13,7 @@ export default function SelectModalBody(
  ) {
 
     const [conditions, setConditions] = useState<number[]>([]);
+    const [isAddConditionButtonEnabled, setIsAddConditionButtonEnabled] = useState<boolean>(true);
     
     const addNewCondition = () => {
         setConditions([...conditions, Date.now()]);
@@ -38,12 +39,16 @@ export default function SelectModalBody(
                             <Condition
                                 key={index}
                                 handlerUpdateCondition = {updateCondition}
+                                setAddConditionEnabled={setIsAddConditionButtonEnabled}
                                 conditionId = {index}
-                                tableColumnItems={tableColumnItems}    
+                                tableColumnItems={tableColumnItems}  
                             />
                         ))}
                     </div>
-                    <button className="add-condition-button" onClick={addNewCondition}>+</button>
+                    <button className="add-condition-button" 
+                        onClick={addNewCondition} 
+                        disabled={!isAddConditionButtonEnabled}
+                    >+</button>
                 </div>
             </div>
         </>
