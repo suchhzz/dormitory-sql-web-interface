@@ -1,8 +1,10 @@
 interface ICondition {
+    id: number,
     column?: string,
     values?: string[],
     operator?: string,
 
+    setId(id: number): void,
     setColumn(column: string): void,
     setValues(values: string[]) : void,
     setOperator(operator: string) : void,
@@ -13,18 +15,25 @@ interface ICondition {
 class Condition implements ICondition {
 
     constructor(
+        id: number = -1,
         operator: string = "=",
         column: string = "",
         values: string[] = []
     ) {
+        this.id = id;
         this.operator = operator;
         this.column = column;
         this.values = values;
     }
 
+    id: number;
     column: string;
     values: string[];
     operator: string;
+
+    setId(id: number): void {
+        this.id = id;
+    }
 
     setColumn(column: string): void {
         this.column = column;

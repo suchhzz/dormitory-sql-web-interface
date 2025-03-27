@@ -8,12 +8,14 @@ export default function Condition(
     {
         handlerUpdateCondition,
         setAddConditionEnabled,
+        removeConditionHandler,
         conditionId,
         tableColumnItems
     }:
         {
             handlerUpdateCondition: (id: number) => void,
             setAddConditionEnabled: (isEnabled: boolean) => void,
+            removeConditionHandler: (conditionId: number) => void,
             conditionId: number,
             tableColumnItems: string[]
         }) {
@@ -69,17 +71,16 @@ export default function Condition(
                     conditionId={conditionId}
                 />
                 <ConditionRelative conditionId={conditionId} />
-                <div className="condition-button condition-remove-button">
+                <div className="condition-button condition-remove-button"
+                    onClick={() => {removeConditionHandler(conditionId)}}
+                >
                     <div className="condition-button--content condition-remove-button--content"></div>
                 </div>
-                {/* {userCustomCondition && (
+                {userCustomCondition && (
                     <div className="condition-button condition-edit-button">
                         <div className="condition-button--content condition-edit-button--content"></div>
                     </div>
-                )} */}
-                <div className="condition-button condition-edit-button">
-                    <div className="condition-button--content condition-edit-button--content"></div>
-                </div>
+                )}
             </div>
         </>
     )

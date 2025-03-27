@@ -17,6 +17,8 @@ interface QueryBuilder {
     toggleRelative(conditionId: number, isANDSelected: boolean): void,
 
     setCustomCondition(conditionValue: string): void,
+
+    removeCondition(conditionId: number): void,
 }
 
 class QueryBuilder {
@@ -45,8 +47,8 @@ class QueryBuilder {
         this.query.setSelectedTable(tableName);
     }
 
-    addSelectCondition(operator: string, column: string, values: string[]): void {
-        let condition = new Condition(operator, column, values);
+    addSelectCondition(conditionId: number, operator: string, column: string, values: string[]): void {
+        let condition = new Condition(conditionId, operator, column, values);
         this.query.addCondition(condition);
     }
 
@@ -73,6 +75,10 @@ class QueryBuilder {
 
     setCustomCondition(conditionValue: string): void {
         this.query.setCustomCondition(conditionValue);
+    }
+
+    removeCondition(conditionId: number): void {
+        this.query.removeCondition(conditionId);
     }
 }
 

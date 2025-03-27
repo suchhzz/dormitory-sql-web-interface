@@ -19,8 +19,6 @@ export default function SelectModal(
 
     const [activeColumns, setActiveColumns] = useState<number[]>([0]);
 
-    
-
     const executeQuery = () => {
         queryBuilder.executeSelect();
     }
@@ -37,8 +35,6 @@ export default function SelectModal(
             setActiveColumns(prev => [...prev, index]);
         }
     }
-
-
 
     return (
         <>

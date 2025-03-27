@@ -22,6 +22,8 @@ interface IQuery {
     addRelative(): void,
     toggleRelative(conditionId: number, isANDSelected: boolean): void,
     setCustomCondition(conditionValue: string): void,
+
+    removeCondition(conditionId: number): void,
 }
 
 class Query implements IQuery {
@@ -121,6 +123,10 @@ class Query implements IQuery {
     setCustomCondition(conditionValue: string): void {
         const newCustomCondition = new Condition("", "", [conditionValue]);
         this.addCondition(newCustomCondition);
+    }
+
+    removeCondition(conditionId: number): void {
+        
     }
 }
 

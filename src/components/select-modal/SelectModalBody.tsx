@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { queryBuilder } from "../../scripts/query/queryBuilder";
 import Condition from "./condition-items/Condition";
 
 export default function SelectModalBody( 
@@ -14,13 +15,25 @@ export default function SelectModalBody(
 
     const [conditions, setConditions] = useState<number[]>([]);
     const [isAddConditionButtonEnabled, setIsAddConditionButtonEnabled] = useState<boolean>(true);
+
+    useEffect(() => {
+        console.log(conditions);
+    }, [conditions]);
     
     const addNewCondition = () => {
-        setConditions([...conditions, Date.now()]);
+        setConditions((prev) => [...prev, prev.length]);
     };
 
     const updateCondition = (conditionId: number) => {
         console.log(conditionId);
+    }
+
+    const removeCondition = (conditionId: number) => {
+        setConditions((prev) => {
+            return prev.filter((index) => index !== conditionId);
+        });
+
+        queryBuilder
     }
 
     return (
@@ -40,6 +53,7 @@ export default function SelectModalBody(
                                 key={index}
                                 handlerUpdateCondition = {updateCondition}
                                 setAddConditionEnabled={setIsAddConditionButtonEnabled}
+                                removeConditionHandler={removeCondition}
                                 conditionId = {index}
                                 tableColumnItems={tableColumnItems}  
                             />
