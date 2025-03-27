@@ -69,6 +69,17 @@ export default function Condition(
                     conditionId={conditionId}
                 />
                 <ConditionRelative conditionId={conditionId} />
+                <div className="condition-button condition-remove-button">
+                    <div className="condition-button--content condition-remove-button--content"></div>
+                </div>
+                {/* {userCustomCondition && (
+                    <div className="condition-button condition-edit-button">
+                        <div className="condition-button--content condition-edit-button--content"></div>
+                    </div>
+                )} */}
+                <div className="condition-button condition-edit-button">
+                    <div className="condition-button--content condition-edit-button--content"></div>
+                </div>
             </div>
         </>
     )
