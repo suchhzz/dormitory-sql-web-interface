@@ -39,7 +39,7 @@ export default function ConditionPopupForm({
         if (selectedTabId === 0) {
             if (activeElement) {
                 addUserTemplateConditionHandler(activeElement);
-                queryBuilder.addSelectCondition(activeElement, '', []);
+                queryBuilder.addSelectCondition(conditionId, activeElement, '', []);
             }
             else {
                 console.log('no condition selected');

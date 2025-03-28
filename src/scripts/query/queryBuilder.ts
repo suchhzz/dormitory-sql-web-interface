@@ -4,7 +4,7 @@ import { Condition } from './abstractions/Condition'
 interface QueryBuilder {
     query: Query,
 
-    addSelectCondition(operator: string, column: string, values: string[]): void,
+    addSelectCondition(conditionId: number, operator: string, column: string, values: string[]): void,
     updateSelectConditionValue(conditionIndex: number, values: string[]): void,
     updateSelectConditionColumn(conditionIndex: number, column: string): void,
     setSelectingColumns(columns: string[]): void,
@@ -16,7 +16,7 @@ interface QueryBuilder {
     addRelative(conditionId: number): void,
     toggleRelative(conditionId: number, isANDSelected: boolean): void,
 
-    setCustomCondition(conditionValue: string): void,
+    setCustomCondition(conditionId: number, conditionValue: string): void,
 
     removeCondition(conditionId: number): void,
 }
@@ -73,8 +73,8 @@ class QueryBuilder {
         this.query.toggleSelectColumn(index);
     }
 
-    setCustomCondition(conditionValue: string): void {
-        this.query.setCustomCondition(conditionValue);
+    setCustomCondition(conditionId: number, conditionValue: string): void {
+        this.query.setCustomCondition(conditionId, conditionValue);
     }
 
     removeCondition(conditionId: number): void {

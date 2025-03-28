@@ -16,7 +16,7 @@ export default function UserCustomCondition(
 
     useEffect(() => {
         if (!setCustomConditionMounted.current) {
-            queryBuilder.setCustomCondition(conditionContent);
+            queryBuilder.setCustomCondition(conditionId, conditionContent);
             const hightlightedContent = hightLightSyntax(conditionContent);
             setSafeConditionContent(hightlightedContent);
             setCustomConditionMounted.current = true;

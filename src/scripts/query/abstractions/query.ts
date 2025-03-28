@@ -21,7 +21,7 @@ interface IQuery {
 
     addRelative(): void,
     toggleRelative(conditionId: number, isANDSelected: boolean): void,
-    setCustomCondition(conditionValue: string): void,
+    setCustomCondition(conditionId: number, conditionValue: string): void,
 
     removeCondition(conditionId: number): void,
 }
@@ -38,6 +38,8 @@ class Query implements IQuery {
     }
     addCondition(condition: Condition): void {
         this.conditions?.push(condition);
+
+        console.log('conditions', this.conditions);
     }
 
     addRelative(): void {
@@ -120,13 +122,15 @@ class Query implements IQuery {
         console.log(this.selectedColumns);
     }
 
-    setCustomCondition(conditionValue: string): void {
-        const newCustomCondition = new Condition("", "", [conditionValue]);
+    setCustomCondition(conditionId: number, conditionValue: string): void {
+        const newCustomCondition = new Condition(conditionId, "", "", [conditionValue]);
         this.addCondition(newCustomCondition);
     }
 
     removeCondition(conditionId: number): void {
-        
+        this.conditions = this.conditions.filter((item) => item.id !== conditionId);
+
+        console.log('conditions', this.conditions);
     }
 }
 
