@@ -15,13 +15,15 @@ export default function SelectModalBody(
 
     const [conditions, setConditions] = useState<number[]>([]);
     const [isAddConditionButtonEnabled, setIsAddConditionButtonEnabled] = useState<boolean>(true);
+    const [conditionIdCounter, setConditionIdCounter] = useState<number>(0);
 
     useEffect(() => {
         console.log(conditions);
     }, [conditions]);
     
     const addNewCondition = () => {
-        setConditions((prev) => [...prev, prev.length]);
+        setConditions((prev) => [...prev, conditionIdCounter]);
+        setConditionIdCounter((prev) => prev + 1);
     };
 
     const updateCondition = (conditionId: number) => {
@@ -33,7 +35,7 @@ export default function SelectModalBody(
             return prev.filter((index) => index !== conditionId);
         });
 
-        queryBuilder
+        queryBuilder.removeCondition(conditionId);
     }
 
     return (
@@ -50,11 +52,11 @@ export default function SelectModalBody(
                     <div className="condition-wrapper d-grid">
                         {conditions.map((item, index) => (
                             <Condition
-                                key={index}
+                                key={item}
                                 handlerUpdateCondition = {updateCondition}
                                 setAddConditionEnabled={setIsAddConditionButtonEnabled}
                                 removeConditionHandler={removeCondition}
-                                conditionId = {index}
+                                conditionId = {item}
                                 tableColumnItems={tableColumnItems}  
                             />
                         ))}
