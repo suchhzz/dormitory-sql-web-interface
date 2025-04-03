@@ -24,6 +24,7 @@ interface IQuery {
     setCustomCondition(conditionId: number, conditionValue: string): void,
 
     removeCondition(conditionId: number): void,
+    removeConditionRelative(conditionId: number): void,
 }
 
 class Query implements IQuery {
@@ -55,11 +56,20 @@ class Query implements IQuery {
     }
 
     updateConditionValue(conditionIndex: number, values: string[]): void {
-        this.conditions[conditionIndex].values = [...values];
+        this.conditions.forEach(condition => {
+            if (condition.id === conditionIndex) {
+                condition.values = [...values];
+            }
+        });
     }
 
     updateConditionColumn(conditionIndex: number, column: string): void {
-        this.conditions[conditionIndex].column = column;
+        this.conditions.forEach(condition => {
+            if (condition.id === conditionIndex) {
+                condition.column = column;
+                return;
+            }
+        });
     }
 
     getQuerySelect(): string {
@@ -129,8 +139,24 @@ class Query implements IQuery {
 
     removeCondition(conditionId: number): void {
         this.conditions = this.conditions.filter((item) => item.id !== conditionId);
+    }
 
+    removeConditionRelative(conditionId: number) { // TODO
+        const index = this.conditions.findIndex(condition => condition.id === conditionId);
+
+        console.log('condition id', conditionId);
         console.log('conditions', this.conditions);
+        
+        
+
+        if (index === 0) {
+            this.relatives.shift();
+        } else {
+            this.relatives.splice(index - 1, 1);
+        }
+        console.log('removing relation at condition index:', index);
+        console.log('relatives', this.relatives);
+        
     }
 }
 

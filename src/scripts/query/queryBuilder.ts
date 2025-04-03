@@ -78,6 +78,7 @@ class QueryBuilder {
     }
 
     removeCondition(conditionId: number): void {
+        this.query.removeConditionRelative(conditionId);
         this.query.removeCondition(conditionId);
     }
 }

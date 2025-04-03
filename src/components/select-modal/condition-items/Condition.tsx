@@ -37,9 +37,15 @@ export default function Condition(
     };
 
     const addUserTemplateCondition = (condition: string) => {
-        setUserTemplateCondition(condition);
-        toggleModal();
-        setAddConditionEnabled(true);
+        
+        try {
+            setUserTemplateCondition(condition);
+            toggleModal();
+            setAddConditionEnabled(true);
+        } catch (e) {
+            console.error(e);
+        }
+        
     }
 
     const addUserCustomCondition = (condition: string) => {
