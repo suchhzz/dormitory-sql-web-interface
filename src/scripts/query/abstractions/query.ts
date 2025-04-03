@@ -46,10 +46,14 @@ class Query implements IQuery {
     addRelative(): void {
         this.relatives.push("AND");
 
-        console.log(this.relatives);
+        console.log('added relative', this.relatives);
     }
 
     toggleRelative(conditionId: number, isANDSelected: boolean): void {
+
+        console.log('toggled with conditionId:', conditionId);
+        
+
         isANDSelected ? this.relatives[conditionId - 1] = "AND" : this.relatives[conditionId - 1] = "OR";
 
         console.log(this.relatives);
@@ -141,23 +145,32 @@ class Query implements IQuery {
         this.conditions = this.conditions.filter((item) => item.id !== conditionId);
     }
 
-    removeConditionRelative(conditionId: number) { // TODO
+    removeConditionRelative(conditionId: number) { 
         const index = this.conditions.findIndex(condition => condition.id === conditionId);
-
-        console.log('condition id', conditionId);
-        console.log('conditions', this.conditions);
-        
-        
-
-        if (index === 0) {
-            this.relatives.shift();
-        } else {
-            this.relatives.splice(index - 1, 1);
+    
+        console.log('Condition ID:', conditionId);
+        console.log('Conditions:', this.conditions);
+        console.log('Relatives before removal:', this.relatives);
+        console.log('Found index:', index);
+    
+        if (index === -1) {
+            console.warn(`Condition with id ${conditionId} not found.`);
+            return;
         }
-        console.log('removing relation at condition index:', index);
-        console.log('relatives', this.relatives);
-        
+    
+        if (index === 0) {
+            console.log("Removing first relative.");
+            this.relatives.shift();
+        } else if (index - 1 >= 0 && index - 1 < this.relatives.length) {
+            console.log(`Removing relative at index ${index - 1}`);
+            this.relatives.splice(index - 1, 1);
+        } else {
+            console.warn(`Index ${index - 1} is out of bounds for relatives.`);
+        }
+    
+        console.log('Relatives after removal:', this.relatives);
     }
+    
 }
 
 export {  Query };
