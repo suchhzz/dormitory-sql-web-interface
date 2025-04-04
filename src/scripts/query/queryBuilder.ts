@@ -30,6 +30,9 @@ class QueryBuilder {
     }
 
     addRelative(conditionId: number): void {
+
+        
+
         if (conditionId === 0) {
             return;
         }

@@ -44,17 +44,24 @@ class Query implements IQuery {
     }
 
     addRelative(): void {
+
+        console.log('query, adding relative, current relatives: ', this.relatives);
+
         this.relatives.push("AND");
 
         console.log('added relative', this.relatives);
     }
 
     toggleRelative(conditionId: number, isANDSelected: boolean): void {
-
-        console.log('toggled with conditionId:', conditionId);
         
 
-        isANDSelected ? this.relatives[conditionId - 1] = "AND" : this.relatives[conditionId - 1] = "OR";
+        const index = this.conditions.findIndex(condition => condition.id === conditionId);
+
+        if (index === 0) {
+            return;
+        }
+
+        isANDSelected ? this.relatives[index - 1] = "AND" : this.relatives[index - 1] = "OR";
 
         console.log(this.relatives);
     }

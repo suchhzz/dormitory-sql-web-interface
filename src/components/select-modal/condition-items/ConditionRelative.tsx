@@ -14,6 +14,9 @@ export default function ConditionRelative(
 
     useEffect(() => {
         if (!effectExecuted.current) { 
+
+            console.log('adding relative conditionId:', conditionId)
+
             queryBuilder.addRelative(conditionId);
             effectExecuted.current = true;
         }
