@@ -38,6 +38,10 @@ export default function SelectModalBody(
         queryBuilder.removeCondition(conditionId);
     }
 
+    const editCustomCondition = (conditionId: number, newConditionContent: string) => {
+        queryBuilder.editCustomCondition(conditionId, newConditionContent);
+    }
+
     return (
         <>
             <div className="select-modal-wrapper-body d-grid">
@@ -56,6 +60,7 @@ export default function SelectModalBody(
                                 handlerUpdateCondition = {updateCondition}
                                 setAddConditionEnabled={setIsAddConditionButtonEnabled}
                                 removeConditionHandler={removeCondition}
+                                editCustomCondition={editCustomCondition}
                                 conditionId = {item}
                                 tableColumnItems={tableColumnItems}  
                             />

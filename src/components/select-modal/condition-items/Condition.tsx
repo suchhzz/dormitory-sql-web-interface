@@ -9,6 +9,7 @@ export default function Condition(
         handlerUpdateCondition,
         setAddConditionEnabled,
         removeConditionHandler,
+        editCustomCondition,
         conditionId,
         tableColumnItems
     }:
@@ -16,11 +17,13 @@ export default function Condition(
             handlerUpdateCondition: (id: number) => void,
             setAddConditionEnabled: (isEnabled: boolean) => void,
             removeConditionHandler: (conditionId: number) => void,
+            editCustomCondition: (conditionId: number, conditionContent: string) => void,
             conditionId: number,
             tableColumnItems: string[]
         }) {
 
     const [isPopupActive, setPopupActive] = useState(false);
+    const [isCustomConditionEditing, setIsCustomConditionEditing] = useState(false);
     const [userTemplateCondition, setUserTemplateCondition] = useState<string>("");
     const [userCustomCondition, setUserCustomCondition] = useState<string>("");
     const addConditionDisabled = useRef(false);
@@ -54,6 +57,23 @@ export default function Condition(
         setAddConditionEnabled(true);
     }
 
+    const editUserCustomCondition = (condition: string) => {
+
+        console.log('condition text:', condition);
+        
+
+        setUserCustomCondition(condition);
+        toggleModal();
+        setAddConditionEnabled(true);
+
+        editCustomCondition(conditionId, condition);
+    }
+
+    const toggleEditCustomCondition = () => {
+        setPopupActive(!isPopupActive);
+        setIsCustomConditionEditing(!isCustomConditionEditing);
+    }
+
     return (
         <>
             <div className="condition-item d-flex">
@@ -72,8 +92,10 @@ export default function Condition(
                 )}
                 <ConditionPopupForm
                     isActive={isPopupActive}
+                    isEditing={isCustomConditionEditing}
                     addUserTemplateConditionHandler={addUserTemplateCondition}
                     addUserCustomConditionHandler={addUserCustomCondition}
+                    editUserCustomConditionHandler={editUserCustomCondition}
                     conditionId={conditionId}
                 />
                 <ConditionRelative conditionId={conditionId} />
@@ -83,7 +105,9 @@ export default function Condition(
                     <div className="condition-button--content condition-remove-button--content"></div>
                 </div>
                 {userCustomCondition && (
-                    <div className="condition-button condition-edit-button">
+                    <div className="condition-button condition-edit-button"
+                        onClick={toggleEditCustomCondition}
+                    >
                         <div className="condition-button--content condition-edit-button--content"></div>
                     </div>
                 )}

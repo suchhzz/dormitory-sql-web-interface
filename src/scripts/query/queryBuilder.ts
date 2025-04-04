@@ -19,6 +19,8 @@ interface QueryBuilder {
     setCustomCondition(conditionId: number, conditionValue: string): void,
 
     removeCondition(conditionId: number): void,
+
+    editCustomCondition(conditionId: number, conditionContent: string): void,
 }
 
 class QueryBuilder {
@@ -83,6 +85,10 @@ class QueryBuilder {
     removeCondition(conditionId: number): void {
         this.query.removeConditionRelative(conditionId);
         this.query.removeCondition(conditionId);
+    }
+
+    editCustomCondition(conditionId: number, conditionContent: string) {
+        this.query.editCustomCondition(conditionId, conditionContent);
     }
 }
 

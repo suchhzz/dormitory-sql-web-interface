@@ -25,6 +25,8 @@ interface IQuery {
 
     removeCondition(conditionId: number): void,
     removeConditionRelative(conditionId: number): void,
+    
+    editCustomCondition(conditionId: number, conditionContent: string): void,
 }
 
 class Query implements IQuery {
@@ -177,7 +179,16 @@ class Query implements IQuery {
     
         console.log('Relatives after removal:', this.relatives);
     }
-    
+
+    editCustomCondition(conditionId: number, conditionContent: string): void {
+        let selectedCondition = this.conditions.find(condition => condition.id === conditionId);
+
+        if (selectedCondition) {
+            selectedCondition?.setValues([conditionContent]);
+            console.log('condition updated', selectedCondition);
+            
+        }
+    }
 }
 
 export {  Query };

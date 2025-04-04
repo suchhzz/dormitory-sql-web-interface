@@ -4,15 +4,19 @@ import { useEffect, useRef, useState } from "react"
 import { queryBuilder } from "../../../scripts/query/queryBuilder";
 import CustomTab from "./CustomTab";
 
-export default function ConditionPopupForm({ 
-    isActive, 
+export default function ConditionPopupForm({
+    isActive,
+    isEditing,
     addUserTemplateConditionHandler: addUserTemplateConditionHandler,
     addUserCustomConditionHandler: addUserCustomConditionHandler,
+    editUserCustomConditionHandler: editUserCustomConditionHandler,
     conditionId
-}: { 
-    isActive: boolean; 
+}: {
+    isActive: boolean,
+    isEditing: boolean,
     addUserTemplateConditionHandler: (condition: string) => void,
     addUserCustomConditionHandler: (condition: string) => void,
+    editUserCustomConditionHandler: (condition: string) => void,
     conditionId: number
 }) {
 
@@ -20,10 +24,17 @@ export default function ConditionPopupForm({
     const [selectedTabId, setSelectedTabId] = useState<number>(0);
     const [customTabValue, setCustomTabValue] = useState<string>("");
     const containerRef = useRef<HTMLDivElement | null>(null);
+    const [customTabContent, setCustomTabContent] = useState<string>("");
 
     useEffect(() => {
         console.log(customTabValue);
     }, [customTabValue]);
+
+    useEffect(() => {
+        if (isEditing) {
+            setSelectedTabId(1);
+        }
+    }, []);
 
     const elementHandleClick = (value: string) => {
 
@@ -46,7 +57,12 @@ export default function ConditionPopupForm({
             }
         }
         else if (selectedTabId === 1) {
-            addUserCustomConditionHandler(customTabValue);
+            if (isEditing) {
+                editUserCustomConditionHandler(customTabValue);
+            }
+            else {
+                addUserCustomConditionHandler(customTabValue);
+            }
         }
     }
 
@@ -128,8 +144,8 @@ export default function ConditionPopupForm({
                             </div>
                         </div>
                         <div id='conditionCustom' className={`condition-field body--custom d-flex ${selectedTabId === 1 ? "active" : ""}`}>
-                            <CustomTab 
-                                customTabValue={setCustomTabValue} 
+                            <CustomTab
+                                customTabValue={setCustomTabValue}
                                 containerRef={containerRef}
                                 conditionId={conditionId}
                             />

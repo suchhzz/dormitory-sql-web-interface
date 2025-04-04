@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react"
 import { queryBuilder } from "../../../scripts/query/queryBuilder"
-import { staticWords } from "../../../scripts/custom-tab/queryFilters";  
+import { staticWords } from "../../../scripts/custom-tab/queryFilters";
 
 export default function UserCustomCondition(
     {
@@ -23,15 +23,20 @@ export default function UserCustomCondition(
         }
     }, [setCustomConditionMounted]);
 
+    useEffect(() => {
+        const hightlightedContent = hightLightSyntax(conditionContent);
+        setSafeConditionContent(hightlightedContent);
+    }, [conditionContent]);
+
     const hightLightSyntax = (text: string): string => {
         const wordsRegex = [...staticWords].join("|");
         const regex = new RegExp(`\\b(${wordsRegex})\\b|[><=\\-+*/%]`, "g");
-    
+
         return text.replace(regex, (match) => {
             return `<span class="highlighted">${match}</span>`;
         });
     };
-    
+
 
     return (
         <>

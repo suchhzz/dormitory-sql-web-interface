@@ -55,7 +55,7 @@ export default function CustomTab({
 
         shadow.innerHTML = textBeforeCursor.replace(/\n/g, "<br>") + `<span class="cursor-span">|</span>` + textAfterCursor;
         const cursorSpans = document.getElementsByClassName("cursor-span");
-        const cursorSpan = cursorSpans[cursorSpans.length - 1]; // todo getting current custom tab id
+        const cursorSpan = cursorSpans[cursorSpans.length - 1];
 
         if (!cursorSpan) return;
 
