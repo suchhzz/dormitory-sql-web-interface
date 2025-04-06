@@ -1,25 +1,27 @@
 import { useEffect, useState } from 'react';
-import ButtonPanel from './components/ButtonPanel';
-import MenuPanel from './components/MenuPanel';
-import Table from './components/Table';
-import './scripts/query/abstractions/Query.ts'
+import ButtonPanel from './components/ButtonPanel.tsx';
+import MenuPanel from './components/MenuPanel.tsx';
+import Table from './components/Table.tsx';
 import { fetchDatabaseData } from './services/databaseService.ts';
-import { DatabaseAbstractObjectType, DatabaseType, TableType } from './types/databaseTypes.ts';
+import { DatabaseType, TableType } from './types/databaseTypes.ts';
 import { queryBuilder } from './scripts/query/queryBuilder.ts';
 
 function App() {
 
   const [activeDatabase, setActiveDatabase] = useState<DatabaseType | null>(null);
   const [activeTable, setActiveTable] = useState<TableType | null>(null);
-  const [activeTableIndex, setActiveTableIndex] = useState<number>(0);
+  const [activeTableIndex] = useState<number>(0);
   const [tableColumns, setTableColumns] = useState<string[]>([]);
-  const [tableName, setTableName] = useState<string>('');
 
   useEffect(() => {
     const fetchData = async () => {
-      const fetchedDatabase = await fetchDatabaseData();
-      if (fetchedDatabase) {
-        setActiveDatabase(fetchedDatabase.database);
+      try {
+        const fetchedDatabase = await fetchDatabaseData();
+        if (fetchedDatabase) {
+          setActiveDatabase(fetchedDatabase.database);
+        }
+      } catch (error) {
+        console.error("Error fetching database data:", error);
       }
     };
 

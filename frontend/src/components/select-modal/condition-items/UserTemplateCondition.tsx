@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { queryBuilder } from "../../../scripts/query/queryBuilder";
 
 export default function UserTemplateCondition(
@@ -20,7 +20,7 @@ export default function UserTemplateCondition(
 
     const [activeColumn, setActiveColumn] = useState<string>(column ?? "column");
     const [activeValues, setActiveValues] = useState<string[]>(values ?? ["_"]);
-    const [activeOperator, setActiveOperator] = useState<string>(operator ?? "");
+    const [activeOperator] = useState<string>(operator ?? "");
     const [typeInConditionModalActive, setTypeInConditionModalActive] = useState<boolean>(false);
     const [typeInConditionInputValue, setTypeInConditionInputValue] = useState<string>("");
     const [selectedPopupId, setSelectedPopupId] = useState<number>(-1);
@@ -134,7 +134,7 @@ export default function UserTemplateCondition(
     }
 
     const setValuesInOperator = (inConditionValue: string) => {
-        setActiveValues(prevValues => [...activeValues, inConditionValue]);
+        setActiveValues([...activeValues, inConditionValue]);
     }
 
     const toggleColumnChangePopup = () => {

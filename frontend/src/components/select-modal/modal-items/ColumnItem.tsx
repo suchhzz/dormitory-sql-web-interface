@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import AliasOption from "./column-item-params/AliasOption"
 import FunctionOption from "./column-item-params/FunctionOption"
 import { queryBuilder } from "../../../scripts/query/queryBuilder";

@@ -1,4 +1,4 @@
-import { ICondition, Condition } from './Condition'
+import { Condition } from './condition';
 import { TableColumn } from './TableColumn'
 
 interface IQuery {
@@ -100,7 +100,7 @@ class Query implements IQuery {
                         .join(', ')} FROM ${table} \n`;
     }
 
-    getConditionsSelectQueryString(conditions: ICondition[]) {
+    getConditionsSelectQueryString(conditions: Condition[]) {
 
         let buildConditionString: string = "WHERE" + '\n';
 

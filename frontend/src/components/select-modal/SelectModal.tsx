@@ -1,7 +1,7 @@
 import ColumnItem from "./modal-items/ColumnItem";
 import SelectModalBody from "./SelectModalBody";
 import { queryBuilder } from "../../scripts/query/queryBuilder";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function SelectModal(
     {

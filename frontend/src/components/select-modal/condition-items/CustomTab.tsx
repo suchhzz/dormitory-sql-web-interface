@@ -4,17 +4,14 @@ import { staticWords } from "../../../scripts/custom-tab/queryFilters";
 export default function CustomTab({
     customTabValue,
     containerRef,
-    conditionId
 }: {
     customTabValue: (text: string) => void,
     containerRef: React.RefObject<HTMLDivElement>,
-    conditionId: number
 }) {
     const [cursorPos, setCursorPos] = useState({ top: 0, left: 0 });
     const textareaRef = useRef<HTMLTextAreaElement | null>(null);
     const shadowRef = useRef<HTMLDivElement | null>(null);
-    const cursorRef = useRef<HTMLSpanElement | null>(null);
-    const [keywords, setKeywords] = useState<string[]>(staticWords);
+    const [keywords] = useState<string[]>(staticWords);
     const [activeKeywords, setActiveKeywords] = useState<string[]>([]);
     const [activeHintIndex, setActiveHintIndex] = useState<number>(-1);
     const [textAreaValue, setTextAreaValue] = useState<string>("");

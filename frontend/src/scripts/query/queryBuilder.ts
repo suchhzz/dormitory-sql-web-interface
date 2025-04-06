@@ -1,5 +1,5 @@
-import { Query } from './abstractions/Query'
-import { Condition } from './abstractions/Condition'
+import { Query } from './abstractions/query';
+import { Condition } from './abstractions/condition';
 
 interface QueryBuilder {
     query: Query,

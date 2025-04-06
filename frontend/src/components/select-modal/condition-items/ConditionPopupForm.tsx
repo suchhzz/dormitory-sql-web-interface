@@ -24,7 +24,6 @@ export default function ConditionPopupForm({
     const [selectedTabId, setSelectedTabId] = useState<number>(0);
     const [customTabValue, setCustomTabValue] = useState<string>("");
     const containerRef = useRef<HTMLDivElement | null>(null);
-    const [customTabContent, setCustomTabContent] = useState<string>("");
 
     useEffect(() => {
         console.log(customTabValue);
@@ -147,7 +146,6 @@ export default function ConditionPopupForm({
                             <CustomTab
                                 customTabValue={setCustomTabValue}
                                 containerRef={containerRef}
-                                conditionId={conditionId}
                             />
                         </div>
                     </div>

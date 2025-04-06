@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { queryBuilder } from "../../../scripts/query/queryBuilder"
 import { staticWords } from "../../../scripts/custom-tab/queryFilters";
 

@@ -54,7 +54,7 @@ export default function SelectModalBody(
                 <div className="select-modal-section select-condition-section">
                     <label className="label-form">Condition</label>
                     <div className="condition-wrapper d-grid">
-                        {conditions.map((item, index) => (
+                        {conditions.map((item) => (
                             <Condition
                                 key={item}
                                 handlerUpdateCondition = {updateCondition}

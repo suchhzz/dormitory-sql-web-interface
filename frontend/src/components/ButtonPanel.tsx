@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import InsertModal from "./insert-modal/InsertModal";
 import SelectModal from "./select-modal/SelectModal";
 
