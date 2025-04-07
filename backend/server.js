@@ -15,6 +15,6 @@ app.use(express.json());
 app.use('/api/query', queryRouter);
 app.use('/api/home', homeRouter);
 
-app.listen(8080, () => {
-  console.log('deployed on http://localhost:8080');
+app.listen(5000, '0.0.0.0', () => {
+  console.log('listening 5000');
 });
