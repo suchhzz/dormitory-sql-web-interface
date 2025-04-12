@@ -114,23 +114,27 @@ class Query implements IQuery {
         return buildConditionString;
     }
 
-    getQueryInsertString(): string {
+    getQueryInsertString(values: string[]): string {
 
         let queryString: string = "";
 
         queryString += this.getHeaderInsertQueryString(this.selectedColumns, this.selectedTable);
 
-        // queryString += this.getValuesInsertQueryString(this.);
+        queryString += this.getValuesInsertQueryString(values);
+        console.log(queryString);
 
-        return "";
+        return queryString;
     }
 
     getHeaderInsertQueryString(columns: TableColumn[], table: string) {
-        return `INSERT INTO (${columns.map(el => el.name).join(' ')}) FROM ${table}`;
+
+        console.log(columns);
+
+        return `INSERT INTO (${columns.map(el => el.name).join(', ')}) FROM ${table}\n`;
     }
 
     getValuesInsertQueryString(values: string[]) {
-        return `VALUES (${values.join(' ')})`;
+        return `VALUES (${values.join(', ')})`;
     }
 
     setColumns(columns: string[]): void {

@@ -34,6 +34,7 @@ export default function ButtonPanel(
             <InsertModal 
                 isActive={isInsertModalActive}
                 handlerCloseModal={toggleInsertModal} 
+                tableColumnItems={tableColumnItems}
             />
             <SelectModal 
                 isActive={isSelectModalActive} 

@@ -1,5 +1,6 @@
+import InsertModalBody from "./InsertModalBody";
 
-export default function InsertModal( { isActive, handlerCloseModal, } : { isActive: boolean, handlerCloseModal: () => void; } ) {
+export default function InsertModal( { isActive, handlerCloseModal, tableColumnItems } : { isActive: boolean, handlerCloseModal: () => void, tableColumnItems: string[] } ) {
     return (
         <>
             <div id="insertModal" className={`modal ${isActive ? "active" : ""}`}>
@@ -10,27 +11,9 @@ export default function InsertModal( { isActive, handlerCloseModal, } : { isActi
                             <div className="modal-header">
                                 <p className="modal-title">Insert</p>
                             </div>
-                            <div className="modal-body">
-                                <form className="modal-form d-flex">
-                                    <label className="label-form d-flex">
-                                        input
-                                        <input type="text" className="form-item-input"></input>
-                                    </label>
-                                    <label className="label-form d-flex">
-                                        input
-                                        <input type="text" className="form-item-input"></input>
-                                    </label>
-                                    <label className="label-form d-flex">
-                                        input
-                                        <input type="text" className="form-item-input"></input>
-                                    </label>
-                                    <label className="label-form d-flex">
-                                        input
-                                        <input type="text" className="form-item-input"></input>
-                                    </label>
-                                    <input type='submit' placeholder="Insert" className="form-btn-submit"></input>
-                                </form>
-                            </div>
+                            <InsertModalBody
+                                tableColumnItems={tableColumnItems}
+                            />
                         </div>
                     </div>
                     <div className="modal-overlay">

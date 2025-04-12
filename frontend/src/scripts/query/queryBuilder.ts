@@ -9,6 +9,8 @@ interface QueryBuilder {
     updateSelectConditionColumn(conditionIndex: number, column: string): void,
     setSelectingColumns(columns: string[]): void,
     executeSelect(): void,
+    executeInsert(inputValues: string[]): void,
+
     toggleSelectColumn(index: number): void,
 
     setActiveTable(tableName: string): void,
@@ -32,8 +34,6 @@ class QueryBuilder {
     }
 
     addRelative(conditionId: number): void {
-
-        
 
         if (conditionId === 0) {
             return;
@@ -89,6 +89,10 @@ class QueryBuilder {
 
     editCustomCondition(conditionId: number, conditionContent: string) {
         this.query.editCustomCondition(conditionId, conditionContent);
+    }
+
+    executeInsert(inputValues: string[]) {
+        this.query.getQueryInsertString(inputValues);
     }
 }
 
