@@ -27,6 +27,8 @@ interface IQuery {
     removeConditionRelative(conditionId: number): void,
     
     editCustomCondition(conditionId: number, conditionContent: string): void,
+
+    deleteTableItem(itemId: number): void,
 }
 
 class Query implements IQuery {
@@ -192,6 +194,13 @@ class Query implements IQuery {
             console.log('condition updated', selectedCondition);
             
         }
+    }
+    
+    deleteTableItem(itemId: number) {
+        const query = `DELETE FROM ${this.selectedTable} WHERE id = ${itemId}`;
+        console.log(query);
+
+        return query;
     }
 }
 

@@ -1,6 +1,17 @@
 import InsertModalBody from "./InsertModalBody";
 
-export default function InsertModal( { isActive, handlerCloseModal, tableColumnItems } : { isActive: boolean, handlerCloseModal: () => void, tableColumnItems: string[] } ) {
+export default function InsertModal( 
+    { 
+        isActive, 
+        handlerCloseModal, 
+        tableColumnItems 
+    } : 
+    { 
+        isActive: boolean, 
+        handlerCloseModal: () => void,
+        tableColumnItems: string[] 
+    } ) 
+    {
     return (
         <>
             <div id="insertModal" className={`modal ${isActive ? "active" : ""}`}>

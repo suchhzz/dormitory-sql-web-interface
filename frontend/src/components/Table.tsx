@@ -23,6 +23,14 @@ export default function Table({ table }: { table: TableType }) {
         queryBuilder.setSelectingColumns(columnsName);
     }, [columnsValues]);
 
+    const deleteTableItem = (id: number) => {
+        queryBuilder.deleteTableItem(id);
+    }
+
+    const editTableItem = (id: number) => {
+        console.log('edit', id);
+    }
+
     return (
         <>
             <table className="table-display">
@@ -37,10 +45,19 @@ export default function Table({ table }: { table: TableType }) {
                 </thead>
                 <tbody>
                     {columnsValues.map((item, index) => (
-                        <tr key={index}>
+                        <tr className="table-item" key={index}>
                             {item.map((valueItem, valueIndex) => (
                                 <td key={valueIndex}>{valueItem}</td>
                             ))}
+
+                            <div className="table-row-options">
+                                <div className="table-row-options--wrapper">
+                                    <div className="option-item delete" onClick={() => deleteTableItem(parseInt(item[0]))}>
+                                    </div>
+                                    <div className="option-item edit" onClick={() => editTableItem(parseInt(item[0]))}>
+                                    </div>
+                                </div>
+                            </div>
                         </tr>
                     ))}
                 </tbody>

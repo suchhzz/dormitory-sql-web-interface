@@ -1,5 +1,6 @@
 import { Query } from './abstractions/query';
 import { Condition } from './abstractions/condition';
+import { VoidFunctionComponent } from 'react';
 
 interface QueryBuilder {
     query: Query,
@@ -23,6 +24,8 @@ interface QueryBuilder {
     removeCondition(conditionId: number): void,
 
     editCustomCondition(conditionId: number, conditionContent: string): void,
+
+    deleteTableItem(itemId: number): void,
 }
 
 class QueryBuilder {
@@ -93,6 +96,10 @@ class QueryBuilder {
 
     executeInsert(inputValues: string[]) {
         this.query.getQueryInsertString(inputValues);
+    }
+
+    deleteTableItem(itemId: number) {
+        this.query.deleteTableItem(itemId);
     }
 }
 
