@@ -3,13 +3,13 @@ export default {
         tables: [
             {
                 tableName: "persons",
-                columns: ["firstname", "lastname", "age"],
+                columns: ["id", "firstname", "lastname", "age"],
                 values: [
-                    ["petr", "petrenko", "26"],
-                    ["john", "allen", "32"],
-                    ["maria", "buya", "54"],
-                    ["joseph", "miller", "21"],
-                    ["mac", "tavish", "17"]
+                    ["1", "petr", "petrenko", "26"],
+                    ["2", "john", "allen", "32"],
+                    ["3", "maria", "buya", "54"],
+                    ["4", "joseph", "miller", "21"],
+                    ["5", "mac", "tavish", "17"]
                 ]
             }
         ]
