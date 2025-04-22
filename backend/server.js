@@ -2,18 +2,18 @@ import express from 'express';
 import cors from 'cors';
 
 import queryRouter from './routes/queryRoutes.js';
-import homeRouter from './routes/homeRoutes.js';
+import databaseRouter from './routes/databaseRoutes.js';
 
 const app = express();
 
 app.use(cors({
   origin: 'http://localhost:5173',
-  methods: ['GET', 'POST'],
+  methods: ['GET', 'POST', 'PATCH', 'DELETE'],
 }));
 
 app.use(express.json());
 app.use('/api/query', queryRouter);
-app.use('/api/home', homeRouter);
+app.use('/api', databaseRouter);
 app.use('/', function(req, res) {
   res.send('test');
 })
