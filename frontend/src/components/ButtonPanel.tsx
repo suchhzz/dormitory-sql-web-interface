@@ -1,22 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InsertModal from "./insert-modal/InsertModal";
 import SelectModal from "./select-modal/SelectModal";
 
 export default function ButtonPanel(
     {
         tableColumnItems,
-        tableName
+        tableName,
+        editValues,
+        clearEditValue
     }:
     {
         tableColumnItems: string[],
-        tableName: string
+        tableName: string,
+        editValues: string[],
+        clearEditValue: () => void 
     }
 ) {
 
     const [isInsertModalActive, setIsInsertModalActive] = useState<boolean>(false);
     const [isSelectModalActive, setIsSelectModalActive] = useState<boolean>(false);
 
+    useEffect(() => {
+        if (editValues.length > 0) {
+            toggleInsertModal();
+        }
+    }, [editValues])
+
+
     const toggleInsertModal = () => {
+
+        if (isInsertModalActive) {
+            clearEditValue();
+            console.log('modal, clearing');
+            
+        }
+
         setIsInsertModalActive(!isInsertModalActive);
     }
     
@@ -35,6 +53,8 @@ export default function ButtonPanel(
                 isActive={isInsertModalActive}
                 handlerCloseModal={toggleInsertModal} 
                 tableColumnItems={tableColumnItems}
+                editValues={editValues}
+                clearEditValue={clearEditValue}
             />
             <SelectModal 
                 isActive={isSelectModalActive} 

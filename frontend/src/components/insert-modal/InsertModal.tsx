@@ -4,12 +4,16 @@ export default function InsertModal(
     { 
         isActive, 
         handlerCloseModal, 
-        tableColumnItems 
+        tableColumnItems,
+        editValues,
+        clearEditValue
     } : 
     { 
         isActive: boolean, 
         handlerCloseModal: () => void,
-        tableColumnItems: string[] 
+        tableColumnItems: string[],
+        editValues: string[],
+        clearEditValue: () => void,
     } ) 
     {
     return (
@@ -20,10 +24,14 @@ export default function InsertModal(
                         <div className="modal-wrapper d-grid">
                             <button id='closeModal' className="close-button close-button-modal" onClick={handlerCloseModal}>X</button>
                             <div className="modal-header">
-                                <p className="modal-title">Insert</p>
+                                <p className="modal-title">
+                                    {editValues.length > 0 ? "Update" : "Insert"}
+                                </p>
                             </div>
                             <InsertModalBody
                                 tableColumnItems={tableColumnItems}
+                                editValues={editValues}
+                                clearEditValue={clearEditValue}
                             />
                         </div>
                     </div>

@@ -14,4 +14,13 @@ export default defineConfig({
     target: ['esnext'],
   },
   envDir: '../',
+  server: {
+    proxy: {
+      '/home': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/home/, '/home')
+      }
+    }
+  }
 })

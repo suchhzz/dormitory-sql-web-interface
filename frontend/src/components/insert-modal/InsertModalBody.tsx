@@ -2,26 +2,44 @@ import { useEffect, useState } from "react";
 import { queryBuilder } from "../../scripts/query/queryBuilder";
 import InsertInput from "./InsertInput";
 
-export default function InsertModalBody({ tableColumnItems }: {
-    tableColumnItems: string[]
+export default function InsertModalBody({ tableColumnItems, editValues, clearEditValue }: {
+    tableColumnItems: string[],
+    editValues: string[],
+    clearEditValue: () => void,
 }) {
 
-    const [inputValues, setInputValues] = useState(() => {
-        return tableColumnItems.map(() => '')
-    });
+    const [inputValues, setInputValues] = useState<string[]>([]);
 
     useEffect(() => {
-        console.log(inputValues);
-    }, []);
+        if (editValues && editValues.length > 0) {
+            setInputValues(editValues);
+        } else {
+            setInputValues(tableColumnItems.map(() => ''));
+        }
+    }, [editValues, tableColumnItems]);
 
     const setInputValue = (inputIndex: number, value: string) => {
-        inputValues[inputIndex] = value;
+        setInputValues(prev => {
+            const updated = [...prev];
+            updated[inputIndex] = value;
+            return updated;
+        });
     }
 
     const executeInsert = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         queryBuilder.executeInsert(inputValues);
     }
+
+    const executeUpdate = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        queryBuilder.executeUpdate(inputValues);
+        clearEditValue();
+    }
+
+    useEffect(() => {
+        console.log('insert modal body edit values', editValues)
+    }, [editValues]);
 
     return (
         <>
@@ -32,9 +50,14 @@ export default function InsertModalBody({ tableColumnItems }: {
                             columnName={item}
                             inputIndex={index}
                             setInputValue={setInputValue}
+                            inputValue={inputValues[index]}
                         />
                     ))}
-                    <button className="form-btn-submit" onClick={executeInsert}>Insert</button>
+                    {
+                        editValues.length > 0 ? <button className="form-btn-submit" onClick={executeUpdate}>Update</button>
+                        : <button className="form-btn-submit" onClick={executeInsert}>Insert</button>
+                    }
+                    
                 </form>
             </div>
         </>

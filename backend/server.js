@@ -14,6 +14,9 @@ app.use(cors({
 app.use(express.json());
 app.use('/api/query', queryRouter);
 app.use('/api/home', homeRouter);
+app.use('/', function(req, res) {
+  res.send('test');
+})
 
 app.listen(8080, '0.0.0.0', () => {
   console.log('listening 8080');

@@ -12,6 +12,9 @@ function App() {
   const [activeTable, setActiveTable] = useState<TableType | null>(null);
   const [activeTableIndex] = useState<number>(0);
   const [tableColumns, setTableColumns] = useState<string[]>([]);
+  
+  const [editValues, setEditValues] = useState<string[]>([]);
+  const [tempEditValues, setTempEditValues] = useState(['1', 'petr', 'petrenko', '26']);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,6 +45,15 @@ function App() {
       queryBuilder.setActiveTable(activeTable.tableName);
     }
   }, [activeTable]);
+
+  const editValue = (editObject: string[]) => {
+    setEditValues(editObject);
+  }
+
+  const clearEditValue = () => {
+    console.log('clearing edit..')
+    setEditValues([]);
+  }
   
   return (
     <>
@@ -51,10 +63,15 @@ function App() {
             {activeTable && <ButtonPanel 
               tableColumnItems={tableColumns}
               tableName={activeTable?.tableName}
+              editValues={editValues}
+              clearEditValue={clearEditValue}
             />}
           </div>
           <div className='table-wrapper'>
-            {activeTable && <Table table={activeTable}  />}
+            {activeTable && <Table 
+              table={activeTable}  
+              editValue={editValue}
+              />}
           </div>
         </div>
       </div>

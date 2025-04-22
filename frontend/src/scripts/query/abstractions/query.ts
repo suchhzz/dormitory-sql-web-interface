@@ -25,14 +25,16 @@ interface IQuery {
 
     removeCondition(conditionId: number): void,
     removeConditionRelative(conditionId: number): void,
-    
+
     editCustomCondition(conditionId: number, conditionContent: string): void,
 
     deleteTableItem(itemId: number): void,
+
+    getQueryUpdateString(inputValues: string[]): void,
 }
 
 class Query implements IQuery {
-    selectedColumns: TableColumn[] = [ new TableColumn("*", true) ];
+    selectedColumns: TableColumn[] = [new TableColumn("*", true)];
     selectedTable: string = "";
     conditions: Condition[] = [];
     relatives: string[] = [];
@@ -57,7 +59,7 @@ class Query implements IQuery {
     }
 
     toggleRelative(conditionId: number, isANDSelected: boolean): void {
-        
+
 
         const index = this.conditions.findIndex(condition => condition.id === conditionId);
 
@@ -98,8 +100,8 @@ class Query implements IQuery {
 
     getHeaderSelectQueryString(columns: TableColumn[], table: string): string {
         return `SELECT ${columns.filter(el => el.isSelected === true)
-                        .map(el => el.name)
-                        .join(', ')} FROM ${table} \n`;
+            .map(el => el.name)
+            .join(', ')} FROM ${table} \n`;
     }
 
     getConditionsSelectQueryString(conditions: Condition[]) {
@@ -140,15 +142,12 @@ class Query implements IQuery {
     }
 
     setColumns(columns: string[]): void {
-        columns.forEach(column => {
-            this.selectedColumns.push(new TableColumn(column));
-        });
+        this.selectedColumns = columns.map(column =>
+            new TableColumn(column));
     }
 
     toggleSelectColumn(index: number): void {
         this.selectedColumns[index].toggleSelectColumn();
-
-        console.log(this.selectedColumns);
     }
 
     setCustomCondition(conditionId: number, conditionValue: string): void {
@@ -160,19 +159,19 @@ class Query implements IQuery {
         this.conditions = this.conditions.filter((item) => item.id !== conditionId);
     }
 
-    removeConditionRelative(conditionId: number) { 
+    removeConditionRelative(conditionId: number) {
         const index = this.conditions.findIndex(condition => condition.id === conditionId);
-    
+
         console.log('Condition ID:', conditionId);
         console.log('Conditions:', this.conditions);
         console.log('Relatives before removal:', this.relatives);
         console.log('Found index:', index);
-    
+
         if (index === -1) {
             console.warn(`Condition with id ${conditionId} not found.`);
             return;
         }
-    
+
         if (index === 0) {
             console.log("Removing first relative.");
             this.relatives.shift();
@@ -182,7 +181,7 @@ class Query implements IQuery {
         } else {
             console.warn(`Index ${index - 1} is out of bounds for relatives.`);
         }
-    
+
         console.log('Relatives after removal:', this.relatives);
     }
 
@@ -192,17 +191,38 @@ class Query implements IQuery {
         if (selectedCondition) {
             selectedCondition?.setValues([conditionContent]);
             console.log('condition updated', selectedCondition);
-            
+
         }
     }
-    
+
     deleteTableItem(itemId: number) {
         const query = `DELETE FROM ${this.selectedTable} WHERE id = ${itemId}`;
         console.log(query);
 
         return query;
     }
+
+    getQueryUpdateString(inputValues: string[]) {
+        let queryString = '';
+
+        console.log('inputValues', inputValues);
+        console.log('selectedColumns', this.selectedColumns)
+
+        queryString += `UPDATE ${this.selectedTable}\n SET\n`;
+
+        this.selectedColumns.map((column, index) => {
+
+            if (column.name !== '*') {
+                queryString += `${column.name} = ${inputValues[index - 1]}\n`
+            }
+
+        })
+
+        queryString += `WHERE id = ${inputValues[0]}`
+
+        console.log(queryString);
+    }
 }
 
-export {  Query };
+export { Query };
 export type { IQuery }
