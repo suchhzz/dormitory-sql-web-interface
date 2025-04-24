@@ -1,5 +1,5 @@
 import database from '../models/databaseModel.js';
-import { fetchTableDataByTableName } from '../services/databaseService.js';
+import { getTableDataByTableName, getDatabaseTableName } from '../services/databaseService.js';
 
 export const getDatabaseData = (req, res) => {
     try {
@@ -10,26 +10,27 @@ export const getDatabaseData = (req, res) => {
 };
 
 export const getTableData = async (req, res) => {
-    console.log('Request received');  // Basic sanity check
-    
-    try {   
-        console.log('Before fetch');
-        const tableData = await fetchTableDataByTableName('faculty');
-        console.log('After fetch', tableData);
-        
-        if (!tableData || tableData.length === 0) {
-            console.log('No data found');
-            return res.status(404).json({ message: 'No data found' });
-        }
+    try {
+        const { tableName } = req.params;
 
-        console.log('Sending response');
+        const tableData = await getTableDataByTableName(tableName);
         return res.json(tableData);
-        
+
     } catch (e) {
-        console.error('Controller error:', e);  // More detailed error logging
-        return res.status(500).json({ 
+        console.error('Controller error:', e);
+        return res.status(500).json({
             error: 'Database operation failed',
-            details: e.message 
+            details: e.message
         });
     }
 };
+
+export const getDatabaseTableNames = async (_, res) => {
+    try {
+        const tableNames = await getDatabaseTableName();
+
+        return res.json(tableNames);
+    } catch (e) {
+        return res.status(404);
+    }
+}
