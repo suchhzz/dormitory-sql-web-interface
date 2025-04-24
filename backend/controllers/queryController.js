@@ -1,32 +1,72 @@
-export const insertQuery = (req, res) => {
+import { executeSelectQuery, executeModifyQuery } from "../services/queryService.js";
+
+export const selectQuery = async (req, res) => {
     try {
-        res.send('insert');
-        // todo
+        const { queryParams } = req.body;
+
+        const query = await executeSelectQuery(queryParams);
+
+        if (!query) {
+            return res.status(400).json({
+                error: `failed executing query: ${queryParams.query}`
+            });
+        }
+
+        return res.send(query);
+    } catch (e) {
+        res.send(e);
+    }
+}
+
+export const insertQuery = async (req, res) => {
+    try {
+        const { queryParams } = req.body;
+
+        const query = await executeModifyQuery(queryParams);
+
+        if (!query) {
+            return res.status(400).json({
+                error: `failed executing query: ${queryParams.query}`
+            });
+        }
+
+        return res.send(query);
     } catch (e) {
         res.send(e);
     }
 };
 
-export const selectQuery = (req, res) => {
+export const updateQuery = async (req, res) => {
     try {
-        res.send('select');
-        // todo
+        const { queryParams } = req.body;
+
+        const query = await executeModifyQuery(queryParams);
+
+        if (!query) {
+            return res.status(400).json({
+                error: `failed executing query: ${queryParams.query}`
+            });
+        }
+
+        return res.send(query);
     } catch (e) {
         res.send(e);
     }
 }
 
-export const updateQuery = (req, res) => {
+export const deleteQuery = async (req, res) => {
     try {
-        res.send('update');
-    } catch (e) {
-        res.send(e);
-    }
-}
+        const { queryParams } = req.body;
 
-export const deleteQuery = (req, res) => {
-    try {
-        res.send('delete');
+        const query = await executeModifyQuery(queryParams);
+
+        if (!query) {
+            return res.status(400).json({
+                error: `failed executing query: ${queryParams.query}`
+            });
+        }
+
+        return res.send(query);
     } catch (e) {
         res.send(e);
     }

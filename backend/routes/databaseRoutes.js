@@ -4,8 +4,8 @@ import { getDatabaseData, getTableData, getDatabaseTableNames } from '../control
 
 const router = express.Router();
 
-router.get('/database', getDatabaseData);
-router.get('/database/tables/:tableName', getTableData);
-router.get('/database/tables', getDatabaseTableNames);
+router.get('/', getDatabaseData);
+router.get('/tables/:tableName', getTableData);
+router.get('/tables', getDatabaseTableNames);
 
 export default router;

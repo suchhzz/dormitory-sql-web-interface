@@ -3,9 +3,9 @@ import { insertQuery, selectQuery, updateQuery, deleteQuery } from '../controlle
 
 const router = express.Router();
 
-router.get('/insert', insertQuery);
-router.get('/select', selectQuery);
+router.post('/select', selectQuery);
+router.post('/insert', insertQuery);
 router.patch('/update', updateQuery);
-router.delete('/delete', deleteQuery);
+router.post('/delete', deleteQuery);
 
 export default router;

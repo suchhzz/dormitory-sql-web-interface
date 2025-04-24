@@ -10,13 +10,10 @@ app.use(cors({
   origin: 'http://localhost:5173',
   methods: ['GET', 'POST', 'PATCH', 'DELETE'],
 }));
-
 app.use(express.json());
+
 app.use('/api/query', queryRouter);
-app.use('/api', databaseRouter);
-app.use('/', function(req, res) {
-  res.send('test');
-})
+app.use('/api/database', databaseRouter);
 
 app.listen(8080, '0.0.0.0', () => {
   console.log('listening 8080');

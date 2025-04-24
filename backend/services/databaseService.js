@@ -8,8 +8,17 @@ export const getDatabaseConnection = () => {
 export const getTableDataByTableName = (tableName) => {
     const db = getDatabaseConnection();
     try {
-        console.log('table name', tableName);
-        return db.prepare(`SELECT * FROM ${tableName}`).all();
+        const columnsInfo = db.prepare(`PRAGMA table_info(${tableName})`).all();
+
+        const foreignKeys = db.prepare(`PRAGMA foreign_key_list(${tableName})`).all();
+
+        const data = db.prepare(`SELECT * FROM ${tableName}`).all();
+
+        return {
+            columnsInfo,
+            foreignKeys,
+            data
+        };
 
     } catch (e) {
         console.error('fetch table error', e);
