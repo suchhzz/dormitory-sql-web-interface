@@ -51,7 +51,6 @@ function App() {
   }
 
   const clearEditValue = () => {
-    console.log('clearing edit..')
     setEditValues([]);
   }
   

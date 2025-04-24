@@ -32,7 +32,6 @@ export default function ButtonPanel(
         if (isInsertModalActive) {
             clearEditValue();
             console.log('modal, clearing');
-            
         }
 
         setIsInsertModalActive(!isInsertModalActive);
