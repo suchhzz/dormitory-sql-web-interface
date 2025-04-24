@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { TableType } from "../types/databaseTypes";
 import { queryBuilder } from "../scripts/query/queryBuilder";
 
-export default function Table({ table }: { table: TableType }) {
+export default function Table({ table, editValue }: { table: TableType, editValue: (editObject: string[]) => void }) {
 
     const [columnsName, setColumnsName] = useState<string[]>([]);
     const [columnsValues, setColumnsValues] = useState<string[][]>([]);
@@ -21,14 +21,16 @@ export default function Table({ table }: { table: TableType }) {
 
     useEffect(() => {
         queryBuilder.setSelectingColumns(columnsName);
+        console.log('set selecting columns', columnsName);
     }, [columnsValues]);
 
     const deleteTableItem = (id: number) => {
         queryBuilder.deleteTableItem(id);
     }
 
-    const editTableItem = (id: number) => {
-        console.log('edit', id);
+    const editTableItem = (editObject: string[]) => {
+        console.log('edit', editObject);
+        editValue(editObject);
     }
 
     return (
@@ -54,7 +56,7 @@ export default function Table({ table }: { table: TableType }) {
                                 <div className="table-row-options--wrapper">
                                     <div className="option-item delete" onClick={() => deleteTableItem(parseInt(item[0]))}>
                                     </div>
-                                    <div className="option-item edit" onClick={() => editTableItem(parseInt(item[0]))}>
+                                    <div className="option-item edit" onClick={() => editTableItem(item)}>
                                     </div>
                                 </div>
                             </div>

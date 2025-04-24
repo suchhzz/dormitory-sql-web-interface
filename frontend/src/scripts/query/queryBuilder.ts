@@ -26,6 +26,8 @@ interface QueryBuilder {
     editCustomCondition(conditionId: number, conditionContent: string): void,
 
     deleteTableItem(itemId: number): void,
+
+    executeUpdate(inputValues: string[]): void,
 }
 
 class QueryBuilder {
@@ -100,6 +102,10 @@ class QueryBuilder {
 
     deleteTableItem(itemId: number) {
         this.query.deleteTableItem(itemId);
+    }
+
+    executeUpdate(inputValues: string[]) {
+        this.query.getQueryUpdateString(inputValues);
     }
 }
 

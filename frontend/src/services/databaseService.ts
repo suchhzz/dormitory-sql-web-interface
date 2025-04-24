@@ -3,9 +3,12 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 export async function fetchDatabaseData() {
     try {
-        const response = await axios.get(`${apiUrl}/home/database`);
+        console.log('vite url', apiUrl)
+        // const response = await axios.get(`${apiUrl}/home/database`);
+        const response = await axios.get(`http://localhost:8080/api/home/database`);
 
         if (response.status === 200) {
+            console.log(response.data);
             return response.data;
         }
 
@@ -15,5 +18,9 @@ export async function fetchDatabaseData() {
     }
 }
 
+async function loadData() {
+    const data = await fetchDatabaseData();
+    console.log('Полученные данные:', data);
+}
 
-await fetchDatabaseData();
+loadData();
