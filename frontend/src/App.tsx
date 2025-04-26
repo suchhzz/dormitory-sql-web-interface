@@ -5,6 +5,7 @@ import Table from './components/Table.tsx';
 import { fetchDatabaseData, fetchTableNames, fetchTableDataByName } from './services/databaseService.ts';
 import { DatabaseType, TableType } from './types/databaseTypes.ts';
 import { queryBuilder } from './scripts/query/queryBuilder.ts';
+import TalbeListSelect from './components/TableListSelect.tsx';
 
 function App() {
 
@@ -19,7 +20,6 @@ function App() {
   const [selectedTableName, setSelectedTableName] = useState("");
 
   useEffect(() => {
-
     const fetchTables = async () => {
       try {
         const fetchedTables = await fetchTableNames();
@@ -30,9 +30,7 @@ function App() {
         console.error("Error fetching table names:", e);
       }
     }
-
     fetchTables();
-
   }, [])
 
   useEffect(() => {
@@ -57,7 +55,7 @@ function App() {
 
     if (selectedTableName) {
 
-      fetchTableData(); 
+      fetchTableData();
     }
   }, [selectedTableName]);
 
@@ -103,6 +101,12 @@ function App() {
               editValues={editValues}
               clearEditValue={clearEditValue}
             />}
+          </div>
+          <div className='table-list-wrapper'>
+            <TalbeListSelect 
+              tableNames={tableNames}
+              setSelectedTableName={setSelectedTableName}
+            />
           </div>
           <div className='table-wrapper'>
             {activeTable && <Table

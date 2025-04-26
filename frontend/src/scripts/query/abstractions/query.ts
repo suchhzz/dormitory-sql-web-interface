@@ -33,6 +33,8 @@ interface IQuery {
     getQueryUpdateString(inputValues: string[]): void,
 
     getQueryStateInfo(): void,
+
+    clear(): void,
 }
 
 class Query implements IQuery {
@@ -40,6 +42,13 @@ class Query implements IQuery {
     selectedTable: string = "";
     conditions: Condition[] = [];
     relatives: string[] = [];
+
+    clear():void {
+        this.selectedColumns = [];
+        this.selectedTable = "";
+        this.conditions = [];
+        this.relatives = [];
+    }
 
     getQueryStateInfo() {
         console.log('\n\n=============table info==============');

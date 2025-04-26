@@ -1,6 +1,5 @@
 import { Query } from './abstractions/query';
 import { Condition } from './abstractions/condition';
-import { VoidFunctionComponent } from 'react';
 
 interface QueryBuilder {
     query: Query,
@@ -38,6 +37,7 @@ class QueryBuilder {
         this.query = new Query();
     }
 
+
     addRelative(conditionId: number): void {
 
         if (conditionId === 0) {
@@ -54,6 +54,7 @@ class QueryBuilder {
     }
 
     setActiveTable(tableName: string): void {
+        this.query.clear();
         this.query.setSelectedTable(tableName);
     }
 
