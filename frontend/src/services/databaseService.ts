@@ -18,9 +18,24 @@ export async function fetchDatabaseData() {
     }
 }
 
-async function loadData() {
-    const data = await fetchDatabaseData();
-    console.log('Полученные данные:', data);
+export async function fetchTableNames() {
+    try {
+        const response = await axios.get('http://localhost:8080/api/database/tables');
+
+        return response.data;
+    } catch (e) {
+        console.error(`fetching table names error ${e}`);
+        return null;
+    }
 }
 
-loadData();
+export async function fetchTableDataByName(tableName: string) {
+    try {
+        const response = await axios.get(`http://localhost:8080/api/database/tables/${tableName}`);
+
+        return response.data;
+    } catch (e) {
+        console.error(`fetching table data error ${e}`);
+        return null;
+    }
+}

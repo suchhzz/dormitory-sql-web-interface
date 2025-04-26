@@ -31,6 +31,8 @@ interface IQuery {
     deleteTableItem(itemId: number): void,
 
     getQueryUpdateString(inputValues: string[]): void,
+
+    getQueryStateInfo(): void,
 }
 
 class Query implements IQuery {
@@ -39,9 +41,17 @@ class Query implements IQuery {
     conditions: Condition[] = [];
     relatives: string[] = [];
 
+    getQueryStateInfo() {
+        console.log('\n\n=============table info==============');
+        console.log('selected table:', this.selectedTable);
+        console.log('selected columns: ', this.selectedColumns);
+        console.log('conditions:', this.conditions);
+        console.log('relatives', this.relatives);
+    }
+
     setSelectedTable(table: string): void {
         this.selectedTable = table;
-        console.log(this.selectedTable);
+        console.log('selected table', this.selectedTable);
     }
     addCondition(condition: Condition): void {
         this.conditions?.push(condition);
@@ -162,11 +172,6 @@ class Query implements IQuery {
     removeConditionRelative(conditionId: number) {
         const index = this.conditions.findIndex(condition => condition.id === conditionId);
 
-        console.log('Condition ID:', conditionId);
-        console.log('Conditions:', this.conditions);
-        console.log('Relatives before removal:', this.relatives);
-        console.log('Found index:', index);
-
         if (index === -1) {
             console.warn(`Condition with id ${conditionId} not found.`);
             return;
@@ -181,8 +186,6 @@ class Query implements IQuery {
         } else {
             console.warn(`Index ${index - 1} is out of bounds for relatives.`);
         }
-
-        console.log('Relatives after removal:', this.relatives);
     }
 
     editCustomCondition(conditionId: number, conditionContent: string): void {
@@ -190,8 +193,6 @@ class Query implements IQuery {
 
         if (selectedCondition) {
             selectedCondition?.setValues([conditionContent]);
-            console.log('condition updated', selectedCondition);
-
         }
     }
 

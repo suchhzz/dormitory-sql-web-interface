@@ -1,5 +1,6 @@
 import database from '../models/databaseModel.js';
 import { getTableDataByTableName, getDatabaseTableName } from '../services/databaseService.js';
+import { tableDataResponseDTO } from '../dto/TableData.dto.js';
 
 export const getDatabaseData = (req, res) => {
     try {
@@ -14,7 +15,10 @@ export const getTableData = async (req, res) => {
         const { tableName } = req.params;
 
         const tableData = await getTableDataByTableName(tableName);
-        return res.json(tableData);
+
+        const tableDataDTO = tableDataResponseDTO(tableData, tableName);
+
+        return res.json(tableDataDTO);
 
     } catch (e) {
         console.error('Controller error:', e);
