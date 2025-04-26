@@ -154,6 +154,8 @@ class Query implements IQuery {
     setColumns(columns: string[]): void {
         this.selectedColumns = columns.map(column =>
             new TableColumn(column));
+
+        this.selectedColumns.unshift(new TableColumn('*', true));
     }
 
     toggleSelectColumn(index: number): void {
