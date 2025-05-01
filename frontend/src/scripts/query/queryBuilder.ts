@@ -8,8 +8,8 @@ interface QueryBuilder {
     updateSelectConditionValue(conditionIndex: number, values: string[]): void,
     updateSelectConditionColumn(conditionIndex: number, column: string): void,
     setSelectingColumns(columns: string[]): void,
-    executeSelect(): void,
-    executeInsert(inputValues: string[]): void,
+    executeSelect(): string,
+    executeInsert(inputValues: string[]): string,
 
     toggleSelectColumn(index: number): void,
 
@@ -26,7 +26,7 @@ interface QueryBuilder {
 
     deleteTableItem(itemId: number): void,
 
-    executeUpdate(inputValues: string[]): void,
+    executeUpdate(inputValues: string[]): string,
 }
 
 class QueryBuilder {
@@ -75,9 +75,8 @@ class QueryBuilder {
         this.query.setColumns(columns);
     }
 
-    executeSelect(): void {
-        let querySelect: string = this.query.getQuerySelect();
-        console.log(querySelect);
+    executeSelect(): string {
+        return this.query.getQuerySelect();
     }
 
     toggleSelectColumn(index: number): void {
@@ -97,16 +96,16 @@ class QueryBuilder {
         this.query.editCustomCondition(conditionId, conditionContent);
     }
 
-    executeInsert(inputValues: string[]) {
-        this.query.getQueryInsertString(inputValues);
+    executeInsert(inputValues: string[]): string {
+        return this.query.getQueryInsertString(inputValues);
     }
 
     deleteTableItem(itemId: number) {
         this.query.deleteTableItem(itemId);
     }
 
-    executeUpdate(inputValues: string[]) {
-        this.query.getQueryUpdateString(inputValues);
+    executeUpdate(inputValues: string[]): string {
+        return this.query.getQueryUpdateString(inputValues);
     }
 }
 

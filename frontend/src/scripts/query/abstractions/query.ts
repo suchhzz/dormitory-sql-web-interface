@@ -30,7 +30,7 @@ interface IQuery {
 
     deleteTableItem(itemId: number): void,
 
-    getQueryUpdateString(inputValues: string[]): void,
+    getQueryUpdateString(inputValues: string[]): string,
 
     getQueryStateInfo(): void,
 
@@ -153,11 +153,16 @@ class Query implements IQuery {
 
         console.log(columns);
 
-        return `INSERT INTO (${columns.map(el => el.name).join(', ')}) FROM ${table}\n`;
+        return `INSERT INTO (${columns
+            .filter(el => el.name !== "*" && el.name !== "id")
+            .map(el => el.name)
+            .join(', ')}) FROM ${table}\n`;
     }
 
     getValuesInsertQueryString(values: string[]) {
-        return `VALUES (${values.join(', ')})`;
+        return `VALUES (${values
+            .slice(1)
+            .join(', ')})`;
     }
 
     setColumns(columns: string[]): void {
@@ -214,7 +219,7 @@ class Query implements IQuery {
         return query;
     }
 
-    getQueryUpdateString(inputValues: string[]) {
+    getQueryUpdateString(inputValues: string[]): string {
         let queryString = '';
 
         console.log('inputValues', inputValues);
@@ -232,7 +237,7 @@ class Query implements IQuery {
 
         queryString += `WHERE id = ${inputValues[0]}`
 
-        console.log(queryString);
+        return queryString
     }
 }
 

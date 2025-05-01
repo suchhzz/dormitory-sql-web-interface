@@ -2,10 +2,13 @@ import { useEffect, useState } from "react";
 import { queryBuilder } from "../../scripts/query/queryBuilder";
 import InsertInput from "./InsertInput";
 
-export default function InsertModalBody({ tableColumnItems, editValues, clearEditValue }: {
+export default function InsertModalBody({ tableColumnItems, editValues, clearEditValue, primaryKeys, executeUpdate, executeInsert }: {
     tableColumnItems: string[],
     editValues: string[],
     clearEditValue: () => void,
+    primaryKeys: number[],
+    executeUpdate: (inputValues: string[]) => void,
+    executeInsert: (inputValues: string[]) => void
 }) {
 
     const [inputValues, setInputValues] = useState<string[]>([]);
@@ -26,14 +29,14 @@ export default function InsertModalBody({ tableColumnItems, editValues, clearEdi
         });
     }
 
-    const executeInsert = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const executeInsertHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        queryBuilder.executeInsert(inputValues);
+        executeInsert(inputValues);
     }
 
-    const executeUpdate = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const executeUpdateHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        queryBuilder.executeUpdate(inputValues);
+        executeUpdate(inputValues);
         clearEditValue();
     }
 
@@ -51,11 +54,12 @@ export default function InsertModalBody({ tableColumnItems, editValues, clearEdi
                             inputIndex={index}
                             setInputValue={setInputValue}
                             inputValue={inputValues[index]}
+                            isPrimaryKey={primaryKeys[index] === 1}
                         />
                     ))}
                     {
-                        editValues.length > 0 ? <button className="form-btn-submit" onClick={executeUpdate}>Update</button>
-                        : <button className="form-btn-submit" onClick={executeInsert}>Insert</button>
+                        editValues.length > 0 ? <button className="form-btn-submit" onClick={executeUpdateHandler}>Update</button>
+                        : <button className="form-btn-submit" onClick={executeInsertHandler}>Insert</button>
                     }
                     
                 </form>

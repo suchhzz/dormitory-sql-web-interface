@@ -7,13 +7,27 @@ export default function ButtonPanel(
         tableColumnItems,
         tableName,
         editValues,
-        clearEditValue
+        clearEditValue,
+        activeColumns,
+        updateActiveColumns,
+        clearActiveColumns,
+        primaryKeys,
+        executeUpdate,
+        executeInsert,
+        executeSelect
     }:
     {
         tableColumnItems: string[],
         tableName: string,
         editValues: string[],
-        clearEditValue: () => void 
+        clearEditValue: () => void,
+        activeColumns: number[],
+        updateActiveColumns: (updater: (prev: number[]) => number[]) => void,
+        clearActiveColumns: () => void,
+        primaryKeys: number[],
+        executeUpdate: (inputValues: string[]) => void,
+        executeInsert: (inputValues: string[]) => void,
+        executeSelect: () => void,
     }
 ) {
 
@@ -54,12 +68,19 @@ export default function ButtonPanel(
                 tableColumnItems={tableColumnItems}
                 editValues={editValues}
                 clearEditValue={clearEditValue}
+                primaryKeys={primaryKeys}
+                executeUpdate={executeUpdate}
+                executeInsert={executeInsert}
             />
             <SelectModal 
                 isActive={isSelectModalActive} 
                 handlerCloseModal={toggleSelectModal} 
                 tableColumnItems={tableColumnItems} 
                 tableName={tableName}
+                activeColumns={activeColumns}
+                updateActiveColumns={updateActiveColumns}
+                clearActiveColumns={clearActiveColumns}
+                executeSelect={executeSelect}
             />
         </>
     )

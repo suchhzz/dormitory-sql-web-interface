@@ -8,19 +8,26 @@ export default function SelectModal(
         isActive,
         handlerCloseModal,
         tableColumnItems,
-        tableName
+        tableName,
+        activeColumns,
+        updateActiveColumns,
+        clearActiveColumns,
+        executeSelect,
     }:
         {
             isActive: boolean,
             handlerCloseModal: () => void;
             tableColumnItems: string[],
-            tableName: string
+            tableName: string,
+            activeColumns: number[],
+            updateActiveColumns: (updater: (prev: number[]) => number[]) => void,
+            clearActiveColumns: () => void,
+            executeSelect: () => void,
         }) {
 
-    const [activeColumns, setActiveColumns] = useState<number[]>([0]);
 
-    const executeQuery = () => {
-        queryBuilder.executeSelect();
+    const executeQueryHandler = () => {
+        executeSelect();
     }
 
     const checkActiveColumn = (index: number): boolean => {
@@ -29,12 +36,13 @@ export default function SelectModal(
 
     const toggleActiveColumn = (index: number): void => {
         if (activeColumns.some(el => el === index)) {
-            setActiveColumns(prev => prev.filter(el => el !== index));
+            updateActiveColumns(prev => prev.filter(el => el !== index));
         }
         else {
-            setActiveColumns(prev => [...prev, index]);
+            updateActiveColumns(prev => [...prev, index]);
         }
     }
+
 
     return (
         <>
@@ -47,15 +55,15 @@ export default function SelectModal(
                                 <p className="modal-title">Select</p>
                                 <div className="table-columns-selector">
                                     <div className="columns-wrapper d-flex">
-                                        <ColumnItem 
+                                        <ColumnItem
                                             columnName="All"
                                             columnIndex={0}
                                             checkActiveColumn={checkActiveColumn}
                                             toggleActiveColumn={toggleActiveColumn}
                                         />
                                         {tableColumnItems.map((item, index) => (
-                                            <ColumnItem 
-                                                key={index}  
+                                            <ColumnItem
+                                                key={index}
                                                 columnName={item}
                                                 columnIndex={index + 1}
                                                 checkActiveColumn={checkActiveColumn}
@@ -73,7 +81,7 @@ export default function SelectModal(
                             </div>
                             <div className="modal-footer">
                                 <div className="modal-footer-wrapper d-flex">
-                                    <button className="template-button template-button--green" onClick={executeQuery}>Execute</button>
+                                    <button className="template-button template-button--green" onClick={executeQueryHandler}>Execute</button>
                                 </div>
                             </div>
                         </div>

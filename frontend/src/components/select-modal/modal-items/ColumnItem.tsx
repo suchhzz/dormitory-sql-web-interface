@@ -26,8 +26,8 @@ export default function ColumnItem(
         <>
             <div className={`column-item ${checkActiveColumn(columnIndex) ? "selected" : ""}`} onClick={selectColumn}>
                 <div className="column-options-wrapper d-flex">
-                    <FunctionOption />
-                    <AliasOption />
+                    {/* <FunctionOption />
+                    <AliasOption /> */}
                 </div>
                 <p>{columnName}</p>
             </div>

@@ -5,10 +5,13 @@ export function tableDataResponseDTO(data, tableName) {
         columns.map(col => String(dataItem[col] ?? ""))
     );
 
+    const primaryKeys = data.columnsInfo.map(column => column.pk);
+
     return {
         tableName: tableName,
         columns: columns,
-        values: values
+        values: values,
+        primaryKeys: primaryKeys,
     };
 }
 

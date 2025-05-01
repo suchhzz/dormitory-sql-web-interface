@@ -6,7 +6,10 @@ export default function InsertModal(
         handlerCloseModal, 
         tableColumnItems,
         editValues,
-        clearEditValue
+        clearEditValue,
+        primaryKeys,
+        executeUpdate,
+        executeInsert
     } : 
     { 
         isActive: boolean, 
@@ -14,6 +17,9 @@ export default function InsertModal(
         tableColumnItems: string[],
         editValues: string[],
         clearEditValue: () => void,
+        primaryKeys: number[],
+        executeUpdate: (inputValues: string[]) => void,
+        executeInsert: (inputValues: string[]) => void
     } ) 
     {
     return (
@@ -32,6 +38,9 @@ export default function InsertModal(
                                 tableColumnItems={tableColumnItems}
                                 editValues={editValues}
                                 clearEditValue={clearEditValue}
+                                primaryKeys={primaryKeys}
+                                executeUpdate={executeUpdate}
+                                executeInsert={executeInsert}
                             />
                         </div>
                     </div>

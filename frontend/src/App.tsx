@@ -6,18 +6,29 @@ import { fetchDatabaseData, fetchTableNames, fetchTableDataByName } from './serv
 import { DatabaseType, TableType } from './types/databaseTypes.ts';
 import { queryBuilder } from './scripts/query/queryBuilder.ts';
 import TalbeListSelect from './components/TableListSelect.tsx';
+import { sendInsertQuery, sendSelectQuery, sendUpdateQuery } from './scripts/query/queryService.ts';
 
 function App() {
 
   const [activeTable, setActiveTable] = useState<TableType | null>(null);
-  const [activeTableIndex] = useState<number>(0);
   const [tableColumns, setTableColumns] = useState<string[]>([]);
 
   const [editValues, setEditValues] = useState<string[]>([]);
-  const [tempEditValues, setTempEditValues] = useState(['1', 'petr', 'petrenko', '26']);
 
   const [tableNames, setTableNames] = useState([]);
   const [selectedTableName, setSelectedTableName] = useState("");
+
+  const [activeColumns, setActiveColumns] = useState<number[]>([0]);
+
+  const [primaryKeys, setPrimaryKeys] = useState<number[]>([]);
+
+  const updateActiveColumns = (updater: (prev: number[]) => number[]) => {
+    setActiveColumns(updater);
+  };
+
+  const clearActiveColumns = () => {
+    setActiveColumns([0]);
+  }
 
   useEffect(() => {
     const fetchTables = async () => {
@@ -44,9 +55,13 @@ function App() {
       try {
         const fetchedTableData = await fetchTableDataByName(selectedTableName);
         if (fetchedTableData) {
-          console.log('fetched table data', fetchedTableData)
+          console.log('fetched table data', fetchedTableData);
+
+          clearActiveColumns();
+
           setActiveTable(fetchedTableData);
           setTableColumns(fetchedTableData.columns)
+          setPrimaryKeys(fetchedTableData.primaryKeys);
         }
       } catch (e) {
         console.error("Error fetching table data:", e);
@@ -59,25 +74,9 @@ function App() {
     }
   }, [selectedTableName]);
 
-
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const fetchedDatabase = await fetchDatabaseData();
-  //       if (fetchedDatabase) {
-  //         setActiveDatabase(fetchedDatabase.database);
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching database data:", error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
-
   useEffect(() => {
     if (activeTable) {
+      clearActiveColumns();
       queryBuilder.setActiveTable(activeTable.tableName);
     }
   }, [activeTable]);
@@ -90,6 +89,18 @@ function App() {
     setEditValues([]);
   }
 
+  const executeUpdate = (inputValues: string[]) => {
+    sendUpdateQuery(inputValues);
+  }
+
+  const executeInsert = (inputValues: string[]) => {
+    sendInsertQuery(inputValues);
+  }
+
+  const executeSelect = () => {
+    sendSelectQuery();
+  }
+
   return (
     <>
       <div className='main-container'>
@@ -100,10 +111,17 @@ function App() {
               tableName={activeTable?.tableName}
               editValues={editValues}
               clearEditValue={clearEditValue}
+              activeColumns={activeColumns}
+              updateActiveColumns={updateActiveColumns}
+              clearActiveColumns={clearActiveColumns}
+              primaryKeys={primaryKeys}
+              executeUpdate={executeUpdate}
+              executeInsert={executeInsert}
+              executeSelect={executeSelect}
             />}
           </div>
           <div className='table-list-wrapper'>
-            <TalbeListSelect 
+            <TalbeListSelect
               tableNames={tableNames}
               setSelectedTableName={setSelectedTableName}
             />
