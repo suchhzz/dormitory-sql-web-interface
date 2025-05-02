@@ -11,6 +11,9 @@ import { sendInsertQuery, sendSelectQuery, sendUpdateQuery } from './scripts/que
 function App() {
 
   const [activeTable, setActiveTable] = useState<TableType | null>(null);
+
+  const [tableValues, setTableValues] = useState<string[][]> ([]);
+
   const [tableColumns, setTableColumns] = useState<string[]>([]);
 
   const [editValues, setEditValues] = useState<string[]>([]);
@@ -60,6 +63,7 @@ function App() {
           clearActiveColumns();
 
           setActiveTable(fetchedTableData);
+          setTableValues(fetchedTableData.values);
           setTableColumns(fetchedTableData.columns)
           setPrimaryKeys(fetchedTableData.primaryKeys);
         }
@@ -89,16 +93,20 @@ function App() {
     setEditValues([]);
   }
 
-  const executeUpdate = (inputValues: string[]) => {
+  const executeUpdate = async (inputValues: string[]) => {
     sendUpdateQuery(inputValues);
   }
 
-  const executeInsert = (inputValues: string[]) => {
-    sendInsertQuery(inputValues);
+  const executeInsert = async (inputValues: string[]) => {
+    const fetchedValues: any = sendInsertQuery(inputValues);
+
+    setTableValues(fetchedValues);
   }
 
-  const executeSelect = () => {
-    sendSelectQuery();
+  const executeSelect = async () => {
+    const fetchedValues: any = await sendSelectQuery();
+
+    setTableValues(fetchedValues);
   }
 
   return (
@@ -130,6 +138,7 @@ function App() {
             {activeTable && <Table
               table={activeTable}
               editValue={editValue}
+              tableValues={tableValues}
             />}
           </div>
         </div>

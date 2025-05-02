@@ -27,6 +27,7 @@ export default function SelectModal(
 
 
     const executeQueryHandler = () => {
+        handlerCloseModal();
         executeSelect();
     }
 

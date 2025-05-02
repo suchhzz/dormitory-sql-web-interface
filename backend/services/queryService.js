@@ -1,12 +1,8 @@
 import { getDatabaseConnection } from "../services/databaseService.js";
 
-export const executeSelectQuery = (queryParams) => {
+export const executeSelectQuery = (queryString) => {
     const db = getDatabaseConnection();
-
     try {
-
-        const queryString = queryParams.query;
-
         return db.prepare(queryString).all();
 
     } catch (e) {

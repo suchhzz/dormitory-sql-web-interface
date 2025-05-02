@@ -1,18 +1,22 @@
 import { executeSelectQuery, executeModifyQuery } from "../services/queryService.js";
+import { tableValuesResponseDTO } from "../dto/TableData.dto.js";
 
 export const selectQuery = async (req, res) => {
     try {
-        const { queryParams } = req.body;
+        const { queryString } = req.body;
 
-        const query = await executeSelectQuery(queryParams);
+        const query = await executeSelectQuery(queryString);
+
 
         if (!query) {
             return res.status(400).json({
-                error: `failed executing query: ${queryParams.query}`
+                error: `failed executing query: ${queryString}`
             });
         }
 
-        return res.send(query);
+        const queryValuesOut = tableValuesResponseDTO(query);
+
+        return res.send(queryValuesOut);
     } catch (e) {
         res.send(e);
     }

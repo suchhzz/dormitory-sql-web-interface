@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { TableType } from "../types/databaseTypes";
 import { queryBuilder } from "../scripts/query/queryBuilder";
 
-export default function Table({ table, editValue }: { table: TableType, editValue: (editObject: string[]) => void }) {
+export default function Table({ table, tableValues, editValue }: { table: TableType, tableValues: string[][], editValue: (editObject: string[]) => void }) {
 
     const [columnsName, setColumnsName] = useState<string[]>([]);
     const [columnsValues, setColumnsValues] = useState<string[][]>([]);
@@ -14,14 +14,13 @@ export default function Table({ table, editValue }: { table: TableType, editValu
     }, [table]);
 
     useEffect(() => {
-        if (table) {
-            setColumnsValues(table.values.map(values => values));
+        if (table && tableValues) {
+            setColumnsValues(tableValues);
         }
-    }, [table]);
+    }, [tableValues]);
 
     useEffect(() => {
         queryBuilder.setSelectingColumns(columnsName);
-        console.log('set selecting columns', columnsName);
     }, [columnsValues]);
 
     const deleteTableItem = (id: number) => {

@@ -1,4 +1,4 @@
-export function tableDataResponseDTO(data, tableName) {
+export function tableDataResponseDTO(data, tableName = "") {
     const columns = data.columnsInfo.map(column => column.name);
 
     const values = data.data.map(dataItem =>
@@ -13,6 +13,14 @@ export function tableDataResponseDTO(data, tableName) {
         values: values,
         primaryKeys: primaryKeys,
     };
+}
+
+export function tableValuesResponseDTO(data) {
+    const columns = data.length > 0 ? Object.keys(data[0]) : [];
+
+    return data.map(dataItem =>
+        columns.map(col => String(dataItem[col] ?? ""))
+    );
 }
 
 // const database = {

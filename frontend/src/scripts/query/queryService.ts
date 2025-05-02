@@ -1,9 +1,10 @@
 import { queryBuilder } from "./queryBuilder";
+import axios from "axios";
 
 export const sendInsertQuery = async (inputValues: string[]) => {
     try {
-        let insertQuery = queryBuilder.executeInsert(inputValues);
-        console.log('send query to api', insertQuery)
+        return queryBuilder.executeInsert(inputValues);
+
     } catch (e) {
         console.error(e);
     }
@@ -11,7 +12,7 @@ export const sendInsertQuery = async (inputValues: string[]) => {
 
 export const sendUpdateQuery = async (inputValues: string[]) => {
     try {
-        let updateQuery = queryBuilder.executeUpdate(inputValues);
+        const updateQuery = queryBuilder.executeUpdate(inputValues);
         console.log('send query to api', updateQuery)
     } catch (e) {
         console.error(e);
@@ -20,9 +21,17 @@ export const sendUpdateQuery = async (inputValues: string[]) => {
 
 export const sendSelectQuery = async () => {
     try {
-        let insertQuery = queryBuilder.executeSelect();
+        const insertQuery = queryBuilder.executeSelect();
 
-        console.log('send query to api', insertQuery)
+        const payload = { queryString: insertQuery }
+
+        const response = await axios.post("http://localhost:8080/api/query/select", payload);
+
+        if (response.status === 200) {
+            console.log('select executed successfuly', response.data);
+        }
+
+        return response.data;
     } catch (e) {
         console.error(e);
     }
