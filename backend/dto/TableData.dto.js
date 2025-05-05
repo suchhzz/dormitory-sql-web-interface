@@ -18,9 +18,12 @@ export function tableDataResponseDTO(data, tableName = "") {
 export function tableValuesResponseDTO(data) {
     const columns = data.length > 0 ? Object.keys(data[0]) : [];
 
-    return data.map(dataItem =>
-        columns.map(col => String(dataItem[col] ?? ""))
-    );
+    return {
+        columns: columns,
+        values: data.map(dataItem =>
+            columns.map(col => String(dataItem[col] ?? ""))
+        ),
+    }
 }
 
 // const database = {

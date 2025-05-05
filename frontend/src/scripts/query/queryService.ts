@@ -23,6 +23,8 @@ export const sendSelectQuery = async () => {
     try {
         const insertQuery = queryBuilder.executeSelect();
 
+        console.log('insert query', insertQuery);
+
         const payload = { queryString: insertQuery }
 
         const response = await axios.post("http://localhost:8080/api/query/select", payload);

@@ -2,26 +2,26 @@ import { useEffect, useState } from "react"
 import { TableType } from "../types/databaseTypes";
 import { queryBuilder } from "../scripts/query/queryBuilder";
 
-export default function Table({ table, tableValues, editValue }: { table: TableType, tableValues: string[][], editValue: (editObject: string[]) => void }) {
+export default function Table({ tableColumns, tableValues, editValue }: { tableColumns: string[], tableValues: string[][], editValue: (editObject: string[]) => void }) {
 
     const [columnsName, setColumnsName] = useState<string[]>([]);
     const [columnsValues, setColumnsValues] = useState<string[][]>([]);
 
     useEffect(() => {
-        if (table) {
-            setColumnsName(table.columns.map(column => column));
+        if (tableColumns) {
+            setColumnsName(tableColumns);
         }
-    }, [table]);
+    }, [tableColumns]);
 
     useEffect(() => {
-        if (table && tableValues) {
+        if (tableValues) {
             setColumnsValues(tableValues);
         }
     }, [tableValues]);
 
-    useEffect(() => {
-        queryBuilder.setSelectingColumns(columnsName);
-    }, [columnsValues]);
+    // useEffect(() => {
+    //     queryBuilder.setSelectingColumns(columnsName);
+    // }, [columnsValues]);
 
     const deleteTableItem = (id: number) => {
         queryBuilder.deleteTableItem(id);
@@ -37,7 +37,7 @@ export default function Table({ table, tableValues, editValue }: { table: TableT
             <table className="table-display">
                 <thead>
                     <tr>
-                        {columnsName.map((item, index) => (
+                        {tableColumns.map((item, index) => (
                             <th key={index}>
                                 {item}
                             </th>
@@ -45,7 +45,7 @@ export default function Table({ table, tableValues, editValue }: { table: TableT
                     </tr>
                 </thead>
                 <tbody>
-                    {columnsValues.map((item, index) => (
+                    {tableValues.map((item, index) => (
                         <tr className="table-item" key={index}>
                             {item.map((valueItem, valueIndex) => (
                                 <td key={valueIndex}>{valueItem}</td>

@@ -28,6 +28,7 @@ export default function SelectModal(
 
     const executeQueryHandler = () => {
         handlerCloseModal();
+        // clearActiveColumns();
         executeSelect();
     }
 

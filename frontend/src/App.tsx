@@ -12,7 +12,7 @@ function App() {
 
   const [activeTable, setActiveTable] = useState<TableType | null>(null);
 
-  const [tableValues, setTableValues] = useState<string[][]> ([]);
+  const [tableValues, setTableValues] = useState<string[][]>([]);
 
   const [tableColumns, setTableColumns] = useState<string[]>([]);
 
@@ -32,6 +32,10 @@ function App() {
   const clearActiveColumns = () => {
     setActiveColumns([0]);
   }
+
+  // useEffect(() => {
+  //   console.log('active columns', activeColumns);
+  // }, activeColumns);
 
   useEffect(() => {
     const fetchTables = async () => {
@@ -81,7 +85,11 @@ function App() {
   useEffect(() => {
     if (activeTable) {
       clearActiveColumns();
+
+      console.log(activeTable);
+
       queryBuilder.setActiveTable(activeTable.tableName);
+      queryBuilder.setSelectingColumns(activeTable.columns);
     }
   }, [activeTable]);
 
@@ -104,9 +112,11 @@ function App() {
   }
 
   const executeSelect = async () => {
-    const fetchedValues: any = await sendSelectQuery();
+    const fetchedQueryResult: any = await sendSelectQuery();
+    setTableColumns(fetchedQueryResult.columns);
+    setTableValues(fetchedQueryResult.values);
 
-    setTableValues(fetchedValues);
+    console.log('fetched query result', fetchedQueryResult);
   }
 
   return (
@@ -115,7 +125,7 @@ function App() {
         <div className='content d-grid'>
           <div className='button-panel-wrapper'>
             {activeTable && <ButtonPanel
-              tableColumnItems={tableColumns}
+              tableColumnItems={activeTable.columns}
               tableName={activeTable?.tableName}
               editValues={editValues}
               clearEditValue={clearEditValue}
@@ -136,9 +146,9 @@ function App() {
           </div>
           <div className='table-wrapper'>
             {activeTable && <Table
-              table={activeTable}
-              editValue={editValue}
+              tableColumns={tableColumns}
               tableValues={tableValues}
+              editValue={editValue}
             />}
           </div>
         </div>

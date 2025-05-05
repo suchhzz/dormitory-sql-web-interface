@@ -1,6 +1,7 @@
 import AliasOption from "./column-item-params/AliasOption"
 import FunctionOption from "./column-item-params/FunctionOption"
 import { queryBuilder } from "../../../scripts/query/queryBuilder";
+import { useEffect } from "react";
 
 export default function ColumnItem( 
     {

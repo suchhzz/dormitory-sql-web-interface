@@ -35,6 +35,7 @@ interface IQuery {
     getQueryStateInfo(): void,
 
     clear(): void,
+    disableSelectColumns(): void,
 }
 
 class Query implements IQuery {
@@ -43,11 +44,17 @@ class Query implements IQuery {
     conditions: Condition[] = [];
     relatives: string[] = [];
 
-    clear():void {
+    clear(): void {
         this.selectedColumns = [];
         this.selectedTable = "";
         this.conditions = [];
         this.relatives = [];
+    }
+
+    disableSelectColumns() {
+        this.selectedColumns.forEach(column => {
+            column.isSelected = false;
+        });
     }
 
     getQueryStateInfo() {
@@ -112,7 +119,11 @@ class Query implements IQuery {
         let queryString: string = "";
 
         queryString += this.getHeaderSelectQueryString(this.selectedColumns, this.selectedTable);
-        queryString += this.getConditionsSelectQueryString(this.conditions);
+
+        if (this.conditions.length > 0) {
+            queryString += this.getConditionsSelectQueryString(this.conditions);
+        }
+        // this.disableSelectColumns();
 
         return queryString;
     }
@@ -170,10 +181,13 @@ class Query implements IQuery {
             new TableColumn(column));
 
         this.selectedColumns.unshift(new TableColumn('*', true));
+
+        console.log('SELECTED COLUMNS SET', this.selectedColumns);
     }
 
     toggleSelectColumn(index: number): void {
         this.selectedColumns[index].toggleSelectColumn();
+        console.log('selected columns', this.selectedColumns)
     }
 
     setCustomCondition(conditionId: number, conditionValue: string): void {
