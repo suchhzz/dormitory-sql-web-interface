@@ -2,7 +2,13 @@ import { useEffect, useState } from "react"
 import { TableType } from "../types/databaseTypes";
 import { queryBuilder } from "../scripts/query/queryBuilder";
 
-export default function Table({ tableColumns, tableValues, editValue }: { tableColumns: string[], tableValues: string[][], editValue: (editObject: string[]) => void }) {
+export default function Table({ tableColumns, tableValues, editValue, executeDelete }: 
+    { 
+        tableColumns: string[], 
+        tableValues: string[][], 
+        editValue: (editObject: string[]) => void,
+        executeDelete: (id: number) => void,
+    }) {
 
     const [columnsName, setColumnsName] = useState<string[]>([]);
     const [columnsValues, setColumnsValues] = useState<string[][]>([]);
@@ -22,10 +28,6 @@ export default function Table({ tableColumns, tableValues, editValue }: { tableC
     // useEffect(() => {
     //     queryBuilder.setSelectingColumns(columnsName);
     // }, [columnsValues]);
-
-    const deleteTableItem = (id: number) => {
-        queryBuilder.deleteTableItem(id);
-    }
 
     const editTableItem = (editObject: string[]) => {
         console.log('edit', editObject);
@@ -53,7 +55,7 @@ export default function Table({ tableColumns, tableValues, editValue }: { tableC
 
                             <div className="table-row-options">
                                 <div className="table-row-options--wrapper">
-                                    <div className="option-item delete" onClick={() => deleteTableItem(parseInt(item[0]))}>
+                                    <div className="option-item delete" onClick={() => executeDelete(parseInt(item[0]))}>
                                     </div>
                                     <div className="option-item edit" onClick={() => editTableItem(item)}>
                                     </div>

@@ -6,7 +6,7 @@ import { fetchDatabaseData, fetchTableNames, fetchTableDataByName } from './serv
 import { DatabaseType, TableType } from './types/databaseTypes.ts';
 import { queryBuilder } from './scripts/query/queryBuilder.ts';
 import TalbeListSelect from './components/TableListSelect.tsx';
-import { sendInsertQuery, sendSelectQuery, sendUpdateQuery } from './scripts/query/queryService.ts';
+import { sendDeleteQuery, sendInsertQuery, sendSelectQuery, sendUpdateQuery } from './scripts/query/queryService.ts';
 
 function App() {
 
@@ -101,22 +101,42 @@ function App() {
     setEditValues([]);
   }
 
+  const executeDelete = async (id: number) => {
+    const deleteQueryResult = await sendDeleteQuery(id);
+
+    const lastQuery = queryBuilder.getLastSelectQuery();
+
+    getSelectQueryResult(lastQuery);
+  }
+
   const executeUpdate = async (inputValues: string[]) => {
-    sendUpdateQuery(inputValues);
+    const updateQueryResult = await sendUpdateQuery(inputValues);
+
+    const lastQuery = queryBuilder.getLastSelectQuery();
+
+    getSelectQueryResult(lastQuery);
   }
 
   const executeInsert = async (inputValues: string[]) => {
-    const fetchedValues: any = sendInsertQuery(inputValues);
+    const insertQueryResult: any = await sendInsertQuery(inputValues);
 
-    setTableValues(fetchedValues);
+    const lastQuery = queryBuilder.getLastSelectQuery();
+
+    getSelectQueryResult(lastQuery);
   }
 
-  const executeSelect = async () => {
-    const fetchedQueryResult: any = await sendSelectQuery();
+  const getSelectQueryResult = async (query: string) => {
+    const fetchedQueryResult: any = await sendSelectQuery(query);
     setTableColumns(fetchedQueryResult.columns);
     setTableValues(fetchedQueryResult.values);
 
     console.log('fetched query result', fetchedQueryResult);
+  }
+
+  const executeSelect = async () => {
+    const selectQuery = queryBuilder.executeSelect();
+
+    getSelectQueryResult(selectQuery);
   }
 
   return (
@@ -149,6 +169,7 @@ function App() {
               tableColumns={tableColumns}
               tableValues={tableValues}
               editValue={editValue}
+              executeDelete={executeDelete}
             />}
           </div>
         </div>

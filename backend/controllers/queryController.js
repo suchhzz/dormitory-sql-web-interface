@@ -24,13 +24,15 @@ export const selectQuery = async (req, res) => {
 
 export const insertQuery = async (req, res) => {
     try {
-        const { queryParams } = req.body;
+        const { queryString } = req.body;
 
-        const query = await executeModifyQuery(queryParams);
+        console.log('query string', queryString);
+
+        const query = await executeModifyQuery(queryString);
 
         if (!query) {
             return res.status(400).json({
-                error: `failed executing query: ${queryParams.query}`
+                error: `failed executing query: ${queryString}`
             });
         }
 
@@ -42,13 +44,15 @@ export const insertQuery = async (req, res) => {
 
 export const updateQuery = async (req, res) => {
     try {
-        const { queryParams } = req.body;
+        const { queryString } = req.body;
 
-        const query = await executeModifyQuery(queryParams);
+        console.log('query string', queryString);
+
+        const query = await executeModifyQuery(queryString);
 
         if (!query) {
             return res.status(400).json({
-                error: `failed executing query: ${queryParams.query}`
+                error: `failed executing query: ${queryString}`
             });
         }
 
@@ -60,13 +64,15 @@ export const updateQuery = async (req, res) => {
 
 export const deleteQuery = async (req, res) => {
     try {
-        const { queryParams } = req.body;
+        const { queryString } = req.body;
 
-        const query = await executeModifyQuery(queryParams);
+        console.log('api delete query', queryString);
+
+        const query = await executeModifyQuery(queryString);
 
         if (!query) {
             return res.status(400).json({
-                error: `failed executing query: ${queryParams.query}`
+                error: `failed executing query: ${queryString}`
             });
         }
 

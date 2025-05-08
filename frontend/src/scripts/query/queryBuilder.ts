@@ -1,8 +1,9 @@
 import { Query } from './abstractions/query';
 import { Condition } from './abstractions/condition';
 
-interface QueryBuilder {
+interface IQueryBuilder {
     query: Query,
+    lastSelectQuery: string,
 
     addSelectCondition(conditionId: number, operator: string, column: string, values: string[]): void,
     updateSelectConditionValue(conditionIndex: number, values: string[]): void,
@@ -29,9 +30,11 @@ interface QueryBuilder {
     executeUpdate(inputValues: string[]): string,
 }
 
-class QueryBuilder {
+class QueryBuilder implements IQueryBuilder {
 
     query: Query;
+
+    lastSelectQuery: string = "";
 
     constructor () {
         this.query = new Query();
@@ -101,11 +104,21 @@ class QueryBuilder {
     }
 
     deleteTableItem(itemId: number) {
-        this.query.deleteTableItem(itemId);
+        return this.query.deleteTableItem(itemId);
     }
 
     executeUpdate(inputValues: string[]): string {
         return this.query.getQueryUpdateString(inputValues);
+    }
+
+    setLastSelectQuery(query: string) {
+        this.lastSelectQuery = query;
+
+        console.log('==============LAST QUERY UPDATED========', this.lastSelectQuery);
+    }
+
+    getLastSelectQuery(): string {
+        return this.lastSelectQuery;
     }
 }
 

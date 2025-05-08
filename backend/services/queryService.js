@@ -12,15 +12,13 @@ export const executeSelectQuery = (queryString) => {
     }
 }
 
-export const executeModifyQuery = (queryParams) => {
+export const executeModifyQuery = (queryString) => {
     const db = getDatabaseConnection();
     try {
-        const queryString = queryParams.query;
-
         return db.prepare(queryString).run();
 
     } catch (e) {
-        console.error('execute insert error', e);
+        console.error('execute modify error', e);
     } finally {
         db.close();
     }

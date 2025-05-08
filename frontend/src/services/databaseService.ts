@@ -1,4 +1,5 @@
 import axios from "axios";
+import { queryBuilder } from "../scripts/query/queryBuilder";
 const apiUrl = import.meta.env.VITE_API_URL;
 
 export async function fetchDatabaseData() {
@@ -32,6 +33,12 @@ export async function fetchTableNames() {
 export async function fetchTableDataByName(tableName: string) {
     try {
         const response = await axios.get(`http://localhost:8080/api/database/tables/${tableName}`);
+
+        if (response.status === 200) {
+            const lastQuery = `SELECT * FROM ${tableName}`;
+
+            queryBuilder.setLastSelectQuery(lastQuery);
+        }
 
         return response.data;
     } catch (e) {

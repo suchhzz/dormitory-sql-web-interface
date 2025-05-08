@@ -164,10 +164,10 @@ class Query implements IQuery {
 
         console.log(columns);
 
-        return `INSERT INTO (${columns
+        return `INSERT INTO ${table} (${columns
             .filter(el => el.name !== "*" && el.name !== "id")
             .map(el => el.name)
-            .join(', ')}) FROM ${table}\n`;
+            .join(', ')})\n`;
     }
 
     getValuesInsertQueryString(values: string[]) {
@@ -244,8 +244,15 @@ class Query implements IQuery {
         this.selectedColumns.map((column, index) => {
 
             if (column.name !== '*') {
-                queryString += `${column.name} = ${inputValues[index - 1]}\n`
+                queryString += `${column.name} = ${inputValues[index - 1]}`;
+
+                if (index !== this.selectedColumns.length - 1) {
+                    queryString += ','
+                }
+
+                queryString += '\n';
             }
+
 
         })
 
