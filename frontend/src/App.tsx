@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ButtonPanel from "./components/ButtonPanel.tsx";
 import MenuPanel from "./components/MenuPanel.tsx";
 import Table from "./components/Table.tsx";
@@ -35,6 +35,20 @@ function App() {
   const [primaryKeys, setPrimaryKeys] = useState<number[]>([]);
 
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [selectedSearchColumn, setSelectedSearchColumn] = useState<string>("");
+
+  const filteredTable = useMemo(() => {
+    const columnIndex = tableColumns.indexOf(selectedSearchColumn);
+
+    if (columnIndex === -1 || !searchQuery.trim()) {
+      return tableValues;
+    }
+
+    return tableValues.filter((row) => {
+      const cellValue = row[columnIndex] || "";
+      return cellValue.toLowerCase().includes(searchQuery.toLowerCase());
+    });
+  }, [tableValues, tableColumns, selectedSearchColumn, searchQuery]);
 
   const updateActiveColumns = (updater: (prev: number[]) => number[]) => {
     setActiveColumns(updater);
@@ -43,10 +57,6 @@ function App() {
   const clearActiveColumns = () => {
     setActiveColumns([0]);
   };
-
-  // useEffect(() => {
-  //   console.log('active columns', activeColumns);
-  // }, activeColumns);
 
   useEffect(() => {
     const fetchTables = async () => {
@@ -81,6 +91,7 @@ function App() {
           setTableValues(fetchedTableData.values);
           setTableColumns(fetchedTableData.columns);
           setPrimaryKeys(fetchedTableData.primaryKeys);
+          setSelectedSearchColumn(fetchedTableData.columns[0]);
         }
       } catch (e) {
         console.error("Error fetching table data:", e);
@@ -139,6 +150,7 @@ function App() {
     const fetchedQueryResult: any = await sendSelectQuery(query);
     setTableColumns(fetchedQueryResult.columns);
     setTableValues(fetchedQueryResult.values);
+    setSelectedSearchColumn(fetchedQueryResult.columns[0]);
 
     console.log("fetched query result", fetchedQueryResult);
   };
@@ -181,13 +193,15 @@ function App() {
               searchQuery={searchQuery}
               tableName={selectedTableName}
               onSearchChange={setSearchQuery}
+              selectedColumn={selectedSearchColumn}
+              onColumnChange={setSelectedSearchColumn}
             />
           </div>
           <div className="table-wrapper">
             {activeTable && (
               <Table
                 tableColumns={tableColumns}
-                tableValues={tableValues}
+                tableValues={filteredTable}
                 tableName={selectedTableName}
                 editValue={editValue}
                 executeDelete={executeDelete}
