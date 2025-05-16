@@ -6,6 +6,7 @@ import {
   translateOneColumn,
 } from "../services/translateColumns";
 import { ForeignKey } from "../types/foreignKey";
+import TableItem from "./TableItem";
 
 export default function Table({
   tableColumns,
@@ -50,12 +51,6 @@ export default function Table({
     editValue(editObject);
   };
 
-  const foreignKeyCellClick = (table: string, value: string) => {
-    const foreignTable = foreignKeys.find((el) => el.from === table);
-
-    console.log("fetch id", value, "from table", foreignTable?.table);
-  };
-
   return (
     <>
       <table className="table-display">
@@ -70,17 +65,13 @@ export default function Table({
           {tableValues.map((item: string[], index: number) => (
             <tr className="table-item" key={index}>
               {item.map((valueItem: string, valueIndex: number) => (
-                <td
-                  key={valueIndex}
-                  className={
-                    isForeignKey(tableColumns[valueIndex]) ? "foreign-key" : ""
-                  }
-                  onClick={() => {
-                    foreignKeyCellClick(tableColumns[valueIndex], valueItem);
-                  }}
-                >
-                  {valueItem}
-                </td>
+                <TableItem
+                  valueIndex={valueIndex}
+                  valueItem={valueItem}
+                  tableColumns={tableColumns}
+                  foreignKeys={foreignKeys}
+                  isForeignKey={isForeignKey}
+                />
               ))}
 
               <div className="table-row-options">
