@@ -1,40 +1,65 @@
-import database from '../models/databaseModel.js';
-import { getTableDataByTableName, getDatabaseTableName } from '../services/databaseService.js';
-import { tableDataResponseDTO } from '../dto/TableData.dto.js';
+import database from "../models/databaseModel.js";
+import {
+  getTableDataByTableName,
+  getDatabaseTableName,
+  getTableItemDataById,
+} from "../services/databaseService.js";
+import { tableDataResponseDTO } from "../dto/TableData.dto.js";
 
 export const getDatabaseData = (req, res) => {
-    try {
-        res.send(database);
-    } catch (e) {
-        res.send(e);
-    }
+  try {
+    res.send(database);
+  } catch (e) {
+    res.send(e);
+  }
 };
 
 export const getTableData = async (req, res) => {
-    try {
-        const { tableName } = req.params;
+  try {
+    const { tableName } = req.params;
 
-        const tableData = await getTableDataByTableName(tableName);
+    const tableData = await getTableDataByTableName(tableName);
 
-        const tableDataDTO = tableDataResponseDTO(tableData, tableName);
+    console.log("table data", tableData);
 
-        return res.json(tableDataDTO);
+    const tableDataDTO = tableDataResponseDTO(tableData, tableName);
 
-    } catch (e) {
-        console.error('Controller error:', e);
-        return res.status(500).json({
-            error: 'Database operation failed',
-            details: e.message
-        });
-    }
+    return res.json(tableDataDTO);
+  } catch (e) {
+    console.error("Controller error:", e);
+    return res.status(500).json({
+      error: "Database operation failed",
+      details: e.message,
+    });
+  }
 };
 
 export const getDatabaseTableNames = async (_, res) => {
-    try {
-        const tableNames = await getDatabaseTableName();
+  try {
+    const tableNames = await getDatabaseTableName();
 
-        return res.json(tableNames);
-    } catch (e) {
-        return res.status(404);
-    }
-}
+    return res.json(tableNames);
+  } catch (e) {
+    return res.status(404);
+  }
+};
+
+export const getTableItemData = async (req, res) => {
+  try {
+    const { tableName, id } = req.params;
+
+    const tableItemData = await getTableItemDataById(tableName, id);
+
+    res.json(tableItemData);
+  } catch (e) {
+    console.error(e);
+
+    return (
+      res.status(500),
+      json({
+        error: "fetching table item data error",
+        details: e.message,
+      })
+    );
+  }
+};

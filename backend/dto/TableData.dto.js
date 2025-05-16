@@ -1,29 +1,35 @@
 export function tableDataResponseDTO(data, tableName = "") {
-    const columns = data.columnsInfo.map(column => column.name);
+  const columns = data.columnsInfo.map((column) => column.name);
 
-    const values = data.data.map(dataItem =>
-        columns.map(col => String(dataItem[col] ?? ""))
-    );
+  const values = data.data.map((dataItem) =>
+    columns.map((col) => String(dataItem[col] ?? ""))
+  );
 
-    const primaryKeys = data.columnsInfo.map(column => column.pk);
+  const simplifiedForeignKeys = data.foreignKeys.map(({ table, from }) => ({
+    table,
+    from,
+  }));
 
-    return {
-        tableName: tableName,
-        columns: columns,
-        values: values,
-        primaryKeys: primaryKeys,
-    };
+  const primaryKeys = data.columnsInfo.map((column) => column.pk);
+
+  return {
+    tableName: tableName,
+    columns: columns,
+    values: values,
+    primaryKeys: primaryKeys,
+    foreignKeys: simplifiedForeignKeys,
+  };
 }
 
 export function tableValuesResponseDTO(data) {
-    const columns = data.length > 0 ? Object.keys(data[0]) : [];
+  const columns = data.length > 0 ? Object.keys(data[0]) : [];
 
-    return {
-        columns: columns,
-        values: data.map(dataItem =>
-            columns.map(col => String(dataItem[col] ?? ""))
-        ),
-    }
+  return {
+    columns: columns,
+    values: data.map((dataItem) =>
+      columns.map((col) => String(dataItem[col] ?? ""))
+    ),
+  };
 }
 
 // const database = {

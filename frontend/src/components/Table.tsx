@@ -5,17 +5,20 @@ import {
   translateColumns,
   translateOneColumn,
 } from "../services/translateColumns";
+import { ForeignKey } from "../types/foreignKey";
 
 export default function Table({
   tableColumns,
   tableValues,
   tableName,
+  foreignKeys,
   editValue,
   executeDelete,
 }: {
   tableColumns: string[];
   tableValues: string[][];
   tableName: string;
+  foreignKeys: ForeignKey[];
   editValue: (editObject: string[]) => void;
   executeDelete: (id: number) => void;
 }) {
@@ -38,9 +41,19 @@ export default function Table({
   //     queryBuilder.setSelectingColumns(columnsName);
   // }, [columnsValues]);
 
+  const isForeignKey = (columnName: string) => {
+    return foreignKeys.some((fk) => fk.from === columnName);
+  };
+
   const editTableItem = (editObject: string[]) => {
     console.log("edit", editObject);
     editValue(editObject);
+  };
+
+  const foreignKeyCellClick = (table: string, value: string) => {
+    const foreignTable = foreignKeys.find((el) => el.from === table);
+
+    console.log("fetch id", value, "from table", foreignTable?.table);
   };
 
   return (
@@ -54,10 +67,20 @@ export default function Table({
           </tr>
         </thead>
         <tbody>
-          {tableValues.map((item, index) => (
+          {tableValues.map((item: string[], index: number) => (
             <tr className="table-item" key={index}>
-              {item.map((valueItem, valueIndex) => (
-                <td key={valueIndex}>{valueItem}</td>
+              {item.map((valueItem: string, valueIndex: number) => (
+                <td
+                  key={valueIndex}
+                  className={
+                    isForeignKey(tableColumns[valueIndex]) ? "foreign-key" : ""
+                  }
+                  onClick={() => {
+                    foreignKeyCellClick(tableColumns[valueIndex], valueItem);
+                  }}
+                >
+                  {valueItem}
+                </td>
               ))}
 
               <div className="table-row-options">

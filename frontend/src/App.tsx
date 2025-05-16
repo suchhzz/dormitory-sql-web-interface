@@ -17,6 +17,7 @@ import {
   sendUpdateQuery,
 } from "./scripts/query/queryService.ts";
 import TableSearch from "./components/TableSearch.tsx";
+import { ForeignKey } from "./types/foreignKey.ts";
 
 function App() {
   const [activeTable, setActiveTable] = useState<TableType | null>(null);
@@ -33,6 +34,7 @@ function App() {
   const [activeColumns, setActiveColumns] = useState<number[]>([0]);
 
   const [primaryKeys, setPrimaryKeys] = useState<number[]>([]);
+  const [foreignKeys, setForeignKeys] = useState<ForeignKey[]>([]);
 
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedSearchColumn, setSelectedSearchColumn] = useState<string>("");
@@ -92,6 +94,7 @@ function App() {
           setTableColumns(fetchedTableData.columns);
           setPrimaryKeys(fetchedTableData.primaryKeys);
           setSelectedSearchColumn(fetchedTableData.columns[0]);
+          setForeignKeys(fetchedTableData.foreignKeys);
         }
       } catch (e) {
         console.error("Error fetching table data:", e);
@@ -203,6 +206,7 @@ function App() {
                 tableColumns={tableColumns}
                 tableValues={filteredTable}
                 tableName={selectedTableName}
+                foreignKeys={foreignKeys}
                 editValue={editValue}
                 executeDelete={executeDelete}
               />
