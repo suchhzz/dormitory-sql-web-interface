@@ -26,6 +26,9 @@ export default function Table({
   const [columnsName, setColumnsName] = useState<string[]>([]);
   const [columnsValues, setColumnsValues] = useState<string[][]>([]);
 
+  const [activeForeignCellIndex, setActiveForeignCellIndex] =
+    useState<string>("");
+
   useEffect(() => {
     if (tableColumns) {
       setColumnsName(tableColumns);
@@ -66,10 +69,13 @@ export default function Table({
             <tr className="table-item" key={index}>
               {item.map((valueItem: string, valueIndex: number) => (
                 <TableItem
+                  index={String(`${valueItem}-${valueIndex}`)}
                   valueIndex={valueIndex}
                   valueItem={valueItem}
                   tableColumns={tableColumns}
                   foreignKeys={foreignKeys}
+                  activeForeignCellIndex={activeForeignCellIndex}
+                  setActiveForeignCellIndex={setActiveForeignCellIndex}
                   isForeignKey={isForeignKey}
                 />
               ))}
