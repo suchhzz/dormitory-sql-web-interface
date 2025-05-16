@@ -1,15 +1,24 @@
-import { useEffect, useState } from 'react';
-import ButtonPanel from './components/ButtonPanel.tsx';
-import MenuPanel from './components/MenuPanel.tsx';
-import Table from './components/Table.tsx';
-import { fetchDatabaseData, fetchTableNames, fetchTableDataByName } from './services/databaseService.ts';
-import { DatabaseType, TableType } from './types/databaseTypes.ts';
-import { queryBuilder } from './scripts/query/queryBuilder.ts';
-import TalbeListSelect from './components/TableListSelect.tsx';
-import { sendDeleteQuery, sendInsertQuery, sendSelectQuery, sendUpdateQuery } from './scripts/query/queryService.ts';
+import { useEffect, useState } from "react";
+import ButtonPanel from "./components/ButtonPanel.tsx";
+import MenuPanel from "./components/MenuPanel.tsx";
+import Table from "./components/Table.tsx";
+import {
+  fetchDatabaseData,
+  fetchTableNames,
+  fetchTableDataByName,
+} from "./services/databaseService.ts";
+import { DatabaseType, TableType } from "./types/databaseTypes.ts";
+import { queryBuilder } from "./scripts/query/queryBuilder.ts";
+import TableListSelect from "./components/TableListSelect.tsx";
+import {
+  sendDeleteQuery,
+  sendInsertQuery,
+  sendSelectQuery,
+  sendUpdateQuery,
+} from "./scripts/query/queryService.ts";
+import TableSearch from "./components/TableSearch.tsx";
 
 function App() {
-
   const [activeTable, setActiveTable] = useState<TableType | null>(null);
 
   const [tableValues, setTableValues] = useState<string[][]>([]);
@@ -25,13 +34,15 @@ function App() {
 
   const [primaryKeys, setPrimaryKeys] = useState<number[]>([]);
 
+  const [searchQuery, setSearchQuery] = useState<string>("");
+
   const updateActiveColumns = (updater: (prev: number[]) => number[]) => {
     setActiveColumns(updater);
   };
 
   const clearActiveColumns = () => {
     setActiveColumns([0]);
-  }
+  };
 
   // useEffect(() => {
   //   console.log('active columns', activeColumns);
@@ -47,9 +58,9 @@ function App() {
       } catch (e) {
         console.error("Error fetching table names:", e);
       }
-    }
+    };
     fetchTables();
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (tableNames.length > 0) {
@@ -62,22 +73,21 @@ function App() {
       try {
         const fetchedTableData = await fetchTableDataByName(selectedTableName);
         if (fetchedTableData) {
-          console.log('fetched table data', fetchedTableData);
+          console.log("fetched table data", fetchedTableData);
 
           clearActiveColumns();
 
           setActiveTable(fetchedTableData);
           setTableValues(fetchedTableData.values);
-          setTableColumns(fetchedTableData.columns)
+          setTableColumns(fetchedTableData.columns);
           setPrimaryKeys(fetchedTableData.primaryKeys);
         }
       } catch (e) {
         console.error("Error fetching table data:", e);
       }
-    }
+    };
 
     if (selectedTableName) {
-
       fetchTableData();
     }
   }, [selectedTableName]);
@@ -95,11 +105,11 @@ function App() {
 
   const editValue = (editObject: string[]) => {
     setEditValues(editObject);
-  }
+  };
 
   const clearEditValue = () => {
     setEditValues([]);
-  }
+  };
 
   const executeDelete = async (id: number) => {
     const deleteQueryResult = await sendDeleteQuery(id);
@@ -107,7 +117,7 @@ function App() {
     const lastQuery = queryBuilder.getLastSelectQuery();
 
     getSelectQueryResult(lastQuery);
-  }
+  };
 
   const executeUpdate = async (inputValues: string[]) => {
     const updateQueryResult = await sendUpdateQuery(inputValues);
@@ -115,7 +125,7 @@ function App() {
     const lastQuery = queryBuilder.getLastSelectQuery();
 
     getSelectQueryResult(lastQuery);
-  }
+  };
 
   const executeInsert = async (inputValues: string[]) => {
     const insertQueryResult: any = await sendInsertQuery(inputValues);
@@ -123,61 +133,73 @@ function App() {
     const lastQuery = queryBuilder.getLastSelectQuery();
 
     getSelectQueryResult(lastQuery);
-  }
+  };
 
   const getSelectQueryResult = async (query: string) => {
     const fetchedQueryResult: any = await sendSelectQuery(query);
     setTableColumns(fetchedQueryResult.columns);
     setTableValues(fetchedQueryResult.values);
 
-    console.log('fetched query result', fetchedQueryResult);
-  }
+    console.log("fetched query result", fetchedQueryResult);
+  };
 
   const executeSelect = async () => {
     const selectQuery = queryBuilder.executeSelect();
 
     getSelectQueryResult(selectQuery);
-  }
+  };
 
   return (
     <>
-      <div className='main-container'>
-        <div className='content d-grid'>
-          <div className='button-panel-wrapper'>
-            {activeTable && <ButtonPanel
-              tableColumnItems={activeTable.columns}
-              tableName={activeTable?.tableName}
-              editValues={editValues}
-              clearEditValue={clearEditValue}
-              activeColumns={activeColumns}
-              updateActiveColumns={updateActiveColumns}
-              clearActiveColumns={clearActiveColumns}
-              primaryKeys={primaryKeys}
-              executeUpdate={executeUpdate}
-              executeInsert={executeInsert}
-              executeSelect={executeSelect}
-            />}
+      <div className="main-container">
+        <div className="content d-grid">
+          <div className="button-panel-wrapper">
+            {activeTable && (
+              <ButtonPanel
+                tableColumnItems={activeTable.columns}
+                tableName={activeTable?.tableName}
+                editValues={editValues}
+                clearEditValue={clearEditValue}
+                activeColumns={activeColumns}
+                updateActiveColumns={updateActiveColumns}
+                clearActiveColumns={clearActiveColumns}
+                primaryKeys={primaryKeys}
+                executeUpdate={executeUpdate}
+                executeInsert={executeInsert}
+                executeSelect={executeSelect}
+              />
+            )}
           </div>
-          <div className='table-list-wrapper'>
-            <TalbeListSelect
+          <div className="table-list-wrapper">
+            <TableListSelect
               tableNames={tableNames}
               setSelectedTableName={setSelectedTableName}
             />
+
+            <TableSearch
+              columns={tableColumns}
+              searchQuery={searchQuery}
+              tableName={selectedTableName}
+              onSearchChange={setSearchQuery}
+            />
           </div>
-          <div className='table-wrapper'>
-            {activeTable && <Table
-              tableColumns={tableColumns}
-              tableValues={tableValues}
-              editValue={editValue}
-              executeDelete={executeDelete}
-            />}
+          <div className="table-wrapper">
+            {activeTable && (
+              <Table
+                tableColumns={tableColumns}
+                tableValues={tableValues}
+                tableName={selectedTableName}
+                editValue={editValue}
+                executeDelete={executeDelete}
+              />
+            )}
           </div>
         </div>
       </div>
 
       <MenuPanel />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -1,10 +1,40 @@
 .button-panel-wrapper {
-    .buttons {
-        justify-content: space-between;
-    }
+  .buttons {
+    justify-content: space-between;
+  }
 }
 
 .button-item {
-    padding: 5px 10px;
-    font-family: Arial, Helvetica, sans-serif;
+  padding: 5px 10px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.styled-select {
+  width: 100%;
+  padding: 8px 12px; // меньше отступы
+  border: 1px solid #444;
+  border-radius: 6px;
+  background-color: #1e1e1e;
+  font-size: 14px;
+  color: #eee;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s, background-color 0.3s;
+  appearance: none;
+
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23eee' viewBox='0 0 16 16'%3E%3Cpath d='M4.646 6.646a.5.5 0 0 1 .708 0L8 9.293l2.646-2.647a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 16px 16px;
+
+  &:focus {
+    border-color: #66afe9;
+    box-shadow: 0 0 0 2px rgba(102, 175, 233, 0.5);
+    background-color: #2a2a2a;
+  }
+
+  &:hover {
+    border-color: #666;
+    background-color: #292929;
+  }
 }
