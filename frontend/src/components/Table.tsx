@@ -41,6 +41,10 @@ export default function Table({
     }
   }, [tableValues]);
 
+  useEffect(() => {
+    setActiveForeignCellIndex("");
+  }, [tableName]);
+
   // useEffect(() => {
   //     queryBuilder.setSelectingColumns(columnsName);
   // }, [columnsValues]);
@@ -65,16 +69,17 @@ export default function Table({
           </tr>
         </thead>
         <tbody>
-          {tableValues.map((item: string[], index: number) => (
-            <tr className="table-item" key={index}>
-              {item.map((valueItem: string, valueIndex: number) => (
+          {tableValues.map((item: string[], valueIndex: number) => (
+            <tr className="table-item" key={valueIndex}>
+              {item.map((itemValue: string, itemIndex: number) => (
                 <TableItem
-                  index={String(`${valueItem}-${valueIndex}`)}
-                  valueIndex={valueIndex}
-                  valueItem={valueItem}
+                  index={String(`${valueIndex}-${itemIndex}`)}
+                  valueIndex={itemIndex}
+                  valueItem={itemValue}
                   tableColumns={tableColumns}
                   foreignKeys={foreignKeys}
                   activeForeignCellIndex={activeForeignCellIndex}
+                  activeTableName={tableName}
                   setActiveForeignCellIndex={setActiveForeignCellIndex}
                   isForeignKey={isForeignKey}
                 />
