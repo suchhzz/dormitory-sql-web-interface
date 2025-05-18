@@ -35,8 +35,6 @@ export const formatForeignCell = async (columnName: string, value: string): Prom
 }
 
 export const formatForeignTableObject = async (tableObject: RowData, keys: string[]): Promise<object> => {
-    console.log('FORMAT FOREIGN TALBE OBJECT', tableObject);
-
     const formattedTableObject = { ...tableObject };
 
     const keyPromises = keys.map(async (key) => {

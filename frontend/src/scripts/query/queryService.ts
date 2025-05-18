@@ -55,8 +55,6 @@ export const sendSelectQuery = async (selectQuery: string) => {
     );
 
     if (response.status === 200) {
-      console.log("select executed successfuly", response.data);
-
       queryBuilder.setLastSelectQuery(selectQuery);
     }
 
@@ -79,10 +77,6 @@ export const sendDeleteQuery = async (id: number) => {
       payload
     );
 
-    if (response.status === 200) {
-      console.log("select executed successfuly", response.data);
-    }
-
     return response.data;
   } catch (e) {
     console.error(e);
@@ -95,12 +89,20 @@ export const getTableItemById = async (tableName: string, id: number) => {
       `http://localhost:8080/api/database/tables/${tableName}/${id}`
     );
 
-    if (response.status === 200) {
-      console.log("fetched table item successfuly", response.data);
-    }
-
     return response.data;
   } catch (e) {
     console.error(e);
   }
 };
+
+export const getTableItemsByTableName = async (tableName: string) => {
+  try {
+    const response = await axios.get(
+      `http://localhost:8080/api/database/foreign/tables/${tableName}`
+    );
+
+    return response.data;
+  } catch (e) {
+    console.error(e);
+  }
+}

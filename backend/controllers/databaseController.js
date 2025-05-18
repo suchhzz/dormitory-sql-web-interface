@@ -3,6 +3,7 @@ import {
   getTableDataByTableName,
   getDatabaseTableName,
   getTableItemDataById,
+  getTableItemsByTableName,
 } from "../services/databaseService.js";
 import { tableDataResponseDTO } from "../dto/TableData.dto.js";
 
@@ -63,3 +64,25 @@ export const getTableItemData = async (req, res) => {
     );
   }
 };
+
+export const getTableItems = async (req, res) => {
+  try {
+    const { tableName } = req.params;
+
+    console.log('foreign table', tableName);
+
+    const tableItemsData = await getTableItemsByTableName(tableName);
+
+    res.json(tableItemsData);
+  } catch (e) {
+    console.error(e);
+
+    return (
+      res.status(500),
+      json({
+        error: "fetching table item data error",
+        details: e.message,
+      })
+    );
+  }
+}

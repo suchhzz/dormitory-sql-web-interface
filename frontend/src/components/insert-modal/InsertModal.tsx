@@ -1,3 +1,4 @@
+import { ForeignKey } from "../../types/foreignKey";
 import InsertModalBody from "./InsertModalBody";
 
 export default function InsertModal({
@@ -8,6 +9,7 @@ export default function InsertModal({
   editValues,
   clearEditValue,
   primaryKeys,
+  foreignKeys,
   executeUpdate,
   executeInsert,
 }: {
@@ -18,6 +20,7 @@ export default function InsertModal({
   editValues: string[];
   clearEditValue: () => void;
   primaryKeys: number[];
+  foreignKeys: ForeignKey[];
   executeUpdate: (inputValues: string[]) => void;
   executeInsert: (inputValues: string[]) => void;
 }) {
@@ -45,6 +48,7 @@ export default function InsertModal({
                 tableName={tableName}
                 clearEditValue={clearEditValue}
                 primaryKeys={primaryKeys}
+                foreignKeys={foreignKeys}
                 executeUpdate={executeUpdate}
                 executeInsert={executeInsert}
               />

@@ -36,12 +36,6 @@ export default function TableItem({
     setForeignTableName("");
   }, [activeTableName]);
 
-  useEffect(() => {
-    if (foreignKeyItemData) {
-      console.log('TABLE ITEM FOREIGN ITEM DATA', foreignKeyItemData);
-    }
-  }, [foreignKeyItemData]);
-
   const foreignKeyCellClick = (table: string, value: string) => {
     if (!foreignKeyItemData) {
       const foreignTable = foreignKeys.find((el) => el.from === table);

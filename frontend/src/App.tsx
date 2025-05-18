@@ -179,6 +179,7 @@ function App() {
                 updateActiveColumns={updateActiveColumns}
                 clearActiveColumns={clearActiveColumns}
                 primaryKeys={primaryKeys}
+                foreignKeys={foreignKeys}
                 executeUpdate={executeUpdate}
                 executeInsert={executeInsert}
                 executeSelect={executeSelect}

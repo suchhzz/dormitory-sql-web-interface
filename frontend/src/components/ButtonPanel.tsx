@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import InsertModal from "./insert-modal/InsertModal";
 import SelectModal from "./select-modal/SelectModal";
 import { translateTableName } from "../services/translateColumns";
+import { ForeignKey } from "../types/foreignKey";
 
 export default function ButtonPanel({
   tableColumnItems,
@@ -12,6 +13,7 @@ export default function ButtonPanel({
   updateActiveColumns,
   clearActiveColumns,
   primaryKeys,
+  foreignKeys,
   executeUpdate,
   executeInsert,
   executeSelect,
@@ -24,6 +26,7 @@ export default function ButtonPanel({
   updateActiveColumns: (updater: (prev: number[]) => number[]) => void;
   clearActiveColumns: () => void;
   primaryKeys: number[];
+  foreignKeys: ForeignKey[];
   executeUpdate: (inputValues: string[]) => void;
   executeInsert: (inputValues: string[]) => void;
   executeSelect: () => void;
@@ -79,6 +82,7 @@ export default function ButtonPanel({
         tableName={tableName}
         clearEditValue={clearEditValue}
         primaryKeys={primaryKeys}
+        foreignKeys={foreignKeys}
         executeUpdate={executeUpdate}
         executeInsert={executeInsert}
       />

@@ -56,3 +56,18 @@ export const getDatabaseTableName = () => {
     db.close();
   }
 };
+
+export const getTableItemsByTableName = (tableName) => {
+  const db = getDatabaseConnection();
+  try {
+    return db
+      .prepare(
+        `SELECT * FROM ${tableName};`
+      )
+      .all();
+  } catch (e) {
+    console.error("fetch table items error", e);
+  } finally {
+    db.close();
+  }
+}

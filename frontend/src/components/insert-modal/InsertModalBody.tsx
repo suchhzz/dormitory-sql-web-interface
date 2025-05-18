@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { queryBuilder } from "../../scripts/query/queryBuilder";
 import InsertInput from "./InsertInput";
+import { ForeignKey } from "../../types/foreignKey";
 
 export default function InsertModalBody({
   tableColumnItems,
@@ -8,6 +9,7 @@ export default function InsertModalBody({
   tableName,
   clearEditValue,
   primaryKeys,
+  foreignKeys,
   executeUpdate,
   executeInsert,
 }: {
@@ -16,6 +18,7 @@ export default function InsertModalBody({
   tableName: string;
   clearEditValue: () => void;
   primaryKeys: number[];
+  foreignKeys: ForeignKey[];
   executeUpdate: (inputValues: string[]) => void;
   executeInsert: (inputValues: string[]) => void;
 }) {
@@ -48,6 +51,10 @@ export default function InsertModalBody({
     clearEditValue();
   };
 
+  const isForeignKey = (columnName: string) => {
+    return foreignKeys.some((fk) => fk.from === columnName);
+  };
+
   useEffect(() => {
     console.log("insert modal body edit values", editValues);
   }, [editValues]);
@@ -64,6 +71,7 @@ export default function InsertModalBody({
               setInputValue={setInputValue}
               inputValue={inputValues[index]}
               isPrimaryKey={primaryKeys[index] === 1}
+              isForeignKey={isForeignKey(item)}
             />
           ))}
           {editValues.length > 0 ? (
