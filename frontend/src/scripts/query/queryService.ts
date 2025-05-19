@@ -105,4 +105,4 @@ export const getTableItemsByTableName = async (tableName: string) => {
   } catch (e) {
     console.error(e);
   }
-}
+};

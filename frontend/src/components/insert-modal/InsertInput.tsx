@@ -5,9 +5,9 @@ import { getTableItemsByTableName } from "../../scripts/query/queryService";
 import { formatTableData } from "../../services/foreignTableService";
 
 type ForeignTableSelectList = {
-  id: number,
-  tableInfo: string[],
-}
+  id: number;
+  tableInfo: string[];
+};
 
 export default function InsertInput({
   columnName,
@@ -26,8 +26,9 @@ export default function InsertInput({
   isPrimaryKey: boolean;
   isForeignKey: boolean;
 }) {
-
-  const [selectListOptions, setSelectListOptions] = useState<ForeignTableSelectList[]>([]);
+  const [selectListOptions, setSelectListOptions] = useState<
+    ForeignTableSelectList[]
+  >([]);
 
   useEffect(() => {
     if (isForeignKey) {
@@ -39,9 +40,11 @@ export default function InsertInput({
     try {
       const foreignTableName = tableNamesByForeignKey[columnName];
 
-      const tableItems = await getTableItemsByTableName(foreignTableName.tableName);
+      const tableItems = await getTableItemsByTableName(
+        foreignTableName.tableName
+      );
 
-      console.log('FOREIGN ITEMS', tableItems);
+      console.log("FOREIGN ITEMS", tableItems);
 
       const formattedTableItems = tableItems.map((item: any) => ({
         id: item.id,
@@ -50,9 +53,9 @@ export default function InsertInput({
 
       setSelectListOptions(formattedTableItems);
     } catch (e) {
-      console.error('fetching foreign table items error', e);
+      console.error("fetching foreign table items error", e);
     }
-  }
+  };
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(inputIndex, e.target.value);
@@ -63,12 +66,15 @@ export default function InsertInput({
       {!isPrimaryKey && (
         <label className="label-form d-flex">
           {translateOneColumn(tableName, columnName)}
-          {isForeignKey ?
-
+          {isForeignKey ? (
             <div className="insert-list">
               <select
                 className="styled-select"
-                onChange={(e) => () => { setInputValue(inputIndex, e.target.value) }}
+                value={inputValue?.trim() === "" ? 0 : Number(inputValue)}
+                onChange={(e) => {
+                  console.log("foreign select on change", e.target.value);
+                  setInputValue(inputIndex, e.target.value);
+                }}
               >
                 <option value="" disabled>
                   Select table
@@ -85,9 +91,7 @@ export default function InsertInput({
                       ))} */}
               </select>
             </div>
-
-            :
-
+          ) : (
             <input
               type="text"
               className="form-item-input"
@@ -95,7 +99,7 @@ export default function InsertInput({
               onChange={handleOnChange}
               disabled={isPrimaryKey}
             ></input>
-          }
+          )}
         </label>
       )}
     </>

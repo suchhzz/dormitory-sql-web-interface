@@ -32,6 +32,10 @@ export default function InsertModalBody({
     }
   }, [editValues, tableColumnItems]);
 
+  useEffect(() => {
+    console.log("edit values", editValues);
+  }, [editValues]);
+
   const setInputValue = (inputIndex: number, value: string) => {
     setInputValues((prev) => {
       const updated = [...prev];

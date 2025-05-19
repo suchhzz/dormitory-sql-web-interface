@@ -42,14 +42,15 @@ function App() {
   const filteredTable = useMemo(() => {
     const columnIndex = tableColumns.indexOf(selectedSearchColumn);
 
-    if (columnIndex === -1 || !searchQuery.trim()) {
-      return tableValues;
-    }
+    const filtered =
+      columnIndex === -1 || !searchQuery.trim()
+        ? tableValues
+        : tableValues.filter((row) => {
+            const cellValue = row[columnIndex] || "";
+            return cellValue.toLowerCase().includes(searchQuery.toLowerCase());
+          });
 
-    return tableValues.filter((row) => {
-      const cellValue = row[columnIndex] || "";
-      return cellValue.toLowerCase().includes(searchQuery.toLowerCase());
-    });
+    return [...filtered].reverse();
   }, [tableValues, tableColumns, selectedSearchColumn, searchQuery]);
 
   const updateActiveColumns = (updater: (prev: number[]) => number[]) => {
